@@ -15,3 +15,4 @@ cd dotfiles
 ./install-dotfiles.sh
 ```
 This will create symlinks in your $HOME to the files listed in the variable 'files' within the script.
+![demo](https://raw.githubusercontent.com/gsantovena/dotfiles/master/dotfiles_s.gif)
