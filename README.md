@@ -3,13 +3,10 @@ My dot files
 
 ## Description
 Some dot files useful for me. Be free to use them.
+
 Currently only my bash_profile and vim stuff:
-- Color schemes:
-..- badwolf
-..- molokai
-- Language syntax:
-..- Scala
-..- Go
+- Color schemes: badwolf, molokai
+- Language syntax: Scala, Go
 
 ## Installation
 ```bash
