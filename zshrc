@@ -55,6 +55,8 @@ plugins=(aws docker docker-compose git nmap osx vagrant virtualenv)
 
 # export PATH="/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
 # export MANPATH="/usr/local/man:$MANPATH"
+export GOPATH=/Users/gsantovena/Projects/Go
+export PATH=$PATH:$GOPATH/bin
 
 source $ZSH/oh-my-zsh.sh
 
