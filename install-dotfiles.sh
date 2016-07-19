@@ -1,7 +1,7 @@
 #!/bin/bash
 
 dir=~/dotfiles
-files="bash_profile vim vimrc"
+files="bash_profile vim vimrc zshrc"
 
 for file in $files
 do
