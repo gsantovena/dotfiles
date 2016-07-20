@@ -23,13 +23,13 @@ set wildmenu
 set wildmode=list:longest,full
 
 " Colors
-colorscheme badwolf
-"colorscheme desert
 syntax enable
 "filetype on
 "filetype plugin on
 filetype plugin indent on
 set t_Co=256
+colorscheme badwolf
+"colorscheme desert
 
 " Spaces & Tabs
 set backspace=2
