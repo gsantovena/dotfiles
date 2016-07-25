@@ -1,0 +1,29 @@
+function precmd() {
+    if [ "$(id -u)" -ne 0 ]; then
+        FULL_CMD_LOG="$HOME/.logs/zsh-history-$(date -u "+%Y-%m-%d").log"
+        echo "$USER@`hostname`:`pwd` [$(date -u)] `\history -1`" >> ${FULL_CMD_LOG}
+    fi
+}
+
+brew-cask-upgrade() { 
+  if [ "$1" != '--continue' ]; then 
+    echo "Removing brew cache" 
+    rm -rf "$(brew --cache)" 
+    echo "Running brew update" 
+    brew update 
+  fi 
+  for c in $(brew cask list); do 
+    echo -e "\n\nInstalled versions of $c: " 
+    ls /usr/local/Caskroom/$c 
+    echo "Cask info for $c" 
+    brew cask info $c 
+    select ynx in "Yes" "No" "Exit"; do  
+      case $ynx in 
+        "Yes") echo "Uninstalling $c"; brew cask uninstall --force "$c"; echo "Re-installing $c"; brew cask install "$c"; break;; 
+        "No") echo "Skipping $c"; break;; 
+        "Exit") echo "Exiting brew-cask-upgrade"; return;; 
+      esac 
+    done 
+  done 
+} 
+

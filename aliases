@@ -1,0 +1,3 @@
+alias ggpnp='git pull origin $(current_branch) && git push origin $(current_branch)'
+alias ls='ls -FG'
+

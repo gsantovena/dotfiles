@@ -1,7 +1,10 @@
 #!/bin/bash
 
+history_logs=~/.logs
 dir=~/dotfiles
-files="bash_profile vim vimrc zshrc"
+files="bash_profile aliases exports functions vim vimrc zshrc"
+
+mkdir -p $history_logs
 
 for file in $files
 do
