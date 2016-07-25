@@ -41,6 +41,11 @@ function nullify() {
     "$@" > /dev/null 2>&1
 }
 
+# remove all comments and blank lines
+function nocomments() {
+    grep -v ^# "$@" | grep -v ^$
+}
+
 # `shellswitch [bash|zsh]`
 # Must be in /etc/shells
 shellswitch() {
