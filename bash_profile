@@ -1,17 +1,26 @@
-source ~/.homebrew_apikey
-source ~/.aliases
-source ~/.exports
-source ~/.functions
+#
+# References:
+# - https://github.com/paulirish/dotfiles
+##
 
-#if [ -f $(brew --prefix)/etc/bash_completion ]; then
-#	. $(brew --prefix)/etc/bash_completion
-#fi
-
-#complete -C aws_completer aws
+for file in ~/.{aliases,exports,functions,homebrew_apikey}; do
+    [ -r "$file" ] && source "$file"
+done
+unset file
 
 if [ -x /usr/local/bin/fortune ]; then
 	echo
 	fortune
 	echo
 fi
+
+if [[ -n "$ZSH_VERSION" ]]; then
+    return 1 2> /dev/null || exit 1;
+fi;
+
+if [ -f $(brew --prefix)/etc/bash_completion ]; then
+	. $(brew --prefix)/etc/bash_completion
+fi
+
+complete -C aws_completer aws
 

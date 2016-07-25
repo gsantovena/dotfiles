@@ -1,3 +1,33 @@
 alias ggpnp='git pull origin $(current_branch) && git push origin $(current_branch)'
-alias ls='ls -FG'
+
+#alias ls='ls -FG'
+
+alias mv='mv -v'
+alias rm='rm -i -v'
+alias cp='cp -v'
+
+alias cask='brew cask'
+alias where=which
+alias path='echo $PATH | tr -s ":" "\n"'
+
+alias hosts='sudo $EDITOR /etc/hosts'
+
+alias vi='vim'
+
+alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
+
+alias cleanup_dsstore="find . -name '*.DS_Store' -type f -ls -delete"
+alias diskspace_report="df -P -kHl"
+alias free_diskspace_report="diskspace_report"
+
+alias fs="stat -f \"%z bytes\""
+
+# Empty the Trash on all mounted volumes and the main HDD. then clear the useless sleepimage
+alias emptytrash=" \
+    sudo rm -rfv /Volumes/*/.Trashes; \
+    rm -rfv ~/.Trash/*; \
+    sudo rm -v /private/var/vm/sleepimage; \
+    rm -rv \"/Users/paulirish/Library/Application Support/stremio/Cache\";  \
+    rm -rv \"/Users/paulirish/Library/Application Support/stremio/stremio-cache\" \
+"
 

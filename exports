@@ -3,3 +3,9 @@ export HISTCONTROL=ignoreboth:erasedups
 export GOPATH=$HOME/Projects/Go
 export PATH=$PATH:$GOPATH/bin
 
+export EDITOR="vim"
+export MANPAGER="less -X"
+
+export LC_ALL="en_US.UTF-8"
+export LANG="en_US"
+

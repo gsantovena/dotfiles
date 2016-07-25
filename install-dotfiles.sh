@@ -1,15 +1,23 @@
 #!/bin/bash
 
-history_logs=~/.logs
-dir=~/dotfiles
-files="bash_profile aliases exports functions vim vimrc zshrc"
+HISTORY_LOGS=~/.logs
+DOTFILES_DIR=~/dotfiles
+FILES="bash_profile aliases exports functions vim vimrc zshrc"
 
-mkdir -p $history_logs
+mkdir -p "${HISTORY_LOGS}"
 
-for file in $files
+link() {
+    # Force create/replace the symlink.
+    echo "${DOTFILES_DIR}/${1} --> ${HOME}/${2}"
+    ln -sf "${DOTFILES_DIR}/${1}" "${HOME}/${2}"
+}
+
+if [ -e "${HOME}/.vim" ]; then
+    rm -rf "${HOME}/.vim"
+fi
+
+for FILE in $FILES
 do
-    echo "Creating symlink to $file in home directory."
-    rm -f ~/.$file
-    ln -sf $dir/$file ~/.$file
+    link "$FILE" ".$FILE"
 done
 
