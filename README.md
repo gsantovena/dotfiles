@@ -28,3 +28,5 @@ This will create symlinks in your $HOME to the files listed in the variable 'fil
 - [Nicolas Gallagher's dotfiles](https://github.com/necolas/dotfiles)
 - [Zsh](http://www.zsh.org/)
 - [oh-my-zsh](http://ohmyz.sh/)
+- [Mac CLI](https://github.com/guarinogabriel/Mac-CLI)
+- [m-cli](https://github.com/rgcr/m-cli)
