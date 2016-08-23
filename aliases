@@ -27,7 +27,7 @@ alias emptytrash=" \
     sudo rm -rfv /Volumes/*/.Trashes; \
     rm -rfv ~/.Trash/*; \
     sudo rm -v /private/var/vm/sleepimage; \
-    rm -rv \"/Users/paulirish/Library/Application Support/stremio/Cache\";  \
-    rm -rv \"/Users/paulirish/Library/Application Support/stremio/stremio-cache\" \
+    rm -rv \"/Users/gsantovena/Library/Application Support/stremio/Cache\";  \
+    rm -rv \"/Users/gsantovena/Library/Application Support/stremio/stremio-cache\" \
 "
 
