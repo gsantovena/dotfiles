@@ -15,8 +15,8 @@ Vim stuff:
 I highly recommend to install [oh-my-zsh](http://ohmyz.sh/) first.
 
 ```bash
-git clone git@github.com:gsantovena/dotfiles.git
-cd dotfiles
+git clone git@github.com:gsantovena/dotfiles.git ~/.dotfiles
+cd ~/.dotfiles
 ./install-dotfiles.sh
 ```
 This will create symlinks in your $HOME to the files listed in the variable 'files' within the script.
