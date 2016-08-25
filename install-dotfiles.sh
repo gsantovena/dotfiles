@@ -1,7 +1,7 @@
 #!/bin/bash
 
-HISTORY_LOGS=~/.logs
-DOTFILES_DIR=~/dotfiles
+HISTORY_LOGS=${HOME}/.logs
+DOTFILES_DIR=$(git rev-parse --show-toplevel)
 FILES="bash_profile aliases exports functions vim vimrc zshrc"
 
 mkdir -p "${HISTORY_LOGS}"
@@ -12,12 +12,14 @@ link() {
     ln -sf "${DOTFILES_DIR}/${1}" "${HOME}/${2}"
 }
 
+# This is a dirty way to do it.
+# It was creating a .vim directory inside ~/.vim, an inception kind of thing
 if [ -e "${HOME}/.vim" ]; then
     rm -rf "${HOME}/.vim"
 fi
 
-for FILE in $FILES
+for FILE in ${FILES}
 do
-    link "$FILE" ".$FILE"
+    link "${FILE}" ".${FILE}"
 done
 
