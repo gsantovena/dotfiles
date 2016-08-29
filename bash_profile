@@ -8,6 +8,10 @@ for file in ~/.{aliases,exports,functions,homebrew_apikey}; do
 done
 unset file
 
+if [ -x /usr/local/bin/thefuck ]; then
+    eval "$(thefuck --alias)"
+fi
+
 if [ -x /usr/local/bin/fortune ]; then
 	echo
 	fortune
