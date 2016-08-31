@@ -2,7 +2,7 @@
 
 HISTORY_LOGS=${HOME}/.logs
 DOTFILES_DIR=$(git rev-parse --show-toplevel)
-FILES="bash_profile aliases exports functions vim vimrc zshrc"
+FILES="bash_profile aliases exports functions vim vimrc zshrc secrets"
 
 mkdir -p "${HISTORY_LOGS}"
 

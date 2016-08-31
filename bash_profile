@@ -3,7 +3,7 @@
 # - https://github.com/paulirish/dotfiles
 ##
 
-for file in ~/.{aliases,exports,functions,homebrew_apikey}; do
+for file in ~/.{aliases,exports,functions,secrets}; do
     [ -r "$file" ] && source "$file"
 done
 unset file
