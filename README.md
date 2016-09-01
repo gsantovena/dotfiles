@@ -7,7 +7,7 @@ Some dot files useful for me. Be free to use them.
 I have installed [zsh](http://www.zsh.org/) and [oh-my-zsh](http://ohmyz.sh/).
 
 Vim stuff:
-- Color schemes: badwolf, molokai, [dracula](https://github.com/dracula/vim)
+- Color schemes: [badwolf](https://github.com/sjl/badwolf), [molokai](https://github.com/tomasr/molokai), [dracula](https://github.com/dracula/vim)
 - Language syntax: Scala, Go
 
 ## Installation
