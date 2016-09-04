@@ -10,3 +10,8 @@
 	ui = auto
 [alias]
 	lga = log --graph --oneline --all --decorate
+[merge]
+	tool = p4merge
+[mergetool]
+	keepTemporaries = false
+	prompt = false
