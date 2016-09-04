@@ -1,0 +1,12 @@
+[user]
+	email = gsantovena@gmail.com
+	name = Gerardo Santoveña
+[core]
+	editor = vim
+	autocrlf = input
+[help]
+	autocorrect = 1
+[color]
+	ui = auto
+[alias]
+	lga = log --graph --oneline --all --decorate
