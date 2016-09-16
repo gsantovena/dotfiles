@@ -50,7 +50,7 @@ COMPLETION_WAITING_DOTS="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(aws brew brew-cask docker docker-compose git go knife nmap osx pyenv vagrant virtualenv)
+plugins=(aws brew brew-cask docker docker-compose git go knife nmap osx pyenv vagrant vault virtualenv)
 
 # User configuration
 
