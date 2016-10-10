@@ -12,6 +12,7 @@ call plug#begin()
 Plug 'fatih/vim-go'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'SirVer/ultisnips'
+Plug 'ctrlpvim/ctrlp.vim'
 call plug#end()
 
 " UI Config
