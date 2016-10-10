@@ -55,8 +55,9 @@ set incsearch
 " Leader Shortcut
 let mapleader=","
 
-" turn off search highlight
+" Shortcuts
 nnoremap <leader><space> :nohlsearch<CR>
+nnoremap <leader>o :only<CR>
 
 " vim-go
 set autowrite
