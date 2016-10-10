@@ -16,6 +16,9 @@ Vim stuff:
 vim -c "PlugInstall" -c "qa"
 ```
 
+I use [neocomplete.vim](https://github.com/Shougo/neocomplete.vim) for completion.
+You will need Vim 7.3.885+ compiled with lua to use it.
+
 ## Installation
 
 I highly recommend to install [oh-my-zsh](http://ohmyz.sh/) first.
