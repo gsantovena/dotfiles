@@ -8,6 +8,10 @@
 " https://github.com/michaeljsmalley/dotfiles
 "---------------------------------------------
 
+call plug#begin()
+Plug 'fatih/vim-go'
+call plug#end()
+
 " UI Config
 set nocompatible " get rid of Vi compatibility mode. SET FIRST!
 
