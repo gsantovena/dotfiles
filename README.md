@@ -12,6 +12,10 @@ Vim stuff:
 - Go development plugin for Vim: [vim-go](https://github.com/fatih/vim-go)
 - Vim Plugin Manager: [vim-plug](https://github.com/junegunn/vim-plug)
 
+```bash
+vim -c "PlugInstall" -c "qa"
+```
+
 ## Installation
 
 I highly recommend to install [oh-my-zsh](http://ohmyz.sh/) first.
