@@ -10,6 +10,7 @@ Vim stuff:
 - Color schemes: [badwolf](https://github.com/sjl/badwolf), [molokai](https://github.com/tomasr/molokai), [dracula](https://github.com/dracula/vim)
 - Language syntax: Scala, Go
 - Go development plugin for Vim: [vim-go](https://github.com/fatih/vim-go)
+- Vim Plugin Manager: [vim-plug](https://github.com/junegunn/vim-plug)
 
 ## Installation
 
