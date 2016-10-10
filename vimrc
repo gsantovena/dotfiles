@@ -56,14 +56,47 @@ let mapleader=","
 " turn off search highlight
 nnoremap <leader><space> :nohlsearch<CR>
 
-" Go Language
+" vim-go
 set autowrite
+
+let g:go_fmt_command = "goimports"
+let g:go_autodetect_gopath = 1
+let g:go_list_type = "quickfix"
+
+let g:go_highlight_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_extra_types = 1
+let g:go_highlight_generate_tags = 1
+let g:go_highlight_build_constraints = 1
+
 map <C-n> :cnext<CR>
 map <C-m> :cprevious<CR>
 nnoremap <leader>a :cclose<CR>
-" autocmd FileType go nmap <leader>b :GoBuild<CR>
-autocmd FileType go nmap <leader>r <Plug>(go-run)
-autocmd FileType go nmap <leader>t <Plug>(go-test)
+
+nmap <C-g> :GoDeclsDir<CR>
+imap <C-g> <ESC>:<C-u>GoDeclsDir<CR>
+
+augroup go
+    autocmd!
+
+    autocmd FileType go nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
+    autocmd FileType go nmap <leader>t <Plug>(go-test)
+    autocmd FileType go nmap <leader>r <Plug>(go-run)
+    autocmd FileType go nmap <leader>d <Plug>(go-doc)
+    autocmd FileType go nmap <leader>c <Plug>(go-coverage-toggle)
+    autocmd FileType go nmap <leader>C <Plug>(go-coverage-browser)
+    autocmd FileType go nmap <leader>i <Plug>(go-info)
+    autocmd FileType go nmap <leader>l <Plug>(go-metalinter)
+    autocmd FileType go nmap <leader>v <Plug>(go-def-vertical)
+    autocmd FileType go nmap <leader>s <Plug>(go-def-split)
+
+    autocmd FileType go command! -bang A call go#alternate#Switch(<bang>0, 'edit')
+    autocmd FileType go command! -bang AV call go#alternate#Switch(<bang>0, 'vsplit')
+    autocmd FileType go command! -bang AS call go#alternate#Switch(<bang>0, 'split')
+    autocmd FileType go command! -bang AT call go#alternate#Switch(<bang>0, 'tabe')
+augroup END
 
 " run :GoBuild or :GoTestCompile based on the go file
 function! s:build_go_files()
@@ -75,16 +108,3 @@ function! s:build_go_files()
     endif
 endfunction
 
-autocmd FileType go nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
-autocmd FileType go nmap <leader>c <Plug>(go-coverage-toggle)
-autocmd FileType go nmap <leader>C <Plug>(go-coverage-browser)
-
-let g:go_fmt_command = "goimports"
-let g:go_fmt_fail_silently = 1
-let g:go_highlight_types = 1
-let g:go_highlight_fields = 1
-let g:go_highlight_functions = 1
-let g:go_highlight_methods = 1
-let g:go_highlight_operators = 1
-let g:go_highlight_extra_types = 1
-let g:go_highlight_build_constraints = 1
