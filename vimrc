@@ -13,6 +13,7 @@ Plug 'fatih/vim-go'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'SirVer/ultisnips'
 Plug 'ctrlpvim/ctrlp.vim'
+Plug 'Shougo/neocomplete.vim'
 call plug#end()
 
 " UI Config
@@ -108,4 +109,19 @@ function! s:build_go_files()
         call go#cmd#Build(0)
     endif
 endfunction
+
+" neocomplete
+let g:neocomplete#enable_at_startup = 1
+let g:neocomplete#enable_smart_case = 1
+let g:neocomplete#sources#syntax#min_keyword_length = 3
+
+if !exists('g:neocomplete#sources')
+    let g:neocomplete#sources = {}
+endif
+
+let g:neocomplete#sources._ = ['buffer', 'member', 'tag', 'file', 'dictionary']
+let g:neocomplete#sources.go = ['omni']
+
+call neocomplete#custom#source('_', 'sorters', [])
+
 
