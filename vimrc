@@ -10,6 +10,8 @@
 
 call plug#begin()
 Plug 'fatih/vim-go'
+Plug 'AndrewRadev/splitjoin.vim'
+Plug 'SirVer/ultisnips'
 call plug#end()
 
 " UI Config
@@ -78,4 +80,11 @@ autocmd FileType go nmap <leader>c <Plug>(go-coverage-toggle)
 autocmd FileType go nmap <leader>C <Plug>(go-coverage-browser)
 
 let g:go_fmt_command = "goimports"
-
+let g:go_fmt_fail_silently = 1
+let g:go_highlight_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_extra_types = 1
+let g:go_highlight_build_constraints = 1
