@@ -55,14 +55,13 @@ let mapleader=","
 nnoremap <leader><space> :nohlsearch<CR>
 
 " Go Language
-au BufRead,BufNewFile *.go set filetype=go
 set autowrite
 map <C-n> :cnext<CR>
 map <C-m> :cprevious<CR>
 nnoremap <leader>a :cclose<CR>
 " autocmd FileType go nmap <leader>b :GoBuild<CR>
-autocmd FileType go nmap <leader>r :GoRun<CR>
-autocmd FileType go nmap <leader>t :GoTest<CR>
+autocmd FileType go nmap <leader>r <Plug>(go-run)
+autocmd FileType go nmap <leader>t <Plug>(go-test)
 
 " run :GoBuild or :GoTestCompile based on the go file
 function! s:build_go_files()
@@ -75,7 +74,8 @@ function! s:build_go_files()
 endfunction
 
 autocmd FileType go nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
-autocmd FileType go nmap <leader>c :GoCoverageBrowser<CR>
+autocmd FileType go nmap <leader>c <Plug>(go-coverage-toggle)
+autocmd FileType go nmap <leader>C <Plug>(go-coverage-browser)
 
 let g:go_fmt_command = "goimports"
 
