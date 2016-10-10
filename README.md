@@ -9,6 +9,7 @@ I have installed [zsh](http://www.zsh.org/) and [oh-my-zsh](http://ohmyz.sh/).
 Vim stuff:
 - Color schemes: [badwolf](https://github.com/sjl/badwolf), [molokai](https://github.com/tomasr/molokai), [dracula](https://github.com/dracula/vim)
 - Language syntax: Scala, Go
+- Go development plugin for Vim: [vim-go](https://github.com/fatih/vim-go)
 
 ## Installation
 
