@@ -14,6 +14,7 @@ Plug 'AndrewRadev/splitjoin.vim'
 Plug 'SirVer/ultisnips'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'Shougo/neocomplete.vim'
+Plug 'rizzatti/dash.vim'
 call plug#end()
 
 " UI Config
