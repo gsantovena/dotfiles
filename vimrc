@@ -15,6 +15,11 @@ Plug 'SirVer/ultisnips'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'Shougo/neocomplete.vim'
 Plug 'rizzatti/dash.vim'
+Plug 'majutsushi/tagbar'
+Plug 'scrooloose/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'klen/python-mode'
+Plug 'Konfekt/FastFold'
 call plug#end()
 
 " UI Config
@@ -59,6 +64,9 @@ let mapleader=","
 " Shortcuts
 nnoremap <leader><space> :nohlsearch<CR>
 nnoremap <leader>o :only<CR>
+
+nmap <F8> :TagbarToggle<CR>
+nmap <F10> :NERDTreeToggle<CR>
 
 " vim-go
 set autowrite
