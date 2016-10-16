@@ -20,6 +20,7 @@ Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'klen/python-mode'
 Plug 'Konfekt/FastFold'
+Plug 'airblade/vim-rooter'
 call plug#end()
 
 " UI Config
