@@ -66,7 +66,7 @@ nnoremap <leader><space> :nohlsearch<CR>
 nnoremap <leader>o :only<CR>
 
 nmap <F8> :TagbarToggle<CR>
-nmap <F10> :NERDTreeToggle<CR>
+map <F10> :NERDTreeToggle<CR>
 
 " vim-go
 set autowrite
