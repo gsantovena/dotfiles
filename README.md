@@ -19,6 +19,8 @@ vim -c "PlugInstall" -c "qa"
 I use [neocomplete.vim](https://github.com/Shougo/neocomplete.vim) for completion.
 You will need Vim 7.3.885+ compiled with lua to use it.
 
+Another plugin I've started to use is 'majutsushi/tagbar'. This plugin will need 'ctags' installed.
+
 ## Installation
 
 I highly recommend to install [oh-my-zsh](http://ohmyz.sh/) first.
