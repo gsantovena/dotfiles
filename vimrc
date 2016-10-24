@@ -10,6 +10,7 @@
 
 call plug#begin()
 Plug 'fatih/vim-go'
+Plug 'derekwyatt/vim-scala'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'SirVer/ultisnips'
 Plug 'ctrlpvim/ctrlp.vim'
