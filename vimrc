@@ -21,6 +21,7 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'klen/python-mode'
 Plug 'Konfekt/FastFold'
 Plug 'airblade/vim-rooter'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 call plug#end()
 
 " UI Config

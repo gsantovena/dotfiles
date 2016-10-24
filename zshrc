@@ -22,3 +22,5 @@ plugins=(aws brew brew-cask docker docker-compose git go knife nmap osx pyenv te
 
 source $ZSH/oh-my-zsh.sh
 source $HOME/.bash_profile
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
