@@ -16,7 +16,24 @@ ZSH_THEME="intheloop"
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
 COMPLETION_WAITING_DOTS="true"
-plugins=(aws brew brew-cask docker docker-compose git go knife nmap osx pyenv terraform vagrant vault virtualenv)
+plugins=(
+    aws 
+    brew 
+    brew-cask 
+    docker 
+    docker-compose 
+    git 
+    go 
+    knife 
+    mvn 
+    nmap 
+    osx 
+    pyenv 
+    terraform 
+    vagrant 
+    vault 
+    virtualenv
+)
 
 # User configuration
 
