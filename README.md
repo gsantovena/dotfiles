@@ -41,3 +41,6 @@ This will create symlinks in your $HOME to the files listed in the variable 'fil
 - [oh-my-zsh](http://ohmyz.sh/)
 - [Mac CLI](https://github.com/guarinogabriel/Mac-CLI)
 - [m-cli](https://github.com/rgcr/m-cli)
+
+Also check the Plug section in the vimrc file for other requirements to have all Vim plugins working.
+
