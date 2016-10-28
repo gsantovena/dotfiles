@@ -22,6 +22,7 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'klen/python-mode'
 Plug 'Konfekt/FastFold'
 Plug 'airblade/vim-rooter'
+Plug 'JamshedVesuna/vim-markdown-preview'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 call plug#end()
 
@@ -47,6 +48,8 @@ filetype plugin indent on
 set t_Co=256
 colorscheme badwolf
 "colorscheme desert
+
+let vim_markdown_preview_github=1
 
 " Spaces & Tabs
 set backspace=2
