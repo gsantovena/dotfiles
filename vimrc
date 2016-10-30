@@ -24,6 +24,7 @@ Plug 'Konfekt/FastFold'
 Plug 'airblade/vim-rooter'
 Plug 'JamshedVesuna/vim-markdown-preview'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'tpope/vim-fugitive'
 call plug#end()
 
 " UI Config
