@@ -25,6 +25,7 @@ Plug 'airblade/vim-rooter'
 Plug 'JamshedVesuna/vim-markdown-preview'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'tpope/vim-fugitive'
+Plug 'hashivim/vim-terraform'
 call plug#end()
 
 " UI Config
