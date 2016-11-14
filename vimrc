@@ -23,6 +23,7 @@ Plug 'klen/python-mode'
 Plug 'Konfekt/FastFold'
 Plug 'airblade/vim-rooter'
 Plug 'JamshedVesuna/vim-markdown-preview'
+Plug 'xavierchow/vim-sequence-diagram'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'tpope/vim-fugitive'
 Plug 'hashivim/vim-terraform'
