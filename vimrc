@@ -53,6 +53,7 @@ colorscheme badwolf
 "colorscheme desert
 
 let vim_markdown_preview_github=1
+let g:generate_diagram_theme_hand=1
 
 " Spaces & Tabs
 set backspace=2
