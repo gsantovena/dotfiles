@@ -20,19 +20,28 @@ plugins=(
     aws 
     brew 
     brew-cask 
+    command-not-found
     docker 
     docker-compose 
     git 
+    github
+    gitignore
     go 
     knife 
+    knife_ssh
     mvn 
+    mosh
     nmap 
     osx 
     pyenv 
+    ssh-agent
     terraform 
+    thefuck
     vagrant 
     vault 
     virtualenv
+    web-search
+    z
 )
 
 # User configuration
