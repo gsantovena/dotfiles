@@ -37,11 +37,13 @@ This will create symlinks in your $HOME to the files listed in the variable 'fil
 - aws 
 - brew 
 - brew-cask 
-- command-not-found `brew tap homebrew/command-not-found`
+- command-not-found 
+    - `brew tap homebrew/command-not-found`
 - docker 
 - docker-compose 
 - git 
 - github
+    - `brew install hub`
 - gitignore
 - go 
 - knife 
