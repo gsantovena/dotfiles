@@ -33,6 +33,33 @@ cd ~/.dotfiles
 This will create symlinks in your $HOME to the files listed in the variable 'files' within the script.
 ![demo](https://raw.githubusercontent.com/gsantovena/dotfiles/master/dotfiles_s.gif)
 
+## ZSH Plugins I use
+- aws 
+- brew 
+- brew-cask 
+- command-not-found `brew tap homebrew/command-not-found`
+- docker 
+- docker-compose 
+- git 
+- github
+- gitignore
+- go 
+- knife 
+- knife_ssh
+- mvn 
+- mosh
+- nmap 
+- osx 
+- pyenv 
+- ssh-agent
+- terraform 
+- thefuck
+- vagrant 
+- vault 
+- virtualenv
+- web-search
+- z
+
 ## References
 - [Paul's dotfiles](https://github.com/paulirish/dotfiles)
 - [Mathias's dotfiles](https://github.com/mathiasbynens/dotfiles)
