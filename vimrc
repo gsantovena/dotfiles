@@ -27,6 +27,7 @@ Plug 'xavierchow/vim-sequence-diagram'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'tpope/vim-fugitive'
 Plug 'hashivim/vim-terraform'
+Plug 'vim-airline/vim-airline'
 call plug#end()
 
 " UI Config
@@ -42,6 +43,12 @@ set showcmd
 set showmatch
 set wildmenu
 set wildmode=list:longest,full
+
+" Tabs
+nnoremap <C-Left> :tabprevious<CR>
+nnoremap <C-Right> :tabnext<CR>
+nnoremap <silent> <A-Left> :execute 'silent! tabmove ' . (tabpagenr()-2)<CR>
+nnoremap <silent> <A-Right> :execute 'silent! tabmove ' . (tabpagenr()+1)<CR>
 
 " Colors
 syntax enable
@@ -144,4 +151,7 @@ let g:neocomplete#sources.go = ['omni']
 
 call neocomplete#custom#source('_', 'sorters', [])
 
+" vim-airline configurations
+set laststatus=2
+let g:airline#extensions#tabline#enabled = 1
 
