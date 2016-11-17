@@ -35,6 +35,7 @@ plugins=(
     osx 
     pyenv 
     ssh-agent
+    taskwarrior
     terraform 
     thefuck
     vagrant 

@@ -54,6 +54,10 @@ This will create symlinks in your $HOME to the files listed in the variable 'fil
 - osx 
 - pyenv 
 - ssh-agent
+- taskwarrior
+    - `brew install task`
+    - `brew install taskd`
+    - `brew install tasksh`
 - terraform 
 - thefuck
 - vagrant 
