@@ -154,4 +154,5 @@ call neocomplete#custom#source('_', 'sorters', [])
 " vim-airline configurations
 set laststatus=2
 let g:airline#extensions#tabline#enabled = 1
+let g:airline_powerline_fonts = 1
 
