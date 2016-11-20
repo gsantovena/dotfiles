@@ -16,11 +16,6 @@ Vim stuff:
 vim -c "PlugInstall" -c "qa"
 ```
 
-I use [neocomplete.vim](https://github.com/Shougo/neocomplete.vim) for completion.
-You will need Vim 7.3.885+ compiled with lua to use it.
-
-Another plugin I've started to use is 'majutsushi/tagbar'. This plugin will need 'ctags' installed.
-
 ## Installation
 
 I highly recommend to install [oh-my-zsh](http://ohmyz.sh/) first.
@@ -32,6 +27,11 @@ cd ~/.dotfiles
 ```
 This will create symlinks in your $HOME to the files listed in the variable 'files' within the script.
 ![demo](https://raw.githubusercontent.com/gsantovena/dotfiles/master/dotfiles_s.gif)
+
+Other considerations:
+- I use [neocomplete.vim](https://github.com/Shougo/neocomplete.vim) for completion.  You will need Vim 7.3.885+ compiled with lua to use it.
+- Another plugin I've started to use is [majutsushi/tagbar](https://github.com/majutsushi/tagbar). This plugin will need `ctags` installed.
+- To have the cool themes for Vim and Oh-My-Zsh, you will need to install [powerline/fonts](https://github.com/powerline/fonts).
 
 ## ZSH Plugins I use
 - aws 
