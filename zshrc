@@ -23,6 +23,7 @@ plugins=(
     command-not-found
     docker 
     docker-compose 
+    dotenv
     git 
     github
     gitignore
