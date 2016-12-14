@@ -18,6 +18,10 @@ if [ -x /usr/local/bin/fortune ]; then
 	echo
 fi
 
+if [ -x /usr/local/bin/git-tip ]; then
+    git-tip
+fi
+
 if [[ -n "$ZSH_VERSION" ]]; then
     return 1 2> /dev/null || exit 1;
 fi;
