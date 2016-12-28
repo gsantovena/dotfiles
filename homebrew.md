@@ -133,17 +133,18 @@ zsh
 
 ```
 atom
+blender
 chefdk
 dash
 diffmerge
 dotnet
 eclipse-java
 filezilla
+flycut
 gimp
 google-chrome
 imageoptim
 iterm2
-jumpcut
 limechat
 nextiva
 ngrok
