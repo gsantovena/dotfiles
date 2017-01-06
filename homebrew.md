@@ -162,6 +162,7 @@ vlc
 
 ```
 caskroom/cask
+caskroom/fonts
 homebrew/command-not-found
 homebrew/core
 ```
