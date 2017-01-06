@@ -20,7 +20,7 @@ plugins=(
     aws 
     brew 
     brew-cask 
-    command-not-found
+    common-aliases
     docker 
     docker-compose 
     dotenv
@@ -36,7 +36,6 @@ plugins=(
     osx 
     pyenv 
     ssh-agent
-    taskwarrior
     terraform 
     thefuck
     vagrant 
