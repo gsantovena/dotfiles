@@ -51,3 +51,4 @@ source $ZSH/oh-my-zsh.sh
 source $HOME/.bash_profile
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+zstyle :omz:plugins:ssh-agent agent-forwarding on
