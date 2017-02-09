@@ -62,6 +62,7 @@ chefdk
 dash
 dotnet
 flycut
+font-hack
 google-chrome
 grammarly
 imageoptim
