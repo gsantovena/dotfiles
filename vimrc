@@ -45,6 +45,7 @@ set showmatch
 set title
 set wildmenu
 set wildmode=list:longest,full
+set showbreak=↪
 
 " Tabs
 nnoremap <C-Left> :tabprevious<CR>
