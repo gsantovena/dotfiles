@@ -62,8 +62,10 @@ set t_Co=256
 colorscheme badwolf
 "colorscheme desert
 
+let vim_markdown_preview_toggle=2
 let vim_markdown_preview_github=1
 let vim_markdown_preview_browser='Google Chrome'
+
 let g:generate_diagram_theme_hand=1
 
 " Spaces & Tabs
