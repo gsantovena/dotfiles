@@ -62,7 +62,7 @@ set t_Co=256
 colorscheme badwolf
 "colorscheme desert
 
-let vim_markdown_preview_toggle=2
+"let vim_markdown_preview_toggle=1
 let vim_markdown_preview_github=1
 let vim_markdown_preview_browser='Google Chrome'
 
