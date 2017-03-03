@@ -29,6 +29,7 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'tpope/vim-fugitive'
 Plug 'hashivim/vim-terraform'
 Plug 'vim-airline/vim-airline'
+Plug 'tpope/vim-surround'
 call plug#end()
 
 " UI Config
