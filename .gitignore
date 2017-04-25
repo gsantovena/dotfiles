@@ -1,4 +1,5 @@
 .DS_Store
 .netrwhist
 secrets
+vim/autoload/plug.vim.old
 vim/plugged/*
