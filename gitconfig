@@ -10,6 +10,7 @@
 	ui = auto
 [alias]
 	lga = log --graph --oneline --all --decorate
+	undo = "!f() { git reset --hard $(git rev-parse --abbrev-ref HEAD)@{${1-1}}; }; f"
 [merge]
 	tool = p4merge
 [mergetool]
