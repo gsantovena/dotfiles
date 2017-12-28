@@ -30,6 +30,7 @@ plugins=(
     go 
     knife 
     knife_ssh
+    kubectl
     mvn 
     mosh
     nmap 
