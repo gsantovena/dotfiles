@@ -3,3 +3,4 @@
 secrets
 vim/autoload/plug.vim.old
 vim/plugged/*
+vim/thesaurus/*

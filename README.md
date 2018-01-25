@@ -89,6 +89,7 @@ Restore: `apm install --packages-file atom-packages.list`
 - [oh-my-zsh](http://ohmyz.sh/)
 - [Mac CLI](https://github.com/guarinogabriel/Mac-CLI)
 - [m-cli](https://github.com/rgcr/m-cli)
+- [mthesaur.txt](http://www.gutenberg.org/files/3202/files/mthesaur.txt)
 
 Also check the Plug section in the vimrc file for other requirements to have all Vim plugins working.
 
