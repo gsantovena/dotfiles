@@ -11,6 +11,7 @@
 [alias]
 	lga = log --graph --oneline --all --decorate
 	undo = "!f() { git reset --hard $(git rev-parse --abbrev-ref HEAD)@{${1-1}}; }; f"
+    newbug = "!sh -c 'git checkout -b $1 origin/master && git config branch.$1.merge refs/heads/$1' -"
 [merge]
 	tool = p4merge
 [mergetool]
