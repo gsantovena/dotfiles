@@ -1,3 +1,5 @@
+[init]
+    templatedir = ~/.git/templates
 [user]
 	email = gsantovena@gmail.com
 	name = Gerardo Santoveña
