@@ -22,7 +22,7 @@ Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'klen/python-mode'
 Plug 'Konfekt/FastFold'
-"Plug 'airblade/vim-rooter'
+Plug 'airblade/vim-rooter'
 Plug 'JamshedVesuna/vim-markdown-preview'
 Plug 'xavierchow/vim-sequence-diagram'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -97,6 +97,9 @@ let g:UltiSnipsExpandTrigger="<tab>"
 "let g:UltiSnipsJumpForwardTrigger="<c-b>"
 "let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 let g:UltiSnipsEditSplit="vertical"
+
+" vim-rooter
+let g:rooter_change_directory_for_non_project_files = 'current'
 
 " vim-go
 set autowrite
