@@ -110,6 +110,7 @@ let g:UltiSnipsEditSplit="vertical"
 
 " root.vim
 let g:root#auto = 1
+let g:root#echo = 0
 
 " vim-go
 set autowrite
