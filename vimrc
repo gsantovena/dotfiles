@@ -22,7 +22,6 @@ Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'klen/python-mode'
 Plug 'Konfekt/FastFold'
-"Plug 'airblade/vim-rooter'
 Plug 'dylanaraps/root.vim'
 Plug 'JamshedVesuna/vim-markdown-preview'
 Plug 'xavierchow/vim-sequence-diagram'
@@ -33,14 +32,14 @@ Plug 'vim-airline/vim-airline'
 Plug 'tpope/vim-surround'
 call plug#end()
 
+" UI Config
+set nocompatible " get rid of Vi compatibility mode. SET FIRST!
+
 " Automatically reloads on vimrc changes
 augroup myvimrc
     au!
     au BufWritePost .vimrc,_vimrc,vimrc,.gvimrc,_gvimrc,gvimrc so $MYVIMRC | if has('gui_running') | so $MYGVIMRC | endif
 augroup END
-
-" UI Config
-set nocompatible " get rid of Vi compatibility mode. SET FIRST!
 
 set autoindent
 set cursorline
@@ -104,9 +103,6 @@ let g:UltiSnipsExpandTrigger="<tab>"
 "let g:UltiSnipsJumpForwardTrigger="<c-b>"
 "let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 let g:UltiSnipsEditSplit="vertical"
-
-" vim-rooter
-"let g:rooter_change_directory_for_non_project_files = 'current'
 
 " root.vim
 let g:root#auto = 1
