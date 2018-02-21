@@ -78,6 +78,6 @@ n() {
 }
 
 nls() {
-    ls -c ~/notes/ | grep "$*"
+    ls -c ~/notes/ | grep -i "$*"
 }
 
