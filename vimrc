@@ -41,6 +41,14 @@ augroup myvimrc
     au BufWritePost .vimrc,_vimrc,vimrc,.gvimrc,_gvimrc,gvimrc so $MYVIMRC | if has('gui_running') | so $MYGVIMRC | endif
 augroup END
 
+" Persistent Undo
+let s:undoDir = "/tmp/.undodir_" . $USER
+if !isdirectory(s:undoDir)
+    call mkdir(s:undoDir, "", 0700)
+endif
+let &undodir=s:undoDir
+set undofile
+
 set autoindent
 set cursorline
 set foldmethod=marker
@@ -94,6 +102,12 @@ let mapleader=","
 " Shortcuts
 nnoremap <leader><space> :nohlsearch<CR>
 nnoremap <leader>o :only<CR>
+
+noremap + <C-a>
+noremap - <C-x>
+
+xnoremap + g<C-a>
+xnoremap - g<C-x>
 
 nmap <F8> :TagbarToggle<CR>
 map <F10> :NERDTreeToggle<CR>
