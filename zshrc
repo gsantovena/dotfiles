@@ -54,3 +54,6 @@ source $HOME/.bash_profile
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 zstyle :omz:plugins:ssh-agent agent-forwarding on
+
+source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc'
+source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'
