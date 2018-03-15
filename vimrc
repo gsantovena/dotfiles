@@ -30,6 +30,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'hashivim/vim-terraform'
 Plug 'vim-airline/vim-airline'
 Plug 'tpope/vim-surround'
+Plug 'aquach/vim-http-client'
 call plug#end()
 
 " UI Config
