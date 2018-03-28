@@ -15,12 +15,11 @@ Plug 'AndrewRadev/splitjoin.vim'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'ctrlpvim/ctrlp.vim'
-Plug 'Shougo/neocomplete.vim'
 Plug 'rizzatti/dash.vim'
 Plug 'majutsushi/tagbar'
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'klen/python-mode'
+Plug 'python-mode/python-mode'
 Plug 'Konfekt/FastFold'
 Plug 'dylanaraps/root.vim'
 Plug 'JamshedVesuna/vim-markdown-preview'
@@ -31,6 +30,14 @@ Plug 'hashivim/vim-terraform'
 Plug 'vim-airline/vim-airline'
 Plug 'tpope/vim-surround'
 Plug 'aquach/vim-http-client'
+
+if has('nvim')
+    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+    Plug 'Shougo/deoplete.nvim'
+    Plug 'roxma/nvim-yarp'
+    Plug 'roxma/vim-hug-neovim-rpc'
+endif
 call plug#end()
 
 " UI Config
@@ -187,7 +194,10 @@ endif
 let g:neocomplete#sources._ = ['buffer', 'member', 'tag', 'file', 'dictionary']
 let g:neocomplete#sources.go = ['omni']
 
-call neocomplete#custom#source('_', 'sorters', [])
+"call neocomplete#custom#source('_', 'sorters', [])
+let g:deoplete#enable_at_startup = 1
+
+let g:pymode_python = 'python3'
 
 " vim-airline configurations
 set laststatus=2
