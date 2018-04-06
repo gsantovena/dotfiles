@@ -32,3 +32,6 @@ fi
 
 complete -C aws_completer aws
 
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+
