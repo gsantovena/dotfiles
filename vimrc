@@ -120,6 +120,8 @@ xnoremap - g<C-x>
 nmap <F8> :TagbarToggle<CR>
 map <F10> :NERDTreeToggle<CR>
 
+cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
+
 " UltiSnips Configuration
 let g:UltiSnipsExpandTrigger="<tab>"
 "let g:UltiSnipsJumpForwardTrigger="<c-b>"
