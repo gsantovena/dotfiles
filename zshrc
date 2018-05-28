@@ -55,5 +55,9 @@ source $HOME/.bash_profile
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 zstyle :omz:plugins:ssh-agent agent-forwarding on
 
-source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc'
-source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'
+GCP_ZSH_PATH='/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc'
+GCP_COMPLETION='/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'
+
+[ -f $GCP_ZSH_PATH ] && source $GCP_ZSH_PATH
+[ -f $GCP_COMPLETION ] && source $GCP_COMPLETION
+
