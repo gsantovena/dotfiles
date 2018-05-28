@@ -15,7 +15,7 @@ alias hosts='sudo $EDITOR /etc/hosts'
 
 alias vi='vim'
 
-alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
+alias myip="dig +short myip.opendns.com @resolver1.opendns.com"
 
 alias cleanup_dsstore="find . -name '*.DS_Store' -type f -ls -delete"
 alias diskspace_report="df -P -kHl"
