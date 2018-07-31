@@ -82,6 +82,7 @@ syntax enable
 "filetype plugin on
 filetype plugin indent on
 set t_Co=256
+"colorscheme zenburn
 colorscheme badwolf
 "colorscheme desert
 
