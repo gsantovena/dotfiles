@@ -25,12 +25,14 @@ plugins=(
     docker-compose 
     dotenv
     git 
+    git-prompt
     github
     gitignore
     go 
     knife 
     knife_ssh
     kubectl
+    minikube
     mvn 
     mosh
     nmap 
