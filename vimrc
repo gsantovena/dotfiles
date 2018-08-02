@@ -8,6 +8,9 @@
 " https://github.com/michaeljsmalley/dotfiles
 "---------------------------------------------
 
+" UI Config
+set nocompatible " get rid of Vi compatibility mode. SET FIRST!
+
 call plug#begin()
 Plug 'fatih/vim-go'
 Plug 'derekwyatt/vim-scala'
@@ -39,9 +42,6 @@ else
     Plug 'roxma/vim-hug-neovim-rpc'
 endif
 call plug#end()
-
-" UI Config
-set nocompatible " get rid of Vi compatibility mode. SET FIRST!
 
 " Automatically reloads on vimrc changes
 augroup myvimrc
