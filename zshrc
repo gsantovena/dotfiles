@@ -43,6 +43,7 @@ plugins=(
     terraform 
     thefuck
     vagrant 
+    vagrant-prompt
     vault 
     virtualenv
     web-search
