@@ -22,7 +22,7 @@ Plug 'rizzatti/dash.vim'
 Plug 'majutsushi/tagbar'
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'python-mode/python-mode'
+Plug 'python-mode/python-mode', { 'branch': 'develop' }
 Plug 'Konfekt/FastFold'
 Plug 'dylanaraps/root.vim'
 Plug 'JamshedVesuna/vim-markdown-preview'
