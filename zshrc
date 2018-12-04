@@ -43,9 +43,11 @@ plugins=(
     osx 
     pyenv 
     ssh-agent
+    systemadmin
     taskwarrior
     terraform 
     thefuck
+    transfer
     vagrant 
     vagrant-prompt
     vault 
@@ -68,3 +70,4 @@ GCP_COMPLETION='/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/com
 [ -f $GCP_ZSH_PATH ] && source $GCP_ZSH_PATH
 [ -f $GCP_COMPLETION ] && source $GCP_COMPLETION
 
+export PATH="/usr/local/opt/ruby/bin:$PATH"
