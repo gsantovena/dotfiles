@@ -43,6 +43,7 @@ plugins=(
     osx 
     pyenv 
     ssh-agent
+    sudo
     systemadmin
     taskwarrior
     terraform 
