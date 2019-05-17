@@ -23,7 +23,6 @@ COMPLETION_WAITING_DOTS="true"
 plugins=(
     aws 
     brew 
-    brew-cask 
     common-aliases
     docker 
     docker-compose 
