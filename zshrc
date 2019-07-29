@@ -2,12 +2,13 @@
 export ZSH=$HOME/.oh-my-zsh
 # export UPDATE_ZSH_DAYS=13
 
-ZSH_THEME="robbyrussell"
-ZSH_THEME="intheloop"
 ZSH_THEME="nanotech"
 ZSH_THEME="arrow"
 ZSH_THEME="clean"
+ZSH_THEME="intheloop"
+ZSH_THEME="robbyrussell"
 ZSH_THEME="cypher"
+ZSH_THEME="af-magic"
 
 # CASE_SENSITIVE="true"
 # HYPHEN_INSENSITIVE="true"
