@@ -33,6 +33,7 @@ Plug 'hashivim/vim-terraform'
 Plug 'vim-airline/vim-airline'
 Plug 'tpope/vim-surround'
 Plug 'aquach/vim-http-client'
+Plug 'rodjek/vim-puppet'
 
 if has('nvim')
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
