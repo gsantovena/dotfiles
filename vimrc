@@ -11,6 +11,8 @@
 " UI Config
 set nocompatible " get rid of Vi compatibility mode. SET FIRST!
 
+set encoding=utf-8
+
 call plug#begin()
 Plug 'fatih/vim-go'
 Plug 'derekwyatt/vim-scala'
