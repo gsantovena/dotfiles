@@ -32,7 +32,7 @@ plugins=(
     git-prompt
     github
     gitignore
-    go 
+    golang
     knife 
     knife_ssh
     kubectl
