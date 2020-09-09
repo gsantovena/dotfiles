@@ -36,6 +36,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'tpope/vim-surround'
 Plug 'aquach/vim-http-client'
 Plug 'rodjek/vim-puppet'
+Plug 'nathanaelkane/vim-indent-guides'
 
 if has('nvim')
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
