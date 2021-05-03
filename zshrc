@@ -6,9 +6,9 @@ ZSH_THEME="nanotech"
 ZSH_THEME="arrow"
 ZSH_THEME="clean"
 ZSH_THEME="intheloop"
-ZSH_THEME="robbyrussell"
 ZSH_THEME="cypher"
 ZSH_THEME="af-magic"
+ZSH_THEME="robbyrussell"
 
 # CASE_SENSITIVE="true"
 # HYPHEN_INSENSITIVE="true"
@@ -40,7 +40,6 @@ plugins=(
     mvn 
     mosh
     nmap 
-    osx 
     pyenv 
     ssh-agent
     sudo
@@ -49,6 +48,7 @@ plugins=(
     terraform 
     thefuck
     transfer
+    ubuntu
     vagrant 
     vagrant-prompt
     vault 
