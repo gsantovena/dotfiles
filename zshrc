@@ -23,7 +23,7 @@ ZSH_THEME="robbyrussell"
 COMPLETION_WAITING_DOTS="true"
 plugins=(
     aws 
-    brew 
+    bundler
     common-aliases
     docker 
     docker-compose 
@@ -53,6 +53,7 @@ plugins=(
     vagrant-prompt
     vault 
     virtualenv
+    virtualenvwrapper
     web-search
     z
 )
@@ -64,6 +65,9 @@ source $HOME/.bash_profile
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 zstyle :omz:plugins:ssh-agent agent-forwarding on
+
+# Pythian
+zstyle :omz:plugins:ssh-agent identities id_rsa tinyco-gsantovena
 
 GCP_ZSH_PATH='/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc'
 GCP_COMPLETION='/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'
