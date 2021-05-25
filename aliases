@@ -32,3 +32,6 @@ alias emptytrash=" \
     rm -rv \"/Users/${USERNAME}/Library/Application Support/stremio/stremio-cache\" \
 "
 
+alias pbcopy='xclip -selection clipboard'
+alias pbpaste='xclip -selection clipboard -o'
+
