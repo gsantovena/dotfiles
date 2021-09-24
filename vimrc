@@ -24,7 +24,8 @@ Plug 'rizzatti/dash.vim'
 Plug 'majutsushi/tagbar'
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'python-mode/python-mode', { 'branch': 'develop' }
+Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
+Plug 'davidhalter/jedi-vim'
 Plug 'Konfekt/FastFold'
 Plug 'dylanaraps/root.vim'
 Plug 'JamshedVesuna/vim-markdown-preview'
