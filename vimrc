@@ -14,30 +14,31 @@ set nocompatible " get rid of Vi compatibility mode. SET FIRST!
 set encoding=utf-8
 
 call plug#begin()
-Plug 'fatih/vim-go'
-Plug 'derekwyatt/vim-scala'
+Plug 'airblade/vim-gitgutter'
 Plug 'AndrewRadev/splitjoin.vim'
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'rizzatti/dash.vim'
-Plug 'majutsushi/tagbar'
-Plug 'scrooloose/nerdtree'
-Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
-Plug 'davidhalter/jedi-vim'
-Plug 'Konfekt/FastFold'
-Plug 'dylanaraps/root.vim'
-Plug 'JamshedVesuna/vim-markdown-preview'
-Plug 'xavierchow/vim-sequence-diagram'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'tpope/vim-fugitive'
-Plug 'hashivim/vim-terraform'
-Plug 'vim-airline/vim-airline'
-Plug 'tpope/vim-surround'
 Plug 'aquach/vim-http-client'
-Plug 'rodjek/vim-puppet'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'davidhalter/jedi-vim'
+Plug 'derekwyatt/vim-scala'
+Plug 'dylanaraps/root.vim'
+Plug 'fatih/vim-go'
+Plug 'hashivim/vim-terraform'
+Plug 'honza/vim-snippets'
+Plug 'JamshedVesuna/vim-markdown-preview'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'Konfekt/FastFold'
+Plug 'majutsushi/tagbar'
 Plug 'nathanaelkane/vim-indent-guides'
+Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
+Plug 'rizzatti/dash.vim'
+Plug 'rodjek/vim-puppet'
+Plug 'scrooloose/nerdtree'
+Plug 'SirVer/ultisnips'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-surround'
+Plug 'vim-airline/vim-airline'
+Plug 'xavierchow/vim-sequence-diagram'
+Plug 'Xuyuanp/nerdtree-git-plugin'
 
 if has('nvim')
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
