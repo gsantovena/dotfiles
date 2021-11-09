@@ -33,6 +33,7 @@ plugins=(
     github
     gitignore
     golang
+    helm
     knife 
     knife_ssh
     kubectl
@@ -58,16 +59,10 @@ plugins=(
     z
 )
 
-# User configuration
-
-source $ZSH/oh-my-zsh.sh
-source $HOME/.bash_profile
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 zstyle :omz:plugins:ssh-agent agent-forwarding on
 
 # Pythian
-zstyle :omz:plugins:ssh-agent identities id_rsa tinyco-gsantovena
+zstyle :omz:plugins:ssh-agent identities id_rsa id_rsa_pythian
 
 GCP_ZSH_PATH='/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc'
 GCP_COMPLETION='/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'
@@ -76,3 +71,8 @@ GCP_COMPLETION='/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/com
 [ -f $GCP_COMPLETION ] && source $GCP_COMPLETION
 
 export PATH="/usr/local/opt/ruby/bin:$PATH"
+
+source $ZSH/oh-my-zsh.sh
+source $HOME/.bash_profile
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
