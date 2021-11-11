@@ -1,6 +1,10 @@
 [init]
     templatedir = ~/.git/templates
 
+[user]
+    email = "gsantovena@gmail.com"
+    name = "Gerardo Santoveña"
+
 [includeIf "gitdir:~/Documents/Learning/"]
     path = ~/.gitconfig-personal
 
