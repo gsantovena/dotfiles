@@ -1,0 +1,10 @@
+[user]
+	email = gsantovena@gmail.com
+	name = Gerardo Santoveña
+
+[github]
+    user = "gsantovena"
+
+[core]
+    sshCommand = "ssh -i ~/.ssh/id_rsa"
+

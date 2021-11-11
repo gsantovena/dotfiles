@@ -1,15 +1,19 @@
 [init]
     templatedir = ~/.git/templates
-[user]
-	email = gsantovena@gmail.com
-	name = Gerardo Santoveña
+
+[includeIf "gitdir:~/Documents/Learning/"]
+    path = ~/.gitconfig-personal
+
 [core]
 	editor = vim
 	autocrlf = input
+
 [help]
 	autocorrect = 1
+
 [color]
 	ui = auto
+
 [alias]
 	lga = log --graph --oneline --all --decorate
 	undo = "!f() { git reset --hard $(git rev-parse --abbrev-ref HEAD)@{${1-1}}; }; f"
@@ -18,13 +22,17 @@
 	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
 	pr = "!f() { git fetch -fu ${2:-upstream} refs/pull/$1/head:pr/$1 && git checkout pr/$1; }; f"
 	pr-clean = "!git checkout master ; git for-each-ref refs/heads/pr/* --format=\"%(refname)\" | while read ref ; do branch=${ref#refs/heads/} ; git branch -D $branch ; done"
+
 [diff]
 	tool = vimdiff
+
 [merge]
 	tool = vimdiff
+
 [mergetool]
 	keepTemporaries = false
 	prompt = false
+
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
