@@ -9,6 +9,7 @@ ZSH_THEME="intheloop"
 ZSH_THEME="cypher"
 ZSH_THEME="af-magic"
 ZSH_THEME="robbyrussell"
+ZSH_THEME="steeef"
 
 # CASE_SENSITIVE="true"
 # HYPHEN_INSENSITIVE="true"
