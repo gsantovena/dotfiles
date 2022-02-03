@@ -9,6 +9,7 @@ ZSH_THEME="intheloop"
 ZSH_THEME="robbyrussell"
 ZSH_THEME="cypher"
 ZSH_THEME="af-magic"
+ZSH_THEME="steeef"
 
 # CASE_SENSITIVE="true"
 # HYPHEN_INSENSITIVE="true"
@@ -23,6 +24,7 @@ ZSH_THEME="af-magic"
 COMPLETION_WAITING_DOTS="true"
 plugins=(
     aws 
+    bundler
     brew 
     common-aliases
     docker 
@@ -33,19 +35,19 @@ plugins=(
     github
     gitignore
     golang
+    helm
     knife 
     knife_ssh
     kubectl
+    macos
     minikube
     mvn 
     mosh
     nmap 
-    osx 
     pyenv 
     ssh-agent
     sudo
     systemadmin
-    taskwarrior
     terraform 
     thefuck
     transfer
@@ -53,6 +55,7 @@ plugins=(
     vagrant-prompt
     vault 
     virtualenv
+    virtualenvwrapper
     web-search
     z
 )
@@ -71,4 +74,12 @@ GCP_COMPLETION='/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/com
 [ -f $GCP_ZSH_PATH ] && source $GCP_ZSH_PATH
 [ -f $GCP_COMPLETION ] && source $GCP_COMPLETION
 
-export PATH="/usr/local/opt/ruby/bin:$PATH"
+# ----------------
+# rbenv
+# ----------------
+eval "$(rbenv init -)"
+
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"

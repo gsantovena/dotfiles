@@ -205,6 +205,7 @@ let g:neocomplete#sources.go = ['omni']
 let g:deoplete#enable_at_startup = 1
 
 let g:pymode_python = 'python3'
+set pyxversion=3
 
 " vim-airline configurations
 set laststatus=2
