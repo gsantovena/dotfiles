@@ -58,6 +58,7 @@ plugins=(
     virtualenvwrapper
     web-search
     z
+    zsh-autosuggestions
 )
 
 # User configuration
