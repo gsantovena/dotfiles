@@ -27,6 +27,7 @@ plugins=(
     bundler
     brew 
     common-aliases
+    copypath
     docker 
     docker-compose 
     dotenv
@@ -45,6 +46,8 @@ plugins=(
     mosh
     nmap 
     pyenv 
+    rbenv
+    ruby
     ssh-agent
     sudo
     systemadmin
@@ -80,6 +83,9 @@ GCP_COMPLETION='/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/com
 # ----------------
 eval "$(rbenv init -)"
 
+export NVM_DIR="$HOME/.nvm"
+[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
