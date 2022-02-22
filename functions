@@ -12,14 +12,14 @@ brew-cask-upgrade() {
     echo "Running brew update" 
     brew update 
   fi 
-  for c in $(brew cask list); do 
+  for c in $(brew list --cask); do 
     echo -e "\n\nInstalled versions of $c: " 
-    ls /usr/local/Caskroom/$c 
+    ls /opt/homebrew/Caskroom/$c 
     echo "Cask info for $c" 
-    brew cask info $c 
+    brew info --cask $c 
     select ynx in "Yes" "No" "Exit"; do  
       case $ynx in 
-        "Yes") echo "Reinstalling $c"; brew cask reinstall --force "$c"; break;; 
+        "Yes") echo "Reinstalling $c"; brew reinstall --cask --force "$c"; break;; 
         "No") echo "Skipping $c"; break;; 
         "Exit") echo "Exiting brew-cask-upgrade"; return;; 
       esac 
