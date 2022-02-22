@@ -1,7 +1,7 @@
 [init]
     templatedir = ~/.git/templates
 [user]
-	email = gsantovena@gmail.com
+	email = gerardo.santovena@nfl.com
 	name = Gerardo Santoveña
 [core]
 	editor = vim
@@ -13,10 +13,10 @@
 [alias]
 	lga = log --graph --oneline --all --decorate
 	undo = "!f() { git reset --hard $(git rev-parse --abbrev-ref HEAD)@{${1-1}}; }; f"
-    newbug = "!sh -c 'git checkout -b $1 origin/master && git config branch.$1.merge refs/heads/$1' -"
+    newbug = "!sh -c 'git checkout -b $1 origin/main && git config branch.$1.merge refs/heads/$1' -"
 	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
 	pr = "!f() { git fetch -fu ${2:-upstream} refs/pull/$1/head:pr/$1 && git checkout pr/$1; }; f"
-	pr-clean = "!git checkout master ; git for-each-ref refs/heads/pr/* --format=\"%(refname)\" | while read ref ; do branch=${ref#refs/heads/} ; git branch -D $branch ; done"
+	pr-clean = "!git checkout main ; git for-each-ref refs/heads/pr/* --format=\"%(refname)\" | while read ref ; do branch=${ref#refs/heads/} ; git branch -D $branch ; done"
 [merge]
 	tool = p4merge
 [mergetool]
@@ -27,3 +27,5 @@
 	smudge = git-lfs smudge -- %f
 	required = true
 	process = git-lfs filter-process
+[url "git@github.dm.nfl.com:"]
+	insteadOf = https://github.dm.nfl.com/
