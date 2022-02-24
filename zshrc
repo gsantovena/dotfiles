@@ -59,6 +59,7 @@ plugins=(
     vault 
     virtualenv
     virtualenvwrapper
+    vscode
     web-search
     z
     zsh-autosuggestions
