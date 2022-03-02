@@ -226,3 +226,4 @@ func! WordProcessorMode()
 endfu
 com! WP call WordProcessorMode()
 
+com! FormatJSON %!python -m json.tool
