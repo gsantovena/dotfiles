@@ -31,6 +31,7 @@ plugins=(
     docker 
     docker-compose 
     dotenv
+    gh
     git 
     git-prompt
     github
