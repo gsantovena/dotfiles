@@ -19,7 +19,7 @@ brew-cask-upgrade() {
     brew info --cask $c 
     select ynx in "Yes" "No" "Exit"; do  
       case $ynx in 
-        "Yes") echo "Reinstalling $c"; brew reinstall --cask --force "$c"; break;; 
+        "Yes") echo "Upgrading $c"; brew upgrade --cask "$c"; break;; 
         "No") echo "Skipping $c"; break;; 
         "Exit") echo "Exiting brew-cask-upgrade"; return;; 
       esac 
