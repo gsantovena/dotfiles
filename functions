@@ -14,7 +14,7 @@ brew-cask-upgrade() {
   fi 
   for c in $(brew list --cask); do 
     echo -e "\n\nInstalled versions of $c: " 
-    ls /opt/homebrew/Caskroom/$c 
+    ls $(brew --prefix)/Caskroom/$c 
     echo "Cask info for $c" 
     brew info --cask $c 
     select ynx in "Yes" "No" "Exit"; do  
