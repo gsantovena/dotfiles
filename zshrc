@@ -26,6 +26,7 @@ plugins=(
     aws 
     bundler
     brew 
+    colorize
     common-aliases
     copypath
     docker 
