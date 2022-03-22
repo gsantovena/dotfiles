@@ -108,6 +108,8 @@ set tabstop=4
 " Searching
 set hlsearch
 set incsearch
+set ignorecase
+set smartcase
 
 " Leader Shortcut
 let mapleader=","
