@@ -1,7 +1,7 @@
 export HISTCONTROL=ignoreboth:erasedups
 
 export GOPATH=$HOME/Projects/Go
-export PATH=$PATH:$GOPATH/bin:/usr/local/sbin:/usr/local/opt/python@2/bin
+export PATH=$PATH:$GOPATH/bin:/usr/local/sbin:/usr/local/opt/python@2/bin:$HOME/bin:$HOME/.krew/bin:$HOME/.cargo/bin
 
 export EDITOR="vim"
 export MANPAGER="less -X"
