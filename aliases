@@ -32,3 +32,4 @@ alias emptytrash=" \
     rm -rv \"/Users/${USERNAME}/Library/Application Support/stremio/stremio-cache\" \
 "
 
+alias vault-login='export VAULT_TOKEN=$(vault login -method=ldap username=$USERNAME -format=json | jq -r .auth.client_token) && export COACH_VAULT_TOKEN=$VAULT_TOKEN && export SECRET_ID_GENERATOR_CLIENT_TOKEN=$VAULT_TOKEN && echo logged in and VAULT_TOKEN, COACH_VAULT_TOKEN, and SECRET_ID_GENERATOR_CLIENT_TOKEN have been set'
