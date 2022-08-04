@@ -1,5 +1,6 @@
 [init]
     templatedir = ~/.git/templates
+	defaultBranch = main
 [user]
 	email = gerardo.santovena@nfl.com
 	name = Gerardo Santoveña
