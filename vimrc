@@ -39,24 +39,24 @@ Plug 'rodjek/vim-puppet'
 Plug 'nathanaelkane/vim-indent-guides'
 
 if has('nvim')
-    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 else
-    Plug 'Shougo/deoplete.nvim'
-    Plug 'roxma/nvim-yarp'
-    Plug 'roxma/vim-hug-neovim-rpc'
+  Plug 'Shougo/deoplete.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
 endif
 call plug#end()
 
 " Automatically reloads on vimrc changes
 augroup myvimrc
-    au!
-    au BufWritePost .vimrc,_vimrc,vimrc,.gvimrc,_gvimrc,gvimrc so $MYVIMRC | if has('gui_running') | so $MYGVIMRC | endif
+  au!
+  au BufWritePost .vimrc,_vimrc,vimrc,.gvimrc,_gvimrc,gvimrc so $MYVIMRC | if has('gui_running') | so $MYGVIMRC | endif
 augroup END
 
 " Persistent Undo
 let s:undoDir = "/tmp/.undodir_" . $USER
 if !isdirectory(s:undoDir)
-    call mkdir(s:undoDir, "", 0700)
+  call mkdir(s:undoDir, "", 0700)
 endif
 let &undodir=s:undoDir
 set undofile
@@ -99,11 +99,11 @@ let g:generate_diagram_theme_hand=1
 " Spaces & Tabs
 set backspace=2
 set expandtab
-set shiftwidth=4
+set shiftwidth=2
 set shiftround
 set smarttab
-set softtabstop=4
-set tabstop=4
+set softtabstop=2
+set tabstop=2
 
 " Searching
 set hlsearch
@@ -162,33 +162,33 @@ nmap <C-g> :GoDeclsDir<CR>
 imap <C-g> <ESC>:<C-u>GoDeclsDir<CR>
 
 augroup go
-    autocmd!
+  autocmd!
 
-    autocmd FileType go nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
-    autocmd FileType go nmap <leader>t <Plug>(go-test)
-    autocmd FileType go nmap <leader>r <Plug>(go-run)
-    autocmd FileType go nmap <leader>d <Plug>(go-doc)
-    autocmd FileType go nmap <leader>c <Plug>(go-coverage-toggle)
-    autocmd FileType go nmap <leader>C <Plug>(go-coverage-browser)
-    autocmd FileType go nmap <leader>i <Plug>(go-info)
-    autocmd FileType go nmap <leader>l <Plug>(go-metalinter)
-    autocmd FileType go nmap <leader>v <Plug>(go-def-vertical)
-    autocmd FileType go nmap <leader>s <Plug>(go-def-split)
+  autocmd FileType go nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
+  autocmd FileType go nmap <leader>t <Plug>(go-test)
+  autocmd FileType go nmap <leader>r <Plug>(go-run)
+  autocmd FileType go nmap <leader>d <Plug>(go-doc)
+  autocmd FileType go nmap <leader>c <Plug>(go-coverage-toggle)
+  autocmd FileType go nmap <leader>C <Plug>(go-coverage-browser)
+  autocmd FileType go nmap <leader>i <Plug>(go-info)
+  autocmd FileType go nmap <leader>l <Plug>(go-metalinter)
+  autocmd FileType go nmap <leader>v <Plug>(go-def-vertical)
+  autocmd FileType go nmap <leader>s <Plug>(go-def-split)
 
-    autocmd FileType go command! -bang A call go#alternate#Switch(<bang>0, 'edit')
-    autocmd FileType go command! -bang AV call go#alternate#Switch(<bang>0, 'vsplit')
-    autocmd FileType go command! -bang AS call go#alternate#Switch(<bang>0, 'split')
-    autocmd FileType go command! -bang AT call go#alternate#Switch(<bang>0, 'tabe')
+  autocmd FileType go command! -bang A call go#alternate#Switch(<bang>0, 'edit')
+  autocmd FileType go command! -bang AV call go#alternate#Switch(<bang>0, 'vsplit')
+  autocmd FileType go command! -bang AS call go#alternate#Switch(<bang>0, 'split')
+  autocmd FileType go command! -bang AT call go#alternate#Switch(<bang>0, 'tabe')
 augroup END
 
 " run :GoBuild or :GoTestCompile based on the go file
 function! s:build_go_files()
-    let l:file = expand('%')
-    if l:file =~# '^\f\+_test\.go$'
-        call go#cmd#Test(0, 1)
-    elseif l:file =~# '^\f\+\.go$'
-        call go#cmd#Build(0)
-    endif
+  let l:file = expand('%')
+  if l:file =~# '^\f\+_test\.go$'
+    call go#cmd#Test(0, 1)
+  elseif l:file =~# '^\f\+\.go$'
+    call go#cmd#Build(0)
+  endif
 endfunction
 
 " neocomplete
@@ -197,7 +197,7 @@ let g:neocomplete#enable_smart_case = 1
 let g:neocomplete#sources#syntax#min_keyword_length = 3
 
 if !exists('g:neocomplete#sources')
-    let g:neocomplete#sources = {}
+  let g:neocomplete#sources = {}
 endif
 
 let g:neocomplete#sources._ = ['buffer', 'member', 'tag', 'file', 'dictionary']
@@ -215,16 +215,16 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
 
 func! WordProcessorMode()
-    setlocal formatoptions=1
-    setlocal noexpandtab
-    map j gj
-    map k gk
-    setlocal spell spelllang=en_us
-    set thesaurus+=/Users/gsantovena/.vim/thesaurus/mthesaur.txt
-    set complete+=s
-    set formatprg=par
-    setlocal wrap
-    setlocal linebreak
+  setlocal formatoptions=1
+  setlocal noexpandtab
+  map j gj
+  map k gk
+  setlocal spell spelllang=en_us
+  set thesaurus+=/Users/gsantovena/.vim/thesaurus/mthesaur.txt
+  set complete+=s
+  set formatprg=par
+  setlocal wrap
+  setlocal linebreak
 endfu
 com! WP call WordProcessorMode()
 
