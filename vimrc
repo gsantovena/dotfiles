@@ -119,6 +119,8 @@ let mapleader=","
 nnoremap <leader><space> :nohlsearch<CR>
 nnoremap <leader>o :only<CR>
 
+noremap <leader>gr :call Gurl()<CR>
+
 noremap + <C-a>
 noremap - <C-x>
 
