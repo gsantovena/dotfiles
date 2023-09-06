@@ -42,6 +42,7 @@ plugins=(
     knife 
     knife_ssh
     kubectl
+    kubectx
     macos
     minikube
     mvn 
@@ -98,3 +99,8 @@ export SDKMAN_DIR="$HOME/.sdkman"
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 #export PATH="$PATH:$HOME/.rvm/bin"
+
+# Ping Identity - Added with 'pingctl config' on Thu Jan 12 11:24:43 CST 2023
+set -a
+test -f '/Users/gsantovena/.pingidentity/config' && source '/Users/gsantovena/.pingidentity/config'
+set +a
