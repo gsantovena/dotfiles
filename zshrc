@@ -10,6 +10,8 @@ ZSH_THEME="robbyrussell"
 ZSH_THEME="cypher"
 ZSH_THEME="af-magic"
 ZSH_THEME="steeef"
+ZSH_THEME="peepcode"
+ZSH_THEME="avit"
 
 # CASE_SENSITIVE="true"
 # HYPHEN_INSENSITIVE="true"
