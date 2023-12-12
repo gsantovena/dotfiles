@@ -88,9 +88,14 @@ syntax enable
 "filetype plugin on
 filetype plugin indent on
 set t_Co=256
-"colorscheme zenburn
-colorscheme badwolf
+
+" badwolf.vim dracula.vim molokai.vim zenburn.vim
+"colorscheme badwolf
 "colorscheme desert
+"colorscheme dracula
+colorscheme molokai
+"colorscheme zenburn
+
 
 "let vim_markdown_preview_toggle=1
 let vim_markdown_preview_github=1
