@@ -5,7 +5,7 @@
 
 export VAULT_ADDR=https://vault.dm.nfl.com
 
-for file in ~/.{aliases,exports,functions,secrets}; do
+for file in ~/.{aliases,exports,functions,secrets,functions.extra}; do
     [ -r "$file" ] && source "$file"
 done
 unset file
