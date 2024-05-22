@@ -39,13 +39,14 @@ Plug 'rodjek/vim-puppet'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'vitapluvia/vim-gurl'
 
-Plug 'Shougo/ddc.vim'
 Plug 'vim-denops/denops.vim'
 
+Plug 'Shougo/ddc.vim'
 Plug 'Shougo/ddc-ui-native'
 Plug 'Shougo/ddc-source-around'
 Plug 'Shougo/ddc-matcher_head'
 Plug 'Shougo/ddc-sorter_rank'
+Plug 'Shougo/ddu.vim'
 
 call plug#end()
 
