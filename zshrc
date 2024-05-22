@@ -63,7 +63,6 @@ plugins=(
     vagrant-prompt
     vault 
     virtualenv
-    virtualenvwrapper
     vscode
     web-search
     z
@@ -106,3 +105,6 @@ export SDKMAN_DIR="$HOME/.sdkman"
 set -a
 test -f '/Users/gsantovena/.pingidentity/config' && source '/Users/gsantovena/.pingidentity/config'
 set +a
+
+# PostreSQL
+export PATH="/opt/homebrew/opt/postgresql@16/bin:$PATH"
