@@ -27,19 +27,23 @@ brew-cask-upgrade() {
   done 
 } 
 
-brew-cask-upgrade2() {
+brew-upgrade() {
   if [ "$1" != '--continue' ]; then 
     echo "Removing brew cache" 
     rm -rf "$(brew --cache)" 
     echo "Running brew update" 
     brew update 
+    brew upgrade
   fi 
   for c in $(brew list --cask); do 
     INSTALLED=$(ls $(brew --prefix)/Caskroom/$c)
     UPGRADE=$(brew info --cask --json=v2 $c | jq -r '.casks[].version')
 
     if [ $INSTALLED = $UPGRADE ]; then
-      break
+      echo "\n\nVersions of $c: "
+      echo "Installed : $INSTALLED"
+      echo "Upgrade to: $UPGRADE"
+      continue
     else
       echo "\n\nVersions of $c: "
       echo "Installed : $INSTALLED"
