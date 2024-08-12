@@ -61,7 +61,6 @@ plugins=(
     transfer
     vagrant 
     vagrant-prompt
-    vault 
     virtualenv
     vscode
     web-search
@@ -108,3 +107,6 @@ set +a
 
 # PostreSQL
 export PATH="/opt/homebrew/opt/postgresql@16/bin:$PATH"
+
+autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C /opt/homebrew/bin/vault vault
