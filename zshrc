@@ -53,6 +53,7 @@ plugins=(
     pyenv 
     rbenv
     ruby
+    rust
     ssh-agent
     sudo
     systemadmin
