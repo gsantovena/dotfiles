@@ -39,15 +39,12 @@ brew-upgrade() {
     INSTALLED=$(ls $(brew --prefix)/Caskroom/$c)
     UPGRADE=$(brew info --cask --json=v2 $c | jq -r '.casks[].version')
 
+    echo "\n\nVersions of $c: "
+    echo "Installed : $INSTALLED"
+    echo "Upgrade to: $UPGRADE"
+
     if [ $INSTALLED = $UPGRADE ]; then
-      echo "\n\nVersions of $c: "
-      echo "Installed : $INSTALLED"
-      echo "Upgrade to: $UPGRADE"
       continue
-    else
-      echo "\n\nVersions of $c: "
-      echo "Installed : $INSTALLED"
-      echo "Upgrade to: $UPGRADE"
     fi
 
     select ynx in "Yes" "No" "Exit"; do  
