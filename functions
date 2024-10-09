@@ -36,8 +36,7 @@ brew-upgrade() {
     brew upgrade
   fi 
   for c in $(brew list --cask); do 
-    INSTALLED=$(ls $(brew --prefix)/Caskroom/$c)
-    UPGRADE=$(brew info --cask --json=v2 $c | jq -r '.casks[].version')
+    read INSTALLED UPGRADE < <(brew info --cask --json=v2 $c | jq -r '.casks[] | "\(.installed) \(.version)"')
 
     if [ $INSTALLED = $UPGRADE ]; then
       continue
@@ -51,7 +50,7 @@ brew-upgrade() {
       case $ynx in 
         "Yes") echo "Upgrading $c"; brew upgrade --cask "$c"; break;; 
         "No") echo "Skipping $c"; break;; 
-        "Exit") echo "Exiting brew-cask-upgrade"; return;; 
+        "Exit") echo "Exiting brew-upgrade"; return;; 
       esac 
     done 
   done 
