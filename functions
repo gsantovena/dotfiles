@@ -110,3 +110,19 @@ nls() {
     ls -c ~/notes/ | grep -i "$*"
 }
 
+## INFO: FFMPEG WEBP CONVERTER
+convert_webp() {
+  for i in *
+  do
+  if [[ "${i##*.}" == "webp" ]]; then
+      echo "WEBP FILE => $i"
+      # show filename
+      filename="${i%.*}"
+      # show Extension
+      extension="${i##*.}"
+      ## webp converter
+      ffmpeg -i "$filename" "$filename.png"
+    fi
+  done
+}
+
