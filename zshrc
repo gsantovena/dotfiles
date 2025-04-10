@@ -111,3 +111,5 @@ export PATH="/opt/homebrew/opt/postgresql@16/bin:$PATH"
 
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /opt/homebrew/bin/vault vault
+
+SF_AC_ZSH_SETUP_PATH=/Users/gsantovena/Library/Caches/sf/autocomplete/zsh_setup && test -f $SF_AC_ZSH_SETUP_PATH && source $SF_AC_ZSH_SETUP_PATH; # sf autocomplete setup
