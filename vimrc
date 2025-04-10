@@ -68,14 +68,15 @@ set autoindent
 set cursorline
 set foldmethod=marker
 set lazyredraw
+set mouse=a
 set number
 set ruler
+set showbreak=↪
 set showcmd
 set showmatch
 set title
 set wildmenu
 set wildmode=list:longest,full
-set showbreak=↪
 
 " Tabs
 nnoremap <C-Left> :tabprevious<CR>
