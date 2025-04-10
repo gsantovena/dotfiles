@@ -9,3 +9,4 @@ export MANPAGER="less -X"
 export LC_ALL="en_US.UTF-8"
 export LANG="en_US"
 
+export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#505050"
