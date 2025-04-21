@@ -224,7 +224,8 @@ func! WordProcessorMode()
 endfu
 com! WP call WordProcessorMode()
 
-com! FormatJSON %!python -m json.tool
+"com! FormatJSON %!python -m json.tool
+com! FormatJSON %!jq
 
 " Customize global settings
 
