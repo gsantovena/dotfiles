@@ -90,6 +90,9 @@ nnoremap <Leader>n :tabnext<CR>
 nnoremap <silent> <A-Left> :execute 'silent! tabmove ' . (tabpagenr()-2)<CR>
 nnoremap <silent> <A-Right> :execute 'silent! tabmove ' . (tabpagenr()+1)<CR>
 
+" Yank to system clipboard
+vnoremap <Leader>v "+y
+
 " Colors
 syntax enable
 "filetype on
