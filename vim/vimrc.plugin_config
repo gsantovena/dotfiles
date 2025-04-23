@@ -208,14 +208,45 @@ nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
-" Remap keys for using coc.nvim
-nmap <leader>gd <Plug>(coc-definition)
-nmap <leader>gy <Plug>(coc-type-definition)
-nmap <leader>gi <Plug>(coc-implementation)
-nmap <leader>gr <Plug>(coc-references)
+let g:coc_global_extensions = [
+  \ 'coc-css',
+  \ 'coc-docker',
+  \ 'coc-eslint',
+  \ 'coc-explorer',
+  \ 'coc-git',
+  \ 'coc-go',
+  \ 'coc-html',
+  \ 'coc-json',
+  \ 'coc-markdownlint',
+  \ 'coc-pairs',
+  \ 'coc-prettier',
+  \ 'coc-pyright',
+  \ 'coc-sh',
+  \ 'coc-snippets',
+  \ 'coc-syntax',
+  \ 'coc-terraform',
+  \ 'coc-tsserver',
+  \ 'coc-yaml',
+  \ ]
 
-" coc-explorer
+" coc-explorer {{{
 nnoremap <leader>e :CocCommand explorer --toggle --position left<CR>
+" }}} coc-explorer
+
+" coc-git {{{
+" Show git status in a floating window
+nmap <leader>gs :CocCommand git.status<CR>
+
+" Show git diff for current file
+nmap <leader>gd :CocCommand git.diff<CR>
+
+" Show commit log for current file
+nmap <leader>gl :CocCommand git.log<CR>
+
+" Show blame for current line
+nmap <leader>gb :CocCommand git.blame<CR>
+" }}} coc-git
+
 "---------------------------------------------
 " }}} PLUGIN: coc.nvim
 "---------------------------------------------
