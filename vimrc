@@ -81,9 +81,12 @@ set title
 set wildmenu
 set wildmode=list:longest,full
 
+" Leader Shortcut
+let mapleader=","
+
 " Tabs
-nnoremap <C-Left> :tabprevious<CR>
-nnoremap <C-Right> :tabnext<CR>
+nnoremap <Leader>p :tabprevious<CR>
+nnoremap <Leader>n :tabnext<CR>
 nnoremap <silent> <A-Left> :execute 'silent! tabmove ' . (tabpagenr()-2)<CR>
 nnoremap <silent> <A-Right> :execute 'silent! tabmove ' . (tabpagenr()+1)<CR>
 
@@ -122,9 +125,6 @@ set hlsearch
 set incsearch
 set ignorecase
 set smartcase
-
-" Leader Shortcut
-let mapleader=","
 
 " Shortcuts
 nnoremap <leader><space> :nohlsearch<CR>
