@@ -69,6 +69,20 @@ endfunction
 "---------------------------------------------
 
 "---------------------------------------------
+" PLUGIN: copilot {{{
+"---------------------------------------------
+" Smart <Tab>: Copilot if visible, else snippet or completion
+inoremap <silent><expr> <Tab>
+  \ pumvisible() ? '<C-n>' :
+  \ (exists('*copilot#Accept') && copilot#Visible()) ? copilot#Accept("\<CR>") :
+  \ UltiSnips#CanExpandSnippet() ? '<C-R>=UltiSnips#ExpandSnippet()<CR>' :
+  \ '<Tab>'
+
+"---------------------------------------------
+" }}} PLUGIN: copilot
+"---------------------------------------------
+
+"---------------------------------------------
 " PLUGIN: vim-airline {{{
 "---------------------------------------------
 set laststatus=2
