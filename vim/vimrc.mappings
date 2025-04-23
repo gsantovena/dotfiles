@@ -1,0 +1,96 @@
+"---------------------------------------------
+" CLIPBOARD & YANK {{{
+"---------------------------------------------
+" Yank to system clipboard in visual mode
+vnoremap <leader>v "+y
+"---------------------------------------------
+" }}} CLIPBOARD & YANK
+"---------------------------------------------
+
+"---------------------------------------------
+" TAB MANAGEMENT {{{
+"---------------------------------------------
+nnoremap <leader>tn :tabnew<CR>
+nnoremap <leader>tc :tabclose<CR>
+nnoremap <leader>p :tabprevious<CR>
+nnoremap <leader>n :tabnext<CR>
+nnoremap <silent> <A-Left> :execute 'silent! tabmove ' . (tabpagenr()-2)<CR>
+nnoremap <silent> <A-Right> :execute 'silent! tabmove ' . (tabpagenr()+1)<CR>
+"---------------------------------------------
+" }}} TAB MANAGEMENT
+"---------------------------------------------
+
+"---------------------------------------------
+" BUFFER MANAGEMENT {{{
+"---------------------------------------------
+" Buffer navigation mappings
+nnoremap <leader>l :ls<CR>
+nnoremap <leader>b :bp<CR>
+nnoremap <leader>f :bn<CR>
+nnoremap <leader>g :e#<CR>
+nnoremap <leader>1 :1b<CR>
+nnoremap <leader>2 :2b<CR>
+nnoremap <leader>3 :3b<CR>
+nnoremap <leader>4 :4b<CR>
+nnoremap <leader>5 :5b<CR>
+nnoremap <leader>6 :6b<CR>
+nnoremap <leader>7 :7b<CR>
+nnoremap <leader>8 :8b<CR>
+nnoremap <leader>9 :9b<CR>
+nnoremap <leader>0 :10b<CR>
+" Buffer number in statusline
+set laststatus=2 statusline=%02n:%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
+"---------------------------------------------
+" }}} BUFFER MANAGEMENT
+"---------------------------------------------
+
+"---------------------------------------------
+" VISUAL & EDITING {{{
+"---------------------------------------------
+" Reselect last-pasted text {{{
+nnoremap gp `[v`]
+" }}}
+
+" Move lines up/down in visual mode (like Sublime/VSCode) {{{
+xnoremap J :move '>+1<CR>gv=gv
+xnoremap K :move '<-2<CR>gv=gv
+" }}}
+
+" Duplicate line or selection {{{
+nnoremap <leader>d :t.<CR>
+xnoremap <leader>d :t'><CR>gv
+" }}}
+"---------------------------------------------
+" }}} VISUAL & EDITING
+"---------------------------------------------
+
+"---------------------------------------------
+" COMMON SHORTCUTS {{{
+"---------------------------------------------
+nnoremap <leader><space> :nohlsearch<CR>
+nnoremap <leader>o :only<CR>
+noremap <leader>gr :call Gurl()<CR>
+
+noremap + <C-a>
+noremap - <C-x>
+xnoremap + g<C-a>
+xnoremap - g<C-x>
+
+nmap <F8> :TagbarToggle<CR>
+map <F10> :NERDTreeToggle<CR>
+
+" Quickfix list navigation
+map <C-n> :cnext<CR>
+map <C-m> :cprevious<CR>
+nnoremap <leader>a :cclose<CR>
+
+nnoremap <space> za
+
+" Command-line mapping: write with sudo
+cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
+
+"com! FormatJSON %!python -m json.tool
+com! FormatJSON %!jq
+"---------------------------------------------
+" }}} COMMON SHORTCUTS
+"---------------------------------------------

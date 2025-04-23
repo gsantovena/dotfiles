@@ -1,0 +1,6 @@
+function! EchoVimrcReloaded()
+  echohl ModeMsg
+  echom "✅ vimrc reloaded: " . expand('%:p')
+  echohl None
+endfunction
+
