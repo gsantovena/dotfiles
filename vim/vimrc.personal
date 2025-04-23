@@ -1,6 +1,7 @@
 function! EchoVimrcReloaded()
-  echohl ModeMsg
-  echom "✅ vimrc reloaded: " . expand('%:p')
-  echohl None
+"  echohl ModeMsg
+"  echom "✅ vimrc reloaded: " . expand('%:p')
+"  echohl None
+  call popup_create(['✅ vimrc reloaded!', expand('%:p')], #{line: 2, col: &columns-20, time: 2000, highlight: 'ModeMsg'})
 endfunction
 
