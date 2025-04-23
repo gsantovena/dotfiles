@@ -1,0 +1,34 @@
+"---------------------------------------------
+" gsantovena@gmail.com
+"
+" References:
+" http://dougblack.io/words/a-good-vimrc.html
+" https://amix.dk/vim/vimrc.html
+" https://github.com/sjl/badwolf/
+" https://github.com/michaeljsmalley/dotfiles
+"---------------------------------------------
+
+" Persistent Undo {{{
+let s:undoDir = "/tmp/.undodir_" . $USER
+if !isdirectory(s:undoDir)
+  call mkdir(s:undoDir, "", 0700)
+endif
+let &undodir=s:undoDir
+set undofile
+" }}} Persistent Undo
+
+set nocompatible
+let mapleader = ","
+
+source ~/.vim/vimrc.ui
+source ~/.vim/vimrc.plugins
+source ~/.vim/vimrc.plugin_config
+source ~/.vim/vimrc.mappings
+source ~/.vim/vimrc.personal
+
+" AUTO-RELOAD VIMRC ON SAVE {{{
+augroup myvimrc
+  au!
+  au BufWritePost ~/.vimrc,~/.vim/vimrc*,*/vim/vimrc* so $MYVIMRC | if has('gui_running') | so $MYGVIMRC | endif | call EchoVimrcReloaded()
+augroup END
+" }}} AUTO-RELOAD VIMRC ON SAVE

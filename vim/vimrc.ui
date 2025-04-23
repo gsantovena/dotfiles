@@ -1,0 +1,64 @@
+"---------------------------------------------
+" COLORSCHEMES & SYNTAX {{{
+"---------------------------------------------
+syntax enable
+filetype plugin indent on
+set t_Co=256
+colorscheme molokai
+" Other color schemes to try:
+" - molokai
+" - badwolf
+" - desert
+" - dracula
+" - zenburn
+"---------------------------------------------
+" }}} COLORSCHEMES & SYNTAX
+"---------------------------------------------
+
+"---------------------------------------------
+" UI & GENERAL SETTINGS {{{
+"---------------------------------------------
+set nocompatible
+set encoding=utf-8
+
+set number
+set ruler
+set cursorline
+set title
+set wildmenu
+set wildmode=list:longest,full
+set showcmd
+set showmatch
+set showbreak=↪
+set lazyredraw
+set foldmethod=marker
+set autoindent
+set mouse=a
+"---------------------------------------------
+" }}} UI & GENERAL SETTINGS
+"---------------------------------------------
+
+"---------------------------------------------
+" Spaces, Tabs & Indentation {{{
+"---------------------------------------------
+set backspace=2
+set expandtab
+set shiftwidth=2
+set shiftround
+set smarttab
+set softtabstop=2
+set tabstop=2
+"---------------------------------------------
+" }}} Spaces, Tabs & Indentation
+"---------------------------------------------
+
+"---------------------------------------------
+" Searching {{{
+"---------------------------------------------
+set hlsearch
+set incsearch
+set ignorecase
+set smartcase
+"---------------------------------------------
+" }}} Searching
+"---------------------------------------------

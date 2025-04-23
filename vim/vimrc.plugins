@@ -1,0 +1,45 @@
+"---------------------------------------------
+" PLUGINS (vim-plug)
+"---------------------------------------------
+call plug#begin()
+  " --- General plugins ---
+  Plug 'fatih/vim-go'
+  Plug 'derekwyatt/vim-scala'
+  Plug 'AndrewRadev/splitjoin.vim'
+  Plug 'SirVer/ultisnips'
+  Plug 'honza/vim-snippets'
+  Plug 'ctrlpvim/ctrlp.vim'
+  Plug 'rizzatti/dash.vim'
+  Plug 'majutsushi/tagbar'
+  Plug 'scrooloose/nerdtree'
+  Plug 'Xuyuanp/nerdtree-git-plugin'
+  Plug 'python-mode/python-mode', { 'branch': 'develop' }
+  Plug 'Konfekt/FastFold'
+  Plug 'dylanaraps/root.vim'
+  Plug 'JamshedVesuna/vim-markdown-preview'
+  Plug 'xavierchow/vim-sequence-diagram'
+  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+  Plug 'tpope/vim-fugitive'
+  Plug 'hashivim/vim-terraform'
+  Plug 'vim-airline/vim-airline'
+  Plug 'tpope/vim-surround'
+  Plug 'aquach/vim-http-client'
+  Plug 'rodjek/vim-puppet'
+  Plug 'nathanaelkane/vim-indent-guides'
+  Plug 'vitapluvia/vim-gurl'
+  Plug 'vim-denops/denops.vim'
+  Plug 'vim-denops/denops-helloworld.vim'
+
+  " --- Shougo completion plugins ---
+  Plug 'Shougo/ddc.vim'
+  Plug 'Shougo/ddc-ui-native'
+  Plug 'Shougo/ddc-source-around'
+  Plug 'Shougo/ddc-matcher_head'
+  Plug 'Shougo/ddc-sorter_rank'
+  Plug 'Shougo/ddu.vim'
+
+  " --- AI ---
+  Plug 'github/copilot.vim'
+call plug#end()
+
+
