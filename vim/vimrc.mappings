@@ -27,6 +27,7 @@ nnoremap <silent> <A-Right> :execute 'silent! tabmove ' . (tabpagenr()+1)<CR>
 nnoremap <leader>l :ls<CR>
 nnoremap <leader>b :bp<CR>
 nnoremap <leader>f :bn<CR>
+nnoremap <leader>bd :bp<bar>sp<bar>bn<bar>bd<CR>
 nnoremap <leader>g :e#<CR>
 nnoremap <leader>1 :1b<CR>
 nnoremap <leader>2 :2b<CR>

@@ -1,0 +1,10 @@
+{
+  "explorer.icon.enableVimDevicons": true,
+  "explorer.width": 30,
+  "explorer.previewAction.onHover": true,
+  "explorer.quitOnOpen": true,
+  "explorer.position": "left",
+  "explorer.width": 35,
+  "explorer.openAction.strategy": "sourceWindow"
+}
+
