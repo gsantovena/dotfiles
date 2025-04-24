@@ -5,5 +5,14 @@
   "explorer.width": 35,
   "explorer.openAction.strategy": "sourceWindow",
   "git.addGBlameToVirtualText": true,
+  "go.goplsOptions": {
+    "usePlaceholders": true,
+    "completeUnimported": true,
+    "staticcheck": true,
+    "useGoEmbed": true,
+    "useGoEmbedForTests": true,
+    "useGoEmbedForXTests": true,
+    "useGoEmbedForXTestFiles": true
+  }
 }
 
