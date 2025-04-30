@@ -64,6 +64,32 @@ set nowritebackup
 set updatetime=300
 set signcolumn=yes
 
+" Extensions {{{
+let g:coc_global_extensions = [
+  \ 'coc-css',
+  \ 'coc-docker',
+  \ 'coc-eslint',
+  \ 'coc-explorer',
+  \ 'coc-git',
+  \ 'coc-go',
+  \ 'coc-html',
+  \ 'coc-json',
+  \ 'coc-markdownlint',
+  \ 'coc-marketplace',
+  \ 'coc-pairs',
+  \ 'coc-prettier',
+  \ 'coc-pyright',
+  \ 'coc-sh',
+  \ 'coc-snippets',
+  \ 'coc-solargraph',
+  \ 'coc-sql',
+  \ 'coc-syntax',
+  \ 'coc-terraform',
+  \ 'coc-tsserver',
+  \ 'coc-yaml',
+  \ ]
+" }}} Extensions
+
 " Use tab for trigger completion with characters ahead and navigate
 " NOTE: There's always complete item selected by default, you may want to enable
 " no select by `"suggest.noselect": true` in your configuration file
@@ -208,30 +234,6 @@ nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 " }}} Mappings for CoCList
-
-" Extensions {{{
-let g:coc_global_extensions = [
-  \ 'coc-css',
-  \ 'coc-docker',
-  \ 'coc-eslint',
-  \ 'coc-explorer',
-  \ 'coc-git',
-  \ 'coc-go',
-  \ 'coc-html',
-  \ 'coc-json',
-  \ 'coc-markdownlint',
-  \ 'coc-marketplace',
-  \ 'coc-pairs',
-  \ 'coc-prettier',
-  \ 'coc-pyright',
-  \ 'coc-sh',
-  \ 'coc-snippets',
-  \ 'coc-syntax',
-  \ 'coc-terraform',
-  \ 'coc-tsserver',
-  \ 'coc-yaml',
-  \ ]
-" }}} Extensions
 
 " coc-explorer {{{
 nnoremap <leader>e :CocCommand explorer --toggle --position left<CR>
