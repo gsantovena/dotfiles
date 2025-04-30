@@ -25,6 +25,7 @@ ZSH_THEME="avit"
 
 COMPLETION_WAITING_DOTS="true"
 plugins=(
+    1password
     aws 
     bundler
     brew 
