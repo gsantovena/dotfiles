@@ -114,3 +114,8 @@ autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /opt/homebrew/bin/vault vault
 
 SF_AC_ZSH_SETUP_PATH=/Users/gsantovena/Library/Caches/sf/autocomplete/zsh_setup && test -f $SF_AC_ZSH_SETUP_PATH && source $SF_AC_ZSH_SETUP_PATH; # sf autocomplete setup
+# The following lines have been added by Docker Desktop to enable Docker CLI completions.
+fpath=(/Users/gsantovena/.docker/completions $fpath)
+autoload -Uz compinit
+compinit
+# End of Docker CLI completions
