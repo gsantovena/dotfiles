@@ -20,9 +20,9 @@ set undofile
 set nocompatible
 let mapleader = ","
 
-source ~/.vim/vimrc.ui
 source ~/.vim/vimrc.plugins
 source ~/.vim/vimrc.plugin_config
+source ~/.vim/vimrc.ui
 source ~/.vim/vimrc.mappings
 source ~/.vim/vimrc.personal
 
