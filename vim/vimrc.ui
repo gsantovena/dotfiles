@@ -4,13 +4,17 @@
 syntax enable
 filetype plugin indent on
 set t_Co=256
-colorscheme molokai
+colorscheme retrobox
 " Other color schemes to try:
 " - molokai
 " - badwolf
 " - desert
 " - dracula
 " - zenburn
+
+" This is to enable transparency in terminal vim
+set termguicolors
+
 "---------------------------------------------
 " }}} COLORSCHEMES & SYNTAX
 "---------------------------------------------
