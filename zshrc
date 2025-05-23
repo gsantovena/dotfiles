@@ -51,6 +51,7 @@ plugins=(
     mvn 
     mosh
     nmap 
+    podman
     pyenv 
     rbenv
     ruby
