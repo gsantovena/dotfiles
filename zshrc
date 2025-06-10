@@ -2,16 +2,19 @@
 export ZSH=$HOME/.oh-my-zsh
 # export UPDATE_ZSH_DAYS=13
 
-ZSH_THEME="nanotech"
-ZSH_THEME="arrow"
-ZSH_THEME="clean"
-ZSH_THEME="intheloop"
-ZSH_THEME="robbyrussell"
-ZSH_THEME="cypher"
-ZSH_THEME="af-magic"
-ZSH_THEME="steeef"
-ZSH_THEME="peepcode"
+# ZSH_THEME="nanotech"
+# ZSH_THEME="arrow"
+# ZSH_THEME="clean"
+# ZSH_THEME="intheloop"
+# ZSH_THEME="robbyrussell"
+# ZSH_THEME="cypher"
+# ZSH_THEME="af-magic"
+# ZSH_THEME="steeef"
+# ZSH_THEME="peepcode"
 ZSH_THEME="avit"
+
+ZSH_COLORIZE_TOOL="chroma"
+ZSH_COLORIZE_STYLE="nordic"
 
 # CASE_SENSITIVE="true"
 # HYPHEN_INSENSITIVE="true"
