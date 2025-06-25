@@ -56,6 +56,7 @@ plugins=(
     nmap 
     podman
     pyenv 
+    python
     rbenv
     ruby
     rust
