@@ -13,6 +13,7 @@
     "useGoEmbedForTests": true,
     "useGoEmbedForXTests": true,
     "useGoEmbedForXTestFiles": true
-  }
+  },
+  "suggest.noselect": true
 }
 
