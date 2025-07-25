@@ -285,3 +285,15 @@ let g:copilot_no_tab_map = v:true
 "----------------------------------------------
 " }}} PLUGIN: copilot.vim
 "----------------------------------------------
+
+"---------------------------------------------
+" PLUGIN: copilot-chat.vim {{{
+"---------------------------------------------
+" Open a new Cpilot Chat window
+nnoremap <leader>cc :CopilotChatOpen<CR>
+
+" Add visual selection to copilot window
+vmap <leader>a <Plug>CopilotChatAddSelection
+"----------------------------------------------
+" }}} PLUGIN: copilot-chat.vim
+"----------------------------------------------

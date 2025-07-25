@@ -26,6 +26,8 @@ call plug#begin()
 
   " --- AI ---
   Plug 'github/copilot.vim'
-call plug#end()
+  Plug 'DanBradbury/copilot-chat.vim'
+  Plug 'madox2/vim-ai'
 
+call plug#end()
 
