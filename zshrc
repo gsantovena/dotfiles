@@ -124,3 +124,7 @@ fpath=(/Users/gsantovena/.docker/completions $fpath)
 autoload -Uz compinit
 compinit
 # End of Docker CLI completions
+
+# Task Master aliases added on 7/23/2025
+alias tm='task-master'
+alias taskmaster='task-master'
