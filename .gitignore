@@ -5,3 +5,4 @@ vim/autoload/plug.vim.old
 vim/plugged/*
 vim/bundle/*
 vim/thesaurus/*
+vim/copilot-chat/*
