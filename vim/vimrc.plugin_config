@@ -301,3 +301,9 @@ vmap <leader>a <Plug>CopilotChatAddSelection
 "----------------------------------------------
 " }}} PLUGIN: copilot-chat.vim
 "----------------------------------------------
+
+if has('nvim')
+  lua << EOF
+require("mcphub").setup()
+EOF
+endif

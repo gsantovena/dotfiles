@@ -23,3 +23,4 @@ do
     link "${FILE}" ".${FILE}"
 done
 
+ln -sf "${DOTFILES_DIR}/nvim" "${HOME}/.config/nvim"

@@ -6,3 +6,4 @@ vim/plugged/*
 vim/bundle/*
 vim/thesaurus/*
 vim/copilot-chat/*
+vim/copilot-chat/.chat_token
