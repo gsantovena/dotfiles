@@ -29,5 +29,9 @@ call plug#begin()
   Plug 'DanBradbury/copilot-chat.vim'
   Plug 'madox2/vim-ai'
 
+  " --- MCP Hub ---"
+  Plug 'nvim-lua/plenary.nvim'
+  Plug 'ravitemer/mcphub.nvim'
+
 call plug#end()
 

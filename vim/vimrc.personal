@@ -1,26 +1,33 @@
 function! EchoVimrcReloaded()
   let msg = '✅ vimrc reloaded!'
-  let col = (&columns - len(msg)) / 2
-
-  call popup_create(msg, #{line: &lines-5, col: col, time: 2000, highlight: 'ModeMsg'})
+  call ShowFloatingMessage(msg)
 endfunction
 
 function! SavePopup()
   let msg = '💾 File saved: ' . expand('%:p')
-  let col = (&columns - len(msg)) / 2
-
-  call popup_create(msg, #{line: &lines-3, col: col, time: 1200, highlight: 'ModeMsg'})
+  call ShowFloatingMessage(msg)
 endfunction
 
 function! SavePopupError()
   let msg = '❌ Error saving file: ' . expand('%:t')
-  let col = (&columns - len(msg)) / 2
-
-  call popup_create(msg, #{line: &lines-3, col: col, time: 2000, highlight: 'ModeMsg'})
+  call ShowFloatingMessage(msg)
 endfunction
 
-augroup save_popup
-  autocmd!
-  autocmd BufWritePost * call SavePopup()
-augroup END
+function! ShowFloatingMessage(msg)
+  if has('nvim')
+    " Call Lua wrapper
+    execute 'lua ShowFloating("' . a:msg . '")'
+  else
+    " For regular Vim, fallback to popup_create (if available)
+    if exists('*popup_create')
+      let col = (&columns - len(a:msg)) / 2
+      call popup_create(a:msg, #{line: &lines-3, col: col, time: 2000, highlight: 'ModeMsg'})
+    endif
+  endif
+endfunction
+
+" augroup save_popup
+"   autocmd!
+"   autocmd BufWritePost * call SavePopup()
+" augroup END
 

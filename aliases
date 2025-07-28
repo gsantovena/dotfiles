@@ -13,7 +13,7 @@ alias path='echo $PATH | tr -s ":" "\n"'
 
 alias hosts='sudo $EDITOR /etc/hosts'
 
-alias vi='vim'
+alias vi='nvim'
 
 alias myip="dig +short myip.opendns.com @resolver1.opendns.com"
 
