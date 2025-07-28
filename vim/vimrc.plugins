@@ -31,7 +31,7 @@ call plug#begin()
 
   " --- MCP Hub ---"
   Plug 'nvim-lua/plenary.nvim'
-  Plug 'ravitemer/mcphub.nvim'
+  Plug 'ravitemer/mcphub.nvim', { 'do': 'npm install -g mcp-hub@latest' }
 
 call plug#end()
 
