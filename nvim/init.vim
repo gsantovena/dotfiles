@@ -17,7 +17,7 @@ let g:python3_host_prog = expand('~/.venvs/nvim/bin/python3')
 set nocompatible
 let mapleader = ","
 
-source ~/.config/nvim/lua/showpopup.lua
+source ~/.config/nvim/lua/config/showpopup.lua
 source ~/.vim/vimrc.plugins
 source ~/.vim/vimrc.plugin_config
 source ~/.vim/vimrc.ui
