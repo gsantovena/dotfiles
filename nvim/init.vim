@@ -27,7 +27,7 @@ source ~/.vim/vimrc.personal
 " AUTO-RELOAD VIMRC ON SAVE {{{
 augroup myvimrc
   au!
-  au BufWritePost ~/.vimrc,~/.vim/vimrc*,*/vim/vimrc* so $MYVIMRC | if has('gui_running') | so $MYGVIMRC | endif | call EchoVimrcReloaded()
+  au BufWritePost ~/.config/nvim/init.vim,~/.vimrc,~/.vim/vimrc*,*/vim/vimrc* so $MYVIMRC | if has('gui_running') | so $MYGVIMRC | endif | call EchoVimrcReloaded()
 augroup END
 " }}} AUTO-RELOAD VIMRC ON SAVE
 
