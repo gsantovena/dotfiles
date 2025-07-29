@@ -387,3 +387,18 @@ require("mcphub").setup({
         })
 EOF
 endif
+
+if has('nvim')
+  lua << EOF
+require("CopilotChat").setup({
+    -- Set the default chat model
+    default_model = "gpt-4o-mini",
+    -- Set the default chat server
+    default_server = "avante",
+    -- Enable or disable the chat window
+    enable_chat_window = true,
+    -- Set the keybinding to open the chat window
+    keybinding = "<leader>cc",
+  })
+EOF
+endif

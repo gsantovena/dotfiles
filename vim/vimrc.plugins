@@ -24,14 +24,15 @@ call plug#begin()
 
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
-  " --- AI ---
-  Plug 'github/copilot.vim'
-  Plug 'DanBradbury/copilot-chat.vim'
-  Plug 'madox2/vim-ai'
-
   " --- MCP Hub ---"
   Plug 'nvim-lua/plenary.nvim'
   Plug 'ravitemer/mcphub.nvim', { 'do': 'npm install -g mcp-hub@latest' }
+
+  " --- AI ---
+  Plug 'github/copilot.vim'
+  Plug 'CopilotC-Nvim/CopilotChat.nvim'
+  Plug 'madox2/vim-ai'
+
 
 call plug#end()
 
