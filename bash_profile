@@ -39,3 +39,5 @@ eval "$(pyenv virtualenv-init -)"
 
 
 complete -C /opt/homebrew/bin/vault vault
+
+. "$HOME/.local/bin/env"
