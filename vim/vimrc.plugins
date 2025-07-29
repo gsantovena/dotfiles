@@ -21,6 +21,8 @@ call plug#begin()
   Plug 'tpope/vim-commentary'
   Plug 'tpope/vim-repeat'
   Plug 'skywind3000/asyncrun.vim'
+  Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.8' }
+  Plug 'nvim-telescope/telescope-ui-select.nvim'
 
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
@@ -30,7 +32,8 @@ call plug#begin()
 
   " --- AI ---
   Plug 'github/copilot.vim'
-  Plug 'CopilotC-Nvim/CopilotChat.nvim'
+  Plug 'CopilotC-Nvim/CopilotChat.nvim', { 'do': 'make tiktoken' }
+  Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSInstall diff' }
   Plug 'madox2/vim-ai'
 
 

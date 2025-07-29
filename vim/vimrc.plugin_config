@@ -302,6 +302,9 @@ vmap <leader>a <Plug>CopilotChatAddSelection
 " }}} PLUGIN: copilot-chat.vim
 "----------------------------------------------
 
+"---------------------------------------------
+" PLUGIN: mcphub {{{
+"---------------------------------------------
 if has('nvim')
   lua << EOF
 require("mcphub").setup({
@@ -387,6 +390,9 @@ require("mcphub").setup({
         })
 EOF
 endif
+"----------------------------------------------
+" }}} PLUGIN: mcphub
+"----------------------------------------------
 
 if has('nvim')
   lua << EOF
@@ -400,5 +406,20 @@ require("CopilotChat").setup({
     -- Set the keybinding to open the chat window
     keybinding = "<leader>cc",
   })
+EOF
+endif
+
+if has('nvim')
+  lua << EOF
+require("telescope").setup({
+  extensions = {
+    ["ui-select"] = {
+        require("telescope.themes").get_dropdown({
+            previewer = false,
+            }),
+        }
+    }
+  })
+require("telescope").load_extension("ui-select")
 EOF
 endif
