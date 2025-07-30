@@ -81,7 +81,7 @@ done
 
 # Validation functions
 check_requirements() {
-    print_status $BLUE "Checking requirements..."
+    print_status "$BLUE" "Checking requirements..."
     
     local missing_requirements=()
     
@@ -109,7 +109,7 @@ check_requirements() {
     done
     
     if [ ${#missing_requirements[@]} -gt 0 ]; then
-        print_status $RED "❌ Requirements check failed:"
+        print_status "$RED" "❌ Requirements check failed:"
         for req in "${missing_requirements[@]}"; do
             echo "  - $req"
         done
@@ -117,10 +117,10 @@ check_requirements() {
         if [ "$FORCE_INSTALL" = false ]; then
             exit 1
         else
-            print_status $YELLOW "⚠️  Continuing with --force flag despite missing requirements"
+            print_status "$YELLOW" "⚠️  Continuing with --force flag despite missing requirements"
         fi
     else
-        print_status $GREEN "✅ All requirements satisfied"
+        print_status "$GREEN" "✅ All requirements satisfied"
     fi
 }
 
@@ -130,7 +130,7 @@ create_backup() {
         return 0
     fi
     
-    print_status $BLUE "Creating backup of existing files..."
+    print_status "$BLUE" "Creating backup of existing files..."
     
     local files_backed_up=()
     
@@ -161,14 +161,14 @@ create_backup() {
     done
     
     if [ ${#files_backed_up[@]} -gt 0 ]; then
-        print_status $GREEN "✅ Backed up ${#files_backed_up[@]} files to: $BACKUP_DIR"
+        print_status "$GREEN" "✅ Backed up ${#files_backed_up[@]} files to: $BACKUP_DIR"
         if [ "$VERBOSE" = true ]; then
             for file in "${files_backed_up[@]}"; do
                 echo "  - $file"
             done
         fi
     else
-        print_status $YELLOW "No existing files to backup"
+        print_status "$YELLOW" "No existing files to backup"
         if [ "$DRY_RUN" = false ]; then
             rmdir "$BACKUP_DIR" 2>/dev/null || true
         fi
@@ -183,7 +183,7 @@ link() {
     
     # Validate source exists
     if [ ! -e "$source" ]; then
-        print_status $RED "❌ Source file does not exist: $source"
+        print_status "$RED" "❌ Source file does not exist: $source"
         return 1
     fi
     
@@ -193,7 +193,7 @@ link() {
             mkdir -p "$target_dir"
         fi
         if [ "$VERBOSE" = true ]; then
-            print_status $BLUE "Created directory: $target_dir"
+            print_status "$BLUE" "Created directory: $target_dir"
         fi
     fi
     
@@ -214,7 +214,7 @@ link() {
 
 # Install dotfiles
 install_dotfiles() {
-    print_status $BLUE "Installing dotfiles..."
+    print_status "$BLUE" "Installing dotfiles..."
     
     # Create logs directory
     if [ "$DRY_RUN" = false ]; then
@@ -224,7 +224,7 @@ install_dotfiles() {
     # Handle special case for .vim directory
     if [ -e "${HOME}/.vim" ] && [ "$DRY_RUN" = false ]; then
         if [ "$VERBOSE" = true ]; then
-            print_status $YELLOW "Removing existing .vim directory to prevent inception"
+            print_status "$YELLOW" "Removing existing .vim directory to prevent inception"
         fi
         rm -rf "${HOME}/.vim"
     fi
@@ -246,10 +246,10 @@ install_dotfiles() {
     done
     
     if [ $link_errors -gt 0 ]; then
-        print_status $RED "❌ $link_errors linking errors occurred"
+        print_status "$RED" "❌ $link_errors linking errors occurred"
         return 1
     else
-        print_status $GREEN "✅ All files linked successfully"
+        print_status "$GREEN" "✅ All files linked successfully"
     fi
 }
 
@@ -259,7 +259,7 @@ verify_installation() {
         return 0
     fi
     
-    print_status $BLUE "Verifying installation..."
+    print_status "$BLUE" "Verifying installation..."
     
     local verification_errors=0
     
@@ -270,14 +270,14 @@ verify_installation() {
             local link_target=$(readlink "$target")
             if [ "$link_target" = "$DOTFILES_DIR/$file" ]; then
                 if [ "$VERBOSE" = true ]; then
-                    print_status $GREEN "✅ $target correctly linked"
+                    print_status "$GREEN" "✅ $target correctly linked"
                 fi
             else
-                print_status $RED "❌ $target points to wrong location: $link_target"
+                print_status "$RED" "❌ $target points to wrong location: $link_target"
                 ((verification_errors++))
             fi
         else
-            print_status $RED "❌ $target is not a symlink"
+            print_status "$RED" "❌ $target is not a symlink"
             ((verification_errors++))
         fi
     done
@@ -289,29 +289,29 @@ verify_installation() {
             local link_target=$(readlink "$target")
             if [ "$link_target" = "$DOTFILES_DIR/$file" ]; then
                 if [ "$VERBOSE" = true ]; then
-                    print_status $GREEN "✅ $target correctly linked"
+                    print_status "$GREEN" "✅ $target correctly linked"
                 fi
             else
-                print_status $RED "❌ $target points to wrong location: $link_target"
+                print_status "$RED" "❌ $target points to wrong location: $link_target"
                 ((verification_errors++))
             fi
         else
-            print_status $RED "❌ $target is not a symlink"
+            print_status "$RED" "❌ $target is not a symlink"
             ((verification_errors++))
         fi
     done
     
     if [ $verification_errors -gt 0 ]; then
-        print_status $RED "❌ $verification_errors verification errors found"
+        print_status "$RED" "❌ $verification_errors verification errors found"
         return 1
     else
-        print_status $GREEN "✅ Installation verified successfully"
+        print_status "$GREEN" "✅ Installation verified successfully"
     fi
 }
 
 # Print next steps
 print_next_steps() {
-    print_status $BLUE "Next steps:"
+    print_status "$BLUE" "Next steps:"
     echo ""
     echo "1. Install Neovim plugins:"
     echo "   curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \\"
@@ -333,11 +333,11 @@ print_next_steps() {
 
 # Main execution
 main() {
-    print_status $BLUE "🏠 Enhanced Dotfiles Installation"
+    print_status "$BLUE" "🏠 Enhanced Dotfiles Installation"
     echo "================================="
     
     if [ "$DRY_RUN" = true ]; then
-        print_status $YELLOW "DRY RUN MODE - No changes will be made"
+        print_status "$YELLOW" "DRY RUN MODE - No changes will be made"
     fi
     
     check_requirements
@@ -348,10 +348,10 @@ main() {
     echo "================================="
     
     if [ "$DRY_RUN" = true ]; then
-        print_status $BLUE "Dry run completed successfully!"
-        print_status $YELLOW "Run without --dry-run to perform actual installation"
+        print_status "$BLUE" "Dry run completed successfully!"
+        print_status "$YELLOW" "Run without --dry-run to perform actual installation"
     else
-        print_status $GREEN "🎉 Installation completed successfully!"
+        print_status "$GREEN" "🎉 Installation completed successfully!"
         print_next_steps
     fi
 }
