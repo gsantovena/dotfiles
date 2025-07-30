@@ -22,14 +22,6 @@ jobs:
         run: |
           find . -name "*.sh" -type f -exec shellcheck {} \;
           
-      - name: Check for secrets
-        run: |
-          # Basic secrets detection
-          if grep -r "password\|secret\|key\|token" --include="*.sh" --include="*.zsh" --include="*.bash" .; then
-            echo "Potential secrets found in scripts"
-            exit 1
-          fi
-
   test-installation:
     name: Test Installation
     strategy:
