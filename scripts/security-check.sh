@@ -50,7 +50,8 @@ check_secrets() {
                 continue
             fi
             
-            if grep -qi "$pattern" "$file" 2>/dev/null; then
+            if grep -Eqi "^\s*(${pattern})\s*(=|:)" "$file" 2>/dev/null || \
+               grep -Eqi "^\s*export\s+(${pattern})\s*(=|:)" "$file" 2>/dev/null; then
                 files_with_secrets+=("$file:$pattern")
             fi
         done < <(find "$DOTFILES_DIR" -type f \( -name "*.sh" -o -name "*.zsh" -o -name "*.bash" -o -name "*rc" -o -name "aliases" -o -name "exports" -o -name "functions" \) -print0)
