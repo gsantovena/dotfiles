@@ -69,7 +69,7 @@ test_dry_run() {
 
 DOTFILES_DIR="$1"
 TEST_HOME="$2"
-HOME_FILES="bash_profile aliases exports functions git gitconfig vim zshrc secrets screenrc"
+HOME_FILES="bash_profile aliases exports functions git gitconfig vim zshrc screenrc"
 CONFIG_FILES="nvim"
 
 echo "DOTFILES_DIR: $DOTFILES_DIR"
