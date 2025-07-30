@@ -24,7 +24,7 @@ print_status() {
 
 # Create a temporary test environment
 setup_test_env() {
-    print_status $BLUE "Setting up test environment..."
+    print_status "$BLUE" "Setting up test environment..."
     
     export TEST_HOME="/tmp/dotfiles-test-$$"
     export TEST_CONFIG_DIR="$TEST_HOME/.config"
@@ -42,24 +42,24 @@ setup_test_env() {
     mkdir -p "$TEST_HOME/.vim"
     echo "# Original vim config" > "$TEST_HOME/.vim/vimrc"
     
-    print_status $GREEN "Test environment created at: $TEST_HOME"
+    print_status "$GREEN" "Test environment created at: $TEST_HOME"
 }
 
 # Test the installation script syntax
 test_script_syntax() {
-    print_status $BLUE "Testing installation script syntax..."
+    print_status "$BLUE" "Testing installation script syntax..."
     
     if bash -n "$DOTFILES_DIR/install-dotfiles.sh"; then
-        print_status $GREEN "✅ Installation script syntax is valid"
+        print_status "$GREEN" "✅ Installation script syntax is valid"
     else
-        print_status $RED "❌ Installation script has syntax errors"
+        print_status "$RED" "❌ Installation script has syntax errors"
         return 1
     fi
 }
 
 # Test dry-run installation
 test_dry_run() {
-    print_status $BLUE "Testing dry-run installation..."
+    print_status "$BLUE" "Testing dry-run installation..."
     
     # Create a modified version of the install script for testing
     local test_script="$TEST_HOME/test-install.sh"
@@ -119,16 +119,16 @@ EOF
     chmod +x "$test_script"
     
     if "$test_script" "$DOTFILES_DIR" "$TEST_HOME"; then
-        print_status $GREEN "✅ Dry-run installation completed successfully"
+        print_status "$GREEN" "✅ Dry-run installation completed successfully"
     else
-        print_status $RED "❌ Dry-run installation failed"
+        print_status "$RED" "❌ Dry-run installation failed"
         return 1
     fi
 }
 
 # Test actual installation in test environment
 test_actual_install() {
-    print_status $BLUE "Testing actual installation in test environment..."
+    print_status "$BLUE" "Testing actual installation in test environment..."
     
     # Save original HOME
     local original_home="$HOME"
@@ -142,40 +142,40 @@ test_actual_install() {
     # Run the actual install script
     cd "$DOTFILES_DIR"
     if ./install-dotfiles.sh; then
-        print_status $GREEN "✅ Installation completed successfully"
+        print_status "$GREEN" "✅ Installation completed successfully"
         
         # Verify some key symlinks were created
         local verification_failed=false
         
         if [ -L "$TEST_HOME/.zshrc" ]; then
-            print_status $GREEN "✅ .zshrc symlink created"
+            print_status "$GREEN" "✅ .zshrc symlink created"
         else
-            print_status $RED "❌ .zshrc symlink missing"
+            print_status "$RED" "❌ .zshrc symlink missing"
             verification_failed=true
         fi
         
         if [ -L "$TEST_HOME/.gitconfig" ]; then
-            print_status $GREEN "✅ .gitconfig symlink created"
+            print_status "$GREEN" "✅ .gitconfig symlink created"
         else
-            print_status $RED "❌ .gitconfig symlink missing"
+            print_status "$RED" "❌ .gitconfig symlink missing"
             verification_failed=true
         fi
         
         if [ -L "$TEST_HOME/.config/nvim" ]; then
-            print_status $GREEN "✅ .config/nvim symlink created"
+            print_status "$GREEN" "✅ .config/nvim symlink created"
         else
-            print_status $RED "❌ .config/nvim symlink missing"
+            print_status "$RED" "❌ .config/nvim symlink missing"
             verification_failed=true
         fi
         
         if [ "$verification_failed" = true ]; then
-            print_status $RED "❌ Some symlinks were not created correctly"
+            print_status "$RED" "❌ Some symlinks were not created correctly"
             export HOME="$original_home"
             return 1
         fi
         
     else
-        print_status $RED "❌ Installation failed"
+        print_status "$RED" "❌ Installation failed"
         export HOME="$original_home"
         return 1
     fi
@@ -186,33 +186,33 @@ test_actual_install() {
 
 # Test configuration file syntax
 test_config_syntax() {
-    print_status $BLUE "Testing configuration file syntax..."
+    print_status "$BLUE" "Testing configuration file syntax..."
     
     local syntax_errors=false
     
     # Test shell configurations
     if command -v zsh >/dev/null 2>&1; then
         if zsh -n "$DOTFILES_DIR/zshrc" 2>/dev/null; then
-            print_status $GREEN "✅ zshrc syntax is valid"
+            print_status "$GREEN" "✅ zshrc syntax is valid"
         else
-            print_status $YELLOW "⚠️  zshrc may have syntax issues (some oh-my-zsh features might not be available in test)"
+            print_status "$YELLOW" "⚠️  zshrc may have syntax issues (some oh-my-zsh features might not be available in test)"
         fi
     else
-        print_status $YELLOW "⚠️  zsh not available for syntax testing"
+        print_status "$YELLOW" "⚠️  zsh not available for syntax testing"
     fi
     
     if bash -n "$DOTFILES_DIR/bash_profile" 2>/dev/null; then
-        print_status $GREEN "✅ bash_profile syntax is valid"
+        print_status "$GREEN" "✅ bash_profile syntax is valid"
     else
-        print_status $RED "❌ bash_profile has syntax errors"
+        print_status "$RED" "❌ bash_profile has syntax errors"
         syntax_errors=true
     fi
     
     # Test git configuration
     if git config --file "$DOTFILES_DIR/gitconfig" --list >/dev/null 2>&1; then
-        print_status $GREEN "✅ gitconfig is valid"
+        print_status "$GREEN" "✅ gitconfig is valid"
     else
-        print_status $RED "❌ gitconfig has errors"
+        print_status "$RED" "❌ gitconfig has errors"
         syntax_errors=true
     fi
     
@@ -223,10 +223,10 @@ test_config_syntax() {
 
 # Cleanup test environment
 cleanup() {
-    print_status $BLUE "Cleaning up test environment..."
+    print_status "$BLUE" "Cleaning up test environment..."
     if [ -n "${TEST_HOME:-}" ] && [ -d "$TEST_HOME" ]; then
         rm -rf "$TEST_HOME"
-        print_status $GREEN "Test environment cleaned up"
+        print_status "$GREEN" "Test environment cleaned up"
     fi
 }
 
@@ -234,7 +234,7 @@ cleanup() {
 main() {
     local exit_code=0
     
-    print_status $BLUE "🧪 Starting dotfiles installation tests..."
+    print_status "$BLUE" "🧪 Starting dotfiles installation tests..."
     echo "========================================"
     
     # Set up cleanup trap
@@ -253,9 +253,9 @@ main() {
     echo "========================================"
     
     if [ $exit_code -eq 0 ]; then
-        print_status $GREEN "🎉 All installation tests passed!"
+        print_status "$GREEN" "🎉 All installation tests passed!"
     else
-        print_status $RED "❌ Some tests failed. Please review the output above."
+        print_status "$RED" "❌ Some tests failed. Please review the output above."
     fi
     
     exit $exit_code

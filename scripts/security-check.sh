@@ -27,7 +27,7 @@ print_status() {
 
 # Check for potential secrets in configuration files
 check_secrets() {
-    print_status $YELLOW "Checking for potential secrets..."
+    print_status "$YELLOW" "Checking for potential secrets..."
     
     local secret_patterns=(
         "password"
@@ -57,19 +57,19 @@ check_secrets() {
     done
     
     if [ ${#files_with_secrets[@]} -gt 0 ]; then
-        print_status $RED "⚠️  Potential secrets found:"
+        print_status "$RED" "⚠️  Potential secrets found:"
         for item in "${files_with_secrets[@]}"; do
             echo "  - $item"
         done
         check_status=1
     else
-        print_status $GREEN "✅ No obvious secrets found in configuration files"
+        print_status "$GREEN" "✅ No obvious secrets found in configuration files"
     fi
 }
 
 # Check for hardcoded email addresses
 check_emails() {
-    print_status $YELLOW "Checking for hardcoded email addresses..."
+    print_status "$YELLOW" "Checking for hardcoded email addresses..."
     
     local email_files=()
     while IFS= read -r -d '' file; do
@@ -79,19 +79,19 @@ check_emails() {
     done < <(find "$DOTFILES_DIR" -type f \( -name "*.sh" -o -name "*rc" -o -name "gitconfig" -o -name "aliases" -o -name "exports" -o -name "functions" \) -print0)
     
     if [ ${#email_files[@]} -gt 0 ]; then
-        print_status $YELLOW "⚠️  Email addresses found in:"
+        print_status "$YELLOW" "⚠️  Email addresses found in:"
         for file in "${email_files[@]}"; do
             echo "  - $file"
         done
-        print_status $YELLOW "Consider using environment variables for email addresses"
+        print_status "$YELLOW" "Consider using environment variables for email addresses"
     else
-        print_status $GREEN "✅ No hardcoded email addresses found"
+        print_status "$GREEN" "✅ No hardcoded email addresses found"
     fi
 }
 
 # Check file permissions
 check_permissions() {
-    print_status $YELLOW "Checking file permissions..."
+    print_status "$YELLOW" "Checking file permissions..."
     
     local bad_permissions=()
     while IFS= read -r -d '' file; do
@@ -104,19 +104,19 @@ check_permissions() {
     done < <(find "$DOTFILES_DIR" -type f -print0)
     
     if [ ${#bad_permissions[@]} -gt 0 ]; then
-        print_status $RED "⚠️  Files with overly permissive permissions:"
+        print_status "$RED" "⚠️  Files with overly permissive permissions:"
         for item in "${bad_permissions[@]}"; do
             echo "  - $item"
         done
         check_status=1
     else
-        print_status $GREEN "✅ File permissions look good"
+        print_status "$GREEN" "✅ File permissions look good"
     fi
 }
 
 # Check for executable files that shouldn't be
 check_executables() {
-    print_status $YELLOW "Checking for unexpected executable files..."
+    print_status "$YELLOW" "Checking for unexpected executable files..."
     
     local unexpected_executables=()
     while IFS= read -r -d '' file; do
@@ -126,22 +126,22 @@ check_executables() {
     done < <(find "$DOTFILES_DIR" -type f \( -name "*rc" -o -name "aliases" -o -name "exports" -o -name "functions" -o -name "gitconfig" \) -print0)
     
     if [ ${#unexpected_executables[@]} -gt 0 ]; then
-        print_status $YELLOW "⚠️  Unexpected executable files:"
+        print_status "$YELLOW" "⚠️  Unexpected executable files:"
         for file in "${unexpected_executables[@]}"; do
             echo "  - $file"
         done
-        print_status $YELLOW "Consider removing execute permissions if not needed"
+        print_status "$YELLOW" "Consider removing execute permissions if not needed"
     else
-        print_status $GREEN "✅ No unexpected executable files found"
+        print_status "$GREEN" "✅ No unexpected executable files found"
     fi
 }
 
 # Check .gitignore coverage
 check_gitignore() {
-    print_status $YELLOW "Checking .gitignore coverage..."
+    print_status "$YELLOW" "Checking .gitignore coverage..."
     
     if [ ! -f "$DOTFILES_DIR/.gitignore" ]; then
-        print_status $RED "❌ No .gitignore file found"
+        print_status "$RED" "❌ No .gitignore file found"
         check_status=1
         return
     fi
@@ -156,12 +156,12 @@ check_gitignore() {
     done
     
     if [ ${#missing_patterns[@]} -gt 0 ]; then
-        print_status $YELLOW "⚠️  Consider adding these patterns to .gitignore:"
+        print_status "$YELLOW" "⚠️  Consider adding these patterns to .gitignore:"
         for pattern in "${missing_patterns[@]}"; do
             echo "  - $pattern"
         done
     else
-        print_status $GREEN "✅ Good .gitignore coverage for sensitive files"
+        print_status "$GREEN" "✅ Good .gitignore coverage for sensitive files"
     fi
 }
 
@@ -181,9 +181,9 @@ main() {
     echo "----------------------------------------"
     
     if [ $check_status -eq 0 ]; then
-        print_status $GREEN "🎉 All security checks passed!"
+        print_status "$GREEN" "🎉 All security checks passed!"
     else
-        print_status $RED "⚠️  Some security issues found. Please review the output above."
+        print_status "$RED" "⚠️  Some security issues found. Please review the output above."
     fi
     
     exit $check_status
