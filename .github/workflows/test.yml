@@ -1,0 +1,82 @@
+name: Dotfiles CI/CD
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  lint:
+    name: Lint Shell Scripts
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Install shellcheck
+        run: |
+          sudo apt-get update
+          sudo apt-get install shellcheck
+      
+      - name: Lint shell scripts
+        run: |
+          find . -name "*.sh" -type f -exec shellcheck {} \;
+          
+  test-installation:
+    name: Test Installation
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Test installation script syntax
+        run: |
+          bash -n install-dotfiles.sh
+          
+      - name: Create test environment
+        run: |
+          # Create a temporary home directory for testing
+          export TEST_HOME="/tmp/test-home"
+          mkdir -p "$TEST_HOME"
+          mkdir -p "$TEST_HOME/.config"
+          
+      - name: Test dry-run installation
+        run: |
+          # Test the installation in dry-run mode
+          bash scripts/test-install.sh
+          
+  security-scan:
+    name: Security Scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Run security checks
+        run: |
+          bash scripts/security-check.sh
+
+  validate-configs:
+    name: Validate Configurations
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Install dependencies for validation
+        run: |
+          sudo apt-get update
+          sudo apt-get install zsh git vim
+          
+      - name: Validate shell configurations
+        run: |
+          # Test zsh configuration syntax
+          zsh -n zshrc || echo "Warning: zshrc has syntax issues"
+          
+          # Test bash configuration syntax  
+          bash -n bash_profile || echo "Warning: bash_profile has syntax issues"
+          
+      - name: Validate git configuration
+        run: |
+          # Test git configuration
+          git config --file gitconfig --list > /dev/null

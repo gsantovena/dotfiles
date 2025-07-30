@@ -1,9 +1,63 @@
+# System files
 .DS_Store
 .netrwhist
+
+# Secrets and sensitive data
 secrets
+secrets/*
+!secrets/README.md
+!secrets/secrets.example
+*.key
+*.pem
+*.crt
+*.p12
+*.p8
+.env
+.env.*
+!.env.example
+
+# Log files
+*.log
+logs/
+.logs/
+
+# Temporary and backup files
+*.tmp
+*.bak
+*.swp
+*.swo
+*~
+.#*
+
+# Vim/Neovim
 vim/autoload/plug.vim.old
 vim/plugged/*
 vim/bundle/*
 vim/thesaurus/*
 vim/copilot-chat/*
 vim/copilot-chat/.chat_token
+.viminfo
+.vim/view/*
+
+# Shell history and caches
+.bash_history
+.zsh_history
+.cache/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.sublime-*
+
+# Build artifacts and dependencies
+node_modules/
+*.pyc
+__pycache__/
+.pytest_cache/
+dist/
+build/
+
+# Personal files that shouldn't be shared
+personal/
+private/
+local/
