@@ -30,7 +30,6 @@ return {
   -- Language and documentation tools
   "rizzatti/dash.vim",
   "JamshedVesuna/vim-markdown-preview",
-  "xavierchow/vim-sequence-diagram",
   "aquach/vim-http-client",
   "vitapluvia/vim-gurl",
   "skywind3000/asyncrun.vim",
