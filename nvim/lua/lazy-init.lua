@@ -19,19 +19,24 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup("plugins", {
   -- Configuration options for lazy.nvim
   defaults = {
-    lazy = false, -- should plugins be lazy-loaded?
+    lazy = false, -- plugins are not lazy-loaded by default
+    version = false, -- don't use version from rockspec
   },
   install = {
-    -- install missing plugins on startup
-    missing = true,
+    missing = true, -- install missing plugins on startup
+    colorscheme = { "default" }, -- try to load colorscheme when starting installation
   },
   checker = {
-    -- automatically check for plugin updates
-    enabled = false,
+    enabled = false, -- don't automatically check for plugin updates
+    notify = false, -- don't notify about updates
+  },
+  change_detection = {
+    enabled = true, -- automatically check for config file changes
+    notify = false, -- don't notify about config changes
   },
   performance = {
     rtp = {
-      -- disable some rtp plugins
+      -- disable some rtp plugins for better performance
       disabled_plugins = {
         "gzip",
         "matchit",
@@ -43,5 +48,8 @@ require("lazy").setup("plugins", {
         "zipPlugin",
       },
     },
+  },
+  ui = {
+    border = "rounded", -- use rounded borders for lazy UI
   },
 })

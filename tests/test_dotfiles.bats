@@ -75,6 +75,21 @@ teardown() {
     [ -f "$DOTFILES_DIR/vim/vimrc.plugin_config" ]
 }
 
+@test "neovim migration from vim-plug to lazy.nvim" {
+    # Verify init.vim no longer sources vim-plug config
+    ! grep -q "source.*vimrc.plugins" "$DOTFILES_DIR/nvim/init.vim"
+    
+    # Verify init.vim sources lazy-init instead
+    grep -q "require('lazy-init')" "$DOTFILES_DIR/nvim/init.vim"
+    
+    # Verify all original plugins are in lazy config
+    local lazy_plugins="$DOTFILES_DIR/nvim/lua/plugins/init.lua"
+    grep -q "github/copilot.vim" "$lazy_plugins"
+    grep -q "neoclide/coc.nvim" "$lazy_plugins"
+    grep -q "nvim-telescope/telescope.nvim" "$lazy_plugins"
+    grep -q "tpope/vim-surround" "$lazy_plugins"
+}
+
 @test "neovim lua files have valid basic structure" {
     # Check plugins/init.lua returns a table
     grep -q "return {" "$DOTFILES_DIR/nvim/lua/plugins/init.lua"
