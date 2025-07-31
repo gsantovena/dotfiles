@@ -18,7 +18,10 @@ set nocompatible
 let mapleader = ","
 
 source ~/.config/nvim/lua/config/showpopup.lua
-source ~/.vim/vimrc.plugins
+
+" Initialize Lazy.nvim plugin manager
+lua require('lazy-init')
+
 source ~/.vim/vimrc.plugin_config
 source ~/.vim/vimrc.ui
 source ~/.vim/vimrc.mappings

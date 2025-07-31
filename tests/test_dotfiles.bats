@@ -67,3 +67,27 @@ teardown() {
     run bash -n "$DOTFILES_DIR/bash_profile"
     [ "$status" -eq 0 ]
 }
+
+@test "neovim configuration files exist" {
+    [ -f "$DOTFILES_DIR/nvim/init.vim" ]
+    [ -f "$DOTFILES_DIR/nvim/lua/lazy-init.lua" ]
+    [ -f "$DOTFILES_DIR/nvim/lua/plugins/init.lua" ]
+    [ -f "$DOTFILES_DIR/vim/vimrc.plugin_config" ]
+}
+
+@test "neovim lua files have valid basic structure" {
+    # Check plugins/init.lua returns a table
+    grep -q "return {" "$DOTFILES_DIR/nvim/lua/plugins/init.lua"
+    
+    # Check that braces are balanced in lua files
+    local plugins_file="$DOTFILES_DIR/nvim/lua/plugins/init.lua"
+    local lazy_init_file="$DOTFILES_DIR/nvim/lua/lazy-init.lua"
+    
+    # Count braces in plugins file
+    local open_braces=$(grep -o "{" "$plugins_file" | wc -l)
+    local close_braces=$(grep -o "}" "$plugins_file" | wc -l)
+    [ "$open_braces" -eq "$close_braces" ]
+    
+    # Check lazy-init has require statement
+    grep -q 'require("lazy")' "$lazy_init_file"
+}
