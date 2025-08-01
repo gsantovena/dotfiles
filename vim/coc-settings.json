@@ -8,11 +8,7 @@
   "go.goplsOptions": {
     "usePlaceholders": true,
     "completeUnimported": true,
-    "staticcheck": true,
-    "useGoEmbed": true,
-    "useGoEmbedForTests": true,
-    "useGoEmbedForXTests": true,
-    "useGoEmbedForXTestFiles": true
+    "staticcheck": true
   },
   "suggest.noselect": true
 }
