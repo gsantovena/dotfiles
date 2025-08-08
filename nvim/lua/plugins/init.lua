@@ -49,8 +49,7 @@ return {
   -- LSP and completion (COC)
   {
     "neoclide/coc.nvim",
-    branch = "release",
-    build = "npm ci"
+    branch = "release"
   },
 
   -- Treesitter for syntax highlighting
