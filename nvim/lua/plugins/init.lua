@@ -88,4 +88,13 @@ return {
     build = "npm install -g mcp-hub@latest",
     cmd = { "MCPHub" },
   },
+  {
+    "greggh/claude-code.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+    },
+    config = function()
+      require("claude-code").setup()
+    end
+  },
 }
