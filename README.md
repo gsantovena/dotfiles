@@ -49,6 +49,7 @@ make install
 make install-dry    # Dry run
 make install        # Full installation
 make check          # Run all quality checks
+make quick-install  # Run checks then install
 ```
 
 ## 📁 Structure
@@ -57,7 +58,6 @@ make check          # Run all quality checks
 dotfiles/
 ├── .github/workflows/    # CI/CD automation
 ├── scripts/             # Installation and validation scripts
-├── secrets/             # Secure secrets management
 ├── tests/              # Automated tests
 ├── aliases             # Shell aliases
 ├── bash_profile        # Bash configuration
@@ -142,12 +142,12 @@ This repository has transitioned from Vim to Neovim for enhanced features:
 
 ### Setup Neovim Plugins
 ```bash
-# Install vim-plug for Neovim
-curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
-  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+# Plugins are managed by lazy.nvim and install automatically
+# Open Neovim to trigger plugin installation
+nvim
 
-# Install plugins
-nvim +PlugInstall +qall
+# Or manually trigger lazy.nvim
+nvim -c "Lazy install" -c "qa"
 ```
 
 ### Key Improvements
@@ -197,7 +197,7 @@ fi
 brew bundle --file=Brewfile
 
 # Update plugins
-nvim +PlugUpdate +qall
+nvim -c "Lazy update" -c "qa"
 
 # Run health checks
 make check
