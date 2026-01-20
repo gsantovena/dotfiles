@@ -29,7 +29,7 @@ return {
   
   -- Language and documentation tools
   "rizzatti/dash.vim",
-  "JamshedVesuna/vim-markdown-preview",
+--  "JamshedVesuna/vim-markdown-preview",
   "aquach/vim-http-client",
   "vitapluvia/vim-gurl",
   "skywind3000/asyncrun.vim",

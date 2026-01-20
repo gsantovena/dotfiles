@@ -80,6 +80,9 @@ xnoremap - g<C-x>
 nmap <F8> :TagbarToggle<CR>
 map <F10> :NERDTreeToggle<CR>
 
+map <C-p> :CocCommand markdown-preview-enhanced.openPreview<CR>
+map <C-S-p> :CocCommand markdown-preview-enhanced.syncPreview<CR>
+
 " Quickfix list navigation
 map <C-n> :cnext<CR>
 map <C-m> :cprevious<CR>
