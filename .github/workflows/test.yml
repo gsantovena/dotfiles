@@ -6,6 +6,13 @@ on:
   pull_request:
     branches: [ main ]
 
+permissions:
+  contents: read
+
+concurrency:
+  group: dotfiles-ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   lint:
     name: Lint Shell Scripts
@@ -16,8 +23,8 @@ jobs:
       - name: Install shellcheck
         run: |
           sudo apt-get update
-          sudo apt-get install shellcheck
-      
+          sudo apt-get install -y shellcheck
+
       - name: Lint shell scripts
         run: |
           find . -name "*.sh" -type f -exec shellcheck {} \;
@@ -34,7 +41,8 @@ jobs:
       - name: Test installation script syntax
         run: |
           bash -n install-dotfiles.sh
-          
+          bash -n scripts/install-enhanced.sh
+
       - name: Create test environment
         run: |
           # Create a temporary home directory for testing
@@ -66,7 +74,7 @@ jobs:
       - name: Install dependencies for validation
         run: |
           sudo apt-get update
-          sudo apt-get install zsh git vim
+          sudo apt-get install -y zsh git vim
           
       - name: Validate shell configurations
         run: |

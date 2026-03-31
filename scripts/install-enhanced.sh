@@ -31,11 +31,12 @@ usage() {
     echo "Usage: $0 [OPTIONS]"
     echo ""
     echo "Options:"
-    echo "  -h, --help     Show this help message"
-    echo "  -d, --dry-run  Show what would be done without making changes"
-    echo "  -b, --backup   Create backup before installation (default: true)"
-    echo "  -f, --force    Force installation even if validation fails"
-    echo "  -v, --verbose  Verbose output"
+    echo "  -h, --help       Show this help message"
+    echo "  -d, --dry-run    Show what would be done without making changes"
+    echo "  -b, --backup     Create backup before installation (default: true)"
+    echo "      --no-backup  Skip backup creation"
+    echo "  -f, --force      Force installation even if validation fails"
+    echo "  -v, --verbose    Verbose output"
     echo ""
 }
 
@@ -134,8 +135,10 @@ create_backup() {
     
     local files_backed_up=()
     
-    # Create backup directory
-    mkdir -p "$BACKUP_DIR"
+    # Create backup directory only for real installs
+    if [ "$DRY_RUN" = false ]; then
+        mkdir -p "$BACKUP_DIR"
+    fi
     
     # Backup home files
     for file in $HOME_FILES; do
@@ -161,8 +164,12 @@ create_backup() {
     done
     
     if [ ${#files_backed_up[@]} -gt 0 ]; then
-        print_status "$GREEN" "✅ Backed up ${#files_backed_up[@]} files to: $BACKUP_DIR"
-        if [ "$VERBOSE" = true ]; then
+        if [ "$DRY_RUN" = true ]; then
+            print_status "$BLUE" "Would back up ${#files_backed_up[@]} files to: $BACKUP_DIR"
+        else
+            print_status "$GREEN" "✅ Backed up ${#files_backed_up[@]} files to: $BACKUP_DIR"
+        fi
+        if [ "$VERBOSE" = true ] || [ "$DRY_RUN" = true ]; then
             for file in "${files_backed_up[@]}"; do
                 echo "  - $file"
             done
@@ -313,10 +320,10 @@ verify_installation() {
 print_next_steps() {
     print_status "$BLUE" "Next steps:"
     echo ""
-    echo "1. Install Neovim plugins:"
-    echo "   curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \\"
-    echo "     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
-    echo "   nvim +PlugInstall +qall"
+    echo "1. Bootstrap Neovim plugins with lazy.nvim:"
+    echo "   nvim"
+    echo "   # or run non-interactively:"
+    echo "   nvim -c 'Lazy install' -c 'qa'"
     echo ""
     echo "2. Install Homebrew packages:"
     echo "   brew bundle --file=$DOTFILES_DIR/Brewfile"

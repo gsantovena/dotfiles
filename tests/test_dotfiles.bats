@@ -90,6 +90,16 @@ teardown() {
     grep -q "tpope/vim-surround" "$lazy_plugins"
 }
 
+@test "enhanced installer prints lazy.nvim bootstrap guidance" {
+    mkdir -p "$TEST_TMPDIR/home"
+    run env HOME="$TEST_TMPDIR/home" bash "$DOTFILES_DIR/scripts/install-enhanced.sh" --no-backup
+    [ "$status" -eq 0 ]
+    [[ "$output" == *"lazy.nvim"* ]]
+    [[ "$output" == *"Lazy install"* ]]
+    [[ "$output" != *"PlugInstall"* ]]
+    [[ "$output" != *"plug.vim"* ]]
+}
+
 @test "neovim lua files have valid basic structure" {
     # Check plugins/init.lua returns a table
     grep -q "return {" "$DOTFILES_DIR/nvim/lua/plugins/init.lua"
