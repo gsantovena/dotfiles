@@ -5,33 +5,24 @@
 This document describes the **current Neovim-only plugin/runtime structure**.
 
 Primary sources:
-- `nvim/init.vim:6-14`
-- `nvim/coc-settings.json:1-14`
-- `nvim/lua/lazy-init.lua:4-55`
-- `nvim/lua/plugins/init.lua:1-10`
-- `nvim/lua/plugins/navigation.lua:1-48`
-- `nvim/lua/plugins/ui.lua:1-24`
-- `nvim/lua/plugins/lsp.lua:1-149`
-- `nvim/lua/plugins/ai.lua:1-93`
-- `nvim/lua/plugins/tools.lua:1-100`
-- `nvim/lua/config/options.lua:1-51`
-- `nvim/lua/config/keymaps.lua:1-50`
-- `nvim/lua/config/commands.lua:1-18`
-- `nvim/lua/config/autocmds.lua:1-21`
-- `nvim/lua/config/personal.lua:1-26`
+- `nvim/init.vim`
+- `nvim/coc-settings.json`
+- `nvim/lua/lazy-init.lua`
+- `nvim/lua/plugins/*.lua`
+- `nvim/lua/config/*.lua`
 
 ## Current runtime path
 
-1. `nvim/init.vim:6-14` is a thin Neovim entrypoint.
-2. `nvim/init.vim:10` boots `lazy.nvim` through `require('lazy-init')`.
-3. `nvim/lua/lazy-init.lua:19` loads grouped specs from `nvim/lua/plugins/init.lua:1-10`.
+1. `nvim/init.vim` is a thin Neovim entrypoint.
+2. `nvim/init.vim` boots `lazy.nvim` through `require('lazy-init')`.
+3. `nvim/lua/lazy-init.lua` loads grouped specs from `nvim/lua/plugins/init.lua`.
 4. General Neovim behavior is owned by Lua config modules:
    - `nvim/lua/config/options.lua`
    - `nvim/lua/config/keymaps.lua`
    - `nvim/lua/config/commands.lua`
    - `nvim/lua/config/autocmds.lua`
    - `nvim/lua/config/personal.lua`
-5. CoC JSON settings live in `nvim/coc-settings.json:1-14`.
+5. CoC JSON settings live in `nvim/coc-settings.json`.
 
 ## High-level findings
 
@@ -57,7 +48,7 @@ Primary sources:
 | `nvim-telescope/telescope.nvim` | `nvim/lua/plugins/navigation.lua` | `:Telescope`, ui-select integration | Keep | Low | Modern, Lua-native. |
 | `nvim-telescope/telescope-ui-select.nvim` | dependency in `navigation.lua` | UI select extension | Keep | Low | Owned with Telescope. |
 | `tpope/vim-fugitive` | `nvim/lua/plugins/git.lua` | `:Git`, `:Gdiffsplit`, etc. | Keep | Low | Clear command-scoped tool. |
-| `nvim-lualine/lualine.nvim` | `nvim/lua/plugins/ui.lua` | statusline/tabline | Keep | Low | Lua-native statusline/tabline using an evil_lualine-inspired layout. |
+| `nvim-lualine/lualine.nvim` | `nvim/lua/plugins/ui.lua` | statusline/tabline | Keep | Low | Lua-native statusline/tabline using an evil_lualine-inspired layout with CoC-aware diagnostics/status. |
 | `nvim-treesitter/nvim-treesitter` | `nvim/lua/plugins/ui.lua` | syntax highlighting | Keep | Low | Modern plugin, already colocated. |
 | `neoclide/coc.nvim` | `nvim/lua/plugins/lsp.lua` plus `nvim/coc-settings.json` | completion, navigation, explorer, diagnostics, lists | Keep now | High | UX is preserved; future replacement should be parity-driven. |
 | `github/copilot.vim` | `nvim/lua/plugins/ai.lua` | `<C-J>` accept, tab-map disable | Keep | Medium | Config and mapping are active and colocated. |

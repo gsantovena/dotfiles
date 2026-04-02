@@ -2,11 +2,12 @@
 
 ## Scope
 
-This document reevaluates the current Neovim-only plugin set and classifies plugins into:
+This document records the plugin reevaluation decisions that shaped the current
+Neovim-only setup. It classifies plugins into:
 - keep
-- remove now
-- replace next
-- replace later
+- removed
+- replaced
+- revisit later
 
 It is based on:
 - current repo usage and keymaps under `nvim/lua/plugins/*`
@@ -35,7 +36,7 @@ It is based on:
 - `asyncrun.vim`
 - `nvim-treesitter`
 
-### Removed now
+### Removed
 - `junegunn/fzf`
 - `madox2/vim-ai`
 
@@ -45,21 +46,21 @@ It is based on:
 - `majutsushi/tagbar` -> `stevearc/aerial.nvim`
 - `vim-airline/vim-airline` -> `nvim-lualine/lualine.nvim`
 
-### Replace later
+### Revisit later
+- `coc.nvim`, but only as a dedicated parity-first migration project
 
 ## Detailed recommendations
 
 ### 1. `junegunn/fzf` — removed
 
-**Current repo evidence**
-- Installed in `nvim/lua/plugins/navigation.lua`
-- No active Neovim mappings or command integrations point to it
-- Telescope is already configured and active in the same module
+**Why it was removed**
+- There were no active Neovim mappings or command integrations pointing to it.
+- Telescope already covered the active fuzzy-finding workflow.
 
 **Why remove**
-- In the current repo, `fzf` appears to be providing installation/build overhead without a visible Neovim UX surface.
-- The config does not include `fzf.vim`; it only installs the `fzf` repository itself.
-- Keeping both `fzf` and Telescope increases maintenance and bootstrap noise without demonstrated benefit.
+- In this repo, `fzf` was providing installation/build overhead without a visible Neovim UX surface.
+- The config did not include `fzf.vim`; it only installed the `fzf` repository itself.
+- Keeping both `fzf` and Telescope increased maintenance and bootstrap noise without demonstrated benefit.
 
 **Recommendation**
 - Remove `fzf` first.
@@ -69,10 +70,9 @@ It is based on:
 
 ### 2. `madox2/vim-ai` — removed
 
-**Current repo evidence**
-- Installed in `nvim/lua/plugins/ai.lua`
-- No config, keymaps, or commands in the repo point to it
-- The AI lane already includes:
+**Why it was removed**
+- No config, keymaps, or commands in the repo pointed to it.
+- The AI lane already included:
   - Copilot
   - CopilotChat
   - Claude Code
@@ -90,9 +90,8 @@ It is based on:
 
 ### 3. `nathanaelkane/vim-indent-guides` — replaced
 
-**Current repo evidence**
-- Installed in `nvim/lua/plugins/ui.lua`
-- No custom behavior or keymaps depend on it
+**Why it was replaced**
+- No custom behavior or keymaps depended on it.
 
 **Why replace**
 - `indent-blankline.nvim` is a modern Neovim indent-guide plugin with a documented `ibl` entrypoint, lazy.nvim config, and Lua-first setup.
@@ -108,9 +107,8 @@ It is based on:
 
 ### 4. `majutsushi/tagbar` — replaced
 
-**Current repo evidence**
-- Installed in `nvim/lua/plugins/navigation.lua`
-- Explicitly mapped to `<F8>`
+**Why it was replaced**
+- The outline toggle was an active workflow surface, so the replacement had to preserve `<F8>`.
 
 **Why replace**
 - This was an active, visible workflow surface, so the replacement preserved the existing F8 toggle workflow.
@@ -129,10 +127,9 @@ It is based on:
 
 ### 5. `vim-airline/vim-airline` — replaced
 
-**Current repo evidence**
-- Installed in `nvim/lua/plugins/ui.lua`
-- Active statusline owner
-- Replaced by a lualine layout adapted from the upstream `evil_lualine.lua` example
+**Why it was replaced**
+- The statusline is now fully Lua-owned.
+- The current replacement is a lualine layout adapted from the upstream `evil_lualine.lua` example.
 
 **Why replace**
 - The statusline is now fully Lua-owned, and lualine fits the Neovim-only layout better than carrying a Vimscript-era statusline plugin.
@@ -153,8 +150,8 @@ It is based on:
 
 ### 6. `dylanaraps/root.vim` — replaced with native Neovim
 
-**Current repo evidence**
-- Root detection is now handled in `nvim/lua/config/project-root.lua`
+**Why it was replaced**
+- Root detection is now handled in `nvim/lua/config/project-root.lua`.
 
 **Why replace**
 - This is a narrow behavior area that Neovim can now handle natively.
@@ -185,9 +182,9 @@ It is based on:
 
 **Risk if changed now**: high
 
-## Priority order for actual implementation
+## Remaining future work
 
-1. Revisit CoC only as a separate project
+1. Revisit CoC only as a separate project with explicit UX parity goals.
 
 ## Sources
 

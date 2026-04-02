@@ -6,9 +6,11 @@ This Neovim setup uses `lazy.nvim` as the plugin manager and treats `nvim/` as t
 
 ```text
 nvim/
+├── coc-settings.json
 ├── init.vim
 ├── lazy-lock.json
 ├── PLUGIN_AUDIT.md
+├── PLUGIN_REEVALUATION.md
 ├── lua/
 │   ├── lazy-init.lua
 │   ├── config/
@@ -17,6 +19,7 @@ nvim/
 │   │   ├── keymaps.lua
 │   │   ├── options.lua
 │   │   ├── personal.lua
+│   │   ├── project-root.lua
 │   │   └── showpopup.lua
 │   └── plugins/
 │       ├── init.lua
@@ -38,6 +41,7 @@ nvim/
   - commands
   - autocmds
   - personal popup helpers
+- `nvim/lua/config/project-root.lua` owns built-in project root detection.
 - `nvim/lua/plugins/*` owns plugin declarations and Neovim-side plugin configuration.
 
 ## Plugin organization
@@ -52,10 +56,12 @@ Current grouped plugin modules:
 6. `plugins/ai.lua`
 7. `plugins/tools.lua`
 
-## CoC and legacy compatibility
+## CoC and statusline
 
 - Neovim still uses `coc.nvim` and the existing CoC-style UX.
 - CoC JSON settings live in `nvim/coc-settings.json`.
+- `lualine.nvim` owns the statusline/tabline with an evil_lualine-inspired layout.
+- A Nerd Font such as Hack Nerd Font is recommended if you want all glyphs to render cleanly.
 
 ## Verification workflow
 
@@ -77,4 +83,4 @@ make lint
 
 1. Open `:Lazy` to inspect plugin installation state.
 2. Run `:checkhealth` for Neovim diagnostics.
-3. Review `nvim/PLUGIN_AUDIT.md` before replacing older plugins or changing CoC-era UX.
+3. Review `nvim/PLUGIN_AUDIT.md` and `nvim/PLUGIN_REEVALUATION.md` before replacing plugins or changing CoC-era UX.

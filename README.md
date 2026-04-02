@@ -19,7 +19,7 @@ make install
 ## 📋 Features
 
 - **Shell Configuration**: Zsh with oh-my-zsh, custom aliases and functions
-- **Editor Setup**: Neovim configuration with plugin management
+- **Editor Setup**: Neovim-only configuration with lazy.nvim plugin management
 - **Git Configuration**: Custom aliases and templates for efficient workflows
 - **Package Management**: Comprehensive Brewfile for development tools
 - **Security**: Proper secrets management and validation
@@ -135,9 +135,21 @@ sudo apt-get install git zsh neovim shellcheck
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 ```
 
-## 🔄 Neovim-first editor setup
+## 🔄 Neovim-only editor setup
 
-This repository is now Neovim-only for editor configuration:
+This repository now uses **Neovim as the only tracked editor configuration**.
+The active runtime lives under `nvim/`, with:
+
+- `nvim/init.vim` as the thin entrypoint
+- `nvim/lua/config/*` for general editor behavior
+- `nvim/lua/plugins/*` for grouped lazy.nvim plugin specs
+- `nvim/coc-settings.json` for CoC settings
+
+Supporting Neovim docs:
+
+- `nvim/README.md` — structure and ownership
+- `nvim/PLUGIN_AUDIT.md` — current plugin inventory
+- `nvim/PLUGIN_REEVALUATION.md` — keep/remove/replace decisions
 
 ### Setup Neovim Plugins
 ```bash
@@ -154,6 +166,7 @@ nvim -c "Lazy install" -c "qa"
 - Asynchronous processing
 - Modern architecture
 - Lua configuration support
+- No split ownership between `nvim/` and legacy Vim files
 
 ## 🏗️ CI/CD & Automation
 
@@ -232,6 +245,15 @@ sudo chown -R $USER:$USER ~/.dotfiles
 # Manual verification
 ls -la ~/.zshrc ~/.gitconfig ~/.config/nvim
 ```
+
+**Neovim statusline icons look wrong**
+```bash
+# Install a Nerd Font if needed
+brew install --cask font-hack-nerd-font
+```
+
+Then select **Hack Nerd Font** in your terminal profile. In iTerm2:
+Settings → Profiles → Text → Font.
 
 **Oh-my-zsh not loading**
 ```bash
