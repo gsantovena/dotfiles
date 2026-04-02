@@ -1,80 +1,83 @@
-# Neovim Configuration with Lazy.nvim
+# Neovim configuration
 
-This Neovim configuration has been migrated from vim-plug to lazy.nvim for better performance and modern plugin management.
+This Neovim setup uses `lazy.nvim` as the plugin manager and treats `nvim/` as the source of truth for Neovim runtime behavior.
 
-## Structure
+## Current structure
 
-```
+```text
 nvim/
-├── init.vim                    # Main configuration file
-├── coc-settings.json          # COC LSP settings
+├── init.vim
+├── lazy-lock.json
+├── PLUGIN_AUDIT.md
 ├── lua/
-│   ├── lazy-init.lua          # Lazy.nvim bootstrap and setup
-│   ├── plugins/
-│   │   └── init.lua           # Plugin specifications
-│   └── config/
-│       └── showpopup.lua      # Custom floating window function
+│   ├── lazy-init.lua
+│   ├── config/
+│   │   ├── autocmds.lua
+│   │   ├── commands.lua
+│   │   ├── keymaps.lua
+│   │   ├── options.lua
+│   │   ├── personal.lua
+│   │   └── showpopup.lua
+│   └── plugins/
+│       ├── init.lua
+│       ├── editing.lua
+│       ├── navigation.lua
+│       ├── git.lua
+│       ├── ui.lua
+│       ├── lsp.lua
+│       ├── ai.lua
+│       └── tools.lua
 ```
 
-## Plugin Manager Migration
+## Ownership model
 
-- **Before**: vim-plug (`call plug#begin()` / `call plug#end()`)
-- **After**: lazy.nvim (modern Lua-based plugin manager)
+- `nvim/init.vim` is a thin Neovim entrypoint.
+- `nvim/lua/config/*` owns general Neovim behavior:
+  - options
+  - keymaps
+  - commands
+  - autocmds
+  - personal popup helpers
+- `nvim/lua/plugins/*` owns plugin declarations and Neovim-side plugin configuration.
+- `vim/` remains for classic Vim compatibility and historical reference.
 
-## Features
+## Plugin organization
 
-### Lazy Loading
-- Telescope: Loads on command usage
-- CopilotChat: Loads on command usage  
-- Copilot: Loads on entering insert mode
-- MCPHub: Loads on command usage
+Current grouped plugin modules:
 
-### Performance Optimizations
-- Disabled unnecessary built-in plugins
-- Organized plugins by category and loading strategy
-- Efficient dependency management
+1. `plugins/editing.lua`
+2. `plugins/navigation.lua`
+3. `plugins/git.lua`
+4. `plugins/ui.lua`
+5. `plugins/lsp.lua`
+6. `plugins/ai.lua`
+7. `plugins/tools.lua`
 
-### Plugin Categories
+## CoC and legacy compatibility
 
-1. **Essential utilities**: plenary.nvim
-2. **Editing**: surround, commentary, repeat, splitjoin
-3. **File management**: fzf, root.vim, tagbar
-4. **Git**: fugitive
-5. **UI**: airline, indent-guides
-6. **Language tools**: dash, markdown-preview, http-client
-7. **Modern tools**: telescope, treesitter
-8. **LSP**: coc.nvim with extensions
-9. **AI**: copilot, copilot-chat, vim-ai
-10. **Advanced**: mcphub.nvim
+- Neovim still uses `coc.nvim` and the existing CoC-style UX.
+- CoC JSON settings live in `vim/coc-settings.json`.
+- `vim/vimrc.plugin_config` is now a **legacy Vim compatibility file**, not part of Neovim's active runtime path.
+- `vim/vimrc.all` is reference-only historical material.
 
-## Installation
+## Verification workflow
 
-When you first start Neovim after this migration:
+Useful checks after editing the configuration:
 
-1. Lazy.nvim will automatically bootstrap itself
-2. All plugins will be installed automatically
-3. COC extensions will be installed on first COC usage
-4. Build commands (like treesitter compilation) will run automatically
+```bash
+bats tests/test_dotfiles.bats
+make test
+nvim --headless '+qa'
+```
 
-## Commands
+If `shellcheck` is installed:
 
-- `:Lazy` - Open lazy.nvim plugin manager UI
-- `:Lazy update` - Update all plugins
-- `:Lazy clean` - Remove unused plugins
-- `:Lazy profile` - Profile plugin loading times
-
-## Compatibility
-
-All existing functionality is preserved:
-- All COC mappings and extensions work as before
-- Copilot and CopilotChat work as before  
-- Telescope configuration is maintained
-- All custom mappings and configurations are preserved
+```bash
+make lint
+```
 
 ## Troubleshooting
 
-If you encounter issues:
-
-1. Check `:Lazy` UI for plugin installation status
-2. Run `:checkhealth` for general Neovim diagnostics
-3. Existing COC and other plugin configurations remain in `~/.vim/vimrc.plugin_config`
+1. Open `:Lazy` to inspect plugin installation state.
+2. Run `:checkhealth` for Neovim diagnostics.
+3. Review `nvim/PLUGIN_AUDIT.md` before replacing older plugins or changing CoC-era UX.
