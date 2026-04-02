@@ -30,14 +30,13 @@ logs/
 .#*
 
 # Vim/Neovim
-vim/autoload/plug.vim.old
-vim/plugged/*
-vim/bundle/*
-vim/thesaurus/*
-vim/copilot-chat/*
-vim/copilot-chat/.chat_token
 .viminfo
 .vim/view/*
+nvim/lazy-lock.json
+
+# Local generated editor state
+.omx/
+coc/
 
 # Shell history and caches
 .bash_history
@@ -61,4 +60,3 @@ build/
 personal/
 private/
 local/
-nvim/lazy-lock.json

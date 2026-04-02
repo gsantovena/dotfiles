@@ -19,3 +19,10 @@ autocmd("BufWritePost", {
     require("config.personal").echo_vimrc_reloaded()
   end,
 })
+
+autocmd({ "BufEnter", "BufWinEnter" }, {
+  group = myvimrc,
+  callback = function(args)
+    require("config.project-root").apply(args.buf)
+  end,
+})

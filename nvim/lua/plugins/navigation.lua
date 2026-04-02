@@ -1,27 +1,30 @@
 return {
   -- File and project management
   {
-    "dylanaraps/root.vim",
-    init = function()
-      vim.g["root#auto"] = 1
-      vim.g["root#echo"] = 0
-    end,
-  },
-  {
-    "majutsushi/tagbar",
+    "stevearc/aerial.nvim",
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      "nvim-telescope/telescope.nvim",
+    },
     cmd = {
-      "Tagbar",
-      "TagbarOpen",
-      "TagbarClose",
-      "TagbarToggle",
+      "AerialOpen",
+      "AerialClose",
+      "AerialToggle",
+      "AerialNavToggle",
     },
     keys = {
-      { "<F8>", "<cmd>TagbarToggle<CR>", mode = "n" },
+      { "<F8>", "<cmd>AerialToggle!<CR>", mode = "n" },
     },
-  },
-  {
-    "junegunn/fzf",
-    build = "./install --all",
+    config = function()
+      require("aerial").setup({
+        backends = { "lsp", "treesitter", "markdown", "man" },
+        layout = {
+          default_direction = "left",
+          min_width = 30,
+        },
+        close_automatic_events = {},
+      })
+    end,
   },
 
   -- Telescope (modern fuzzy finder)

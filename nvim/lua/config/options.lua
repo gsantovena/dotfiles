@@ -48,4 +48,3 @@ opt.hlsearch = true
 opt.incsearch = true
 opt.ignorecase = true
 opt.smartcase = true
-opt.laststatus = 2

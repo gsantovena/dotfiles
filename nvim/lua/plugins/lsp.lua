@@ -121,12 +121,6 @@ return {
         command! -nargs=? Fold :call CocAction('fold', <f-args>)
         command! -nargs=0 OR :call CocActionAsync('runCommand', 'editor.action.organizeImport')
 
-        if has('nvim')
-          set statusline+=%{coc#status()}%=
-        else
-          set statusline+=%{CocStatus()}%=
-        endif
-
         nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
         nnoremap <silent><nowait> <space>e  :<C-u>CocList extensions<cr>
         nnoremap <silent><nowait> <space>c  :<C-u>CocList commands<cr>

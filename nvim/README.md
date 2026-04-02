@@ -39,7 +39,6 @@ nvim/
   - autocmds
   - personal popup helpers
 - `nvim/lua/plugins/*` owns plugin declarations and Neovim-side plugin configuration.
-- `vim/` remains for classic Vim compatibility and historical reference.
 
 ## Plugin organization
 
@@ -56,9 +55,7 @@ Current grouped plugin modules:
 ## CoC and legacy compatibility
 
 - Neovim still uses `coc.nvim` and the existing CoC-style UX.
-- CoC JSON settings live in `vim/coc-settings.json`.
-- `vim/vimrc.plugin_config` is now a **legacy Vim compatibility file**, not part of Neovim's active runtime path.
-- `vim/vimrc.all` is reference-only historical material.
+- CoC JSON settings live in `nvim/coc-settings.json`.
 
 ## Verification workflow
 

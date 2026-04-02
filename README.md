@@ -66,7 +66,6 @@ dotfiles/
 ├── git/                # Git templates and hooks
 ├── gitconfig           # Git configuration
 ├── nvim/               # Neovim configuration
-├── vim/                # Legacy Vim configuration
 ├── zshrc               # Zsh configuration
 ├── Brewfile            # Package management
 └── Makefile            # Build automation
@@ -136,9 +135,9 @@ sudo apt-get install git zsh neovim shellcheck
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 ```
 
-## 🔄 Migration from Vim to Neovim
+## 🔄 Neovim-first editor setup
 
-This repository has transitioned from Vim to Neovim for enhanced features:
+This repository is now Neovim-only for editor configuration:
 
 ### Setup Neovim Plugins
 ```bash
@@ -150,7 +149,7 @@ nvim
 nvim -c "Lazy install" -c "qa"
 ```
 
-### Key Improvements
+### Key improvements
 - Better plugin support and performance
 - Asynchronous processing
 - Modern architecture
@@ -292,4 +291,3 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 *Last updated: $(date)*
 *For DevOps recommendations and improvements, see [DEVOPS_RECOMMENDATIONS.md](DEVOPS_RECOMMENDATIONS.md)*
-

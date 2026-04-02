@@ -70,12 +70,14 @@ teardown() {
 
 @test "neovim configuration files exist" {
     [ -f "$DOTFILES_DIR/nvim/init.vim" ]
+    [ -f "$DOTFILES_DIR/nvim/coc-settings.json" ]
     [ -f "$DOTFILES_DIR/nvim/lua/lazy-init.lua" ]
     [ -f "$DOTFILES_DIR/nvim/lua/config/options.lua" ]
     [ -f "$DOTFILES_DIR/nvim/lua/config/keymaps.lua" ]
     [ -f "$DOTFILES_DIR/nvim/lua/config/commands.lua" ]
     [ -f "$DOTFILES_DIR/nvim/lua/config/autocmds.lua" ]
     [ -f "$DOTFILES_DIR/nvim/lua/config/personal.lua" ]
+    [ -f "$DOTFILES_DIR/nvim/lua/config/project-root.lua" ]
     [ -f "$DOTFILES_DIR/nvim/lua/config/showpopup.lua" ]
     [ -f "$DOTFILES_DIR/nvim/lua/plugins/init.lua" ]
     [ -f "$DOTFILES_DIR/nvim/lua/plugins/editing.lua" ]
@@ -85,7 +87,7 @@ teardown() {
     [ -f "$DOTFILES_DIR/nvim/lua/plugins/lsp.lua" ]
     [ -f "$DOTFILES_DIR/nvim/lua/plugins/ai.lua" ]
     [ -f "$DOTFILES_DIR/nvim/lua/plugins/tools.lua" ]
-    [ -f "$DOTFILES_DIR/vim/vimrc.plugin_config" ]
+    [ ! -d "$DOTFILES_DIR/vim" ]
 }
 
 @test "neovim migration from vim-plug to lazy.nvim" {
@@ -99,6 +101,7 @@ teardown() {
     grep -q "require('config.commands')" "$DOTFILES_DIR/nvim/init.vim"
     grep -q "require('config.autocmds')" "$DOTFILES_DIR/nvim/init.vim"
     grep -q "require('config.personal')" "$DOTFILES_DIR/nvim/init.vim"
+    grep -q "require('config.project-root')" "$DOTFILES_DIR/nvim/init.vim"
     ! grep -q "source ~/.vim/" "$DOTFILES_DIR/nvim/init.vim"
     
     # Verify lazy imports grouped plugin modules
@@ -111,8 +114,11 @@ teardown() {
     grep -R -q "nvim-telescope/telescope.nvim" "$lazy_plugins"
     grep -R -q "tpope/vim-surround" "$lazy_plugins"
     ! grep -R -q 'ctrlpvim/ctrlp.vim' "$lazy_plugins"
+    ! grep -R -q 'junegunn/fzf' "$lazy_plugins"
+    ! grep -R -q 'dylanaraps/root.vim' "$lazy_plugins"
     ! grep -R -q 'dir = "~/.fzf"' "$lazy_plugins"
-    grep -R -q 'build = "./install --all"' "$lazy_plugins"
+    ! grep -R -q 'build = "./install --all"' "$lazy_plugins"
+    ! grep -R -q 'madox2/vim-ai' "$lazy_plugins"
 }
 
 @test "enhanced installer prints lazy.nvim bootstrap guidance" {
@@ -127,14 +133,14 @@ teardown() {
 
 @test "shared Neovim mappings do not reference removed or conflicting plugin keys" {
     local keymaps_file="$DOTFILES_DIR/nvim/lua/config/keymaps.lua"
-    local plugin_config="$DOTFILES_DIR/vim/vimrc.plugin_config"
     local navigation_plugins="$DOTFILES_DIR/nvim/lua/plugins/navigation.lua"
     local lsp_plugins="$DOTFILES_DIR/nvim/lua/plugins/lsp.lua"
     local ai_plugins="$DOTFILES_DIR/nvim/lua/plugins/ai.lua"
     local tools_plugins="$DOTFILES_DIR/nvim/lua/plugins/tools.lua"
 
     ! grep -q "NERDTreeToggle" "$lsp_plugins"
-    grep -q "TagbarToggle" "$navigation_plugins"
+    grep -q "AerialToggle" "$navigation_plugins"
+    ! grep -q "majutsushi/tagbar" "$navigation_plugins"
     grep -q "CocCommand explorer --toggle --position left" "$lsp_plugins"
     grep -q "markdown-preview-enhanced.openPreview" "$lsp_plugins"
     grep -q "CopilotChatOpen" "$ai_plugins"
@@ -143,7 +149,6 @@ teardown() {
     grep -q "<cmd>tabnew<CR>" "$keymaps_file"
     grep -q "coc-codeaction-selected" "$lsp_plugins"
     grep -q "CopilotChatAddSelection" "$ai_plugins"
-    grep -q "nmap <leader>a  <Plug>(coc-codeaction-selected)" "$plugin_config"
 }
 
 @test "neovim non-plugin options and keymaps are owned by Lua config modules" {
@@ -152,6 +157,7 @@ teardown() {
     local keymaps_file="$DOTFILES_DIR/nvim/lua/config/keymaps.lua"
     local autocmds_file="$DOTFILES_DIR/nvim/lua/config/autocmds.lua"
     local personal_file="$DOTFILES_DIR/nvim/lua/config/personal.lua"
+    local root_file="$DOTFILES_DIR/nvim/lua/config/project-root.lua"
 
     grep -q "require('config.options')" "$init_file"
     grep -q "require('config.keymaps')" "$init_file"
@@ -159,13 +165,15 @@ teardown() {
     grep -q "require('config.personal')" "$init_file"
 
     grep -q 'opt.termguicolors = true' "$options_file"
-    grep -q 'opt.laststatus = 2' "$options_file"
+    ! grep -q 'opt.laststatus = 2' "$options_file"
     ! grep -q 'statusline =' "$options_file"
     grep -q 'keymap("n", "<leader>tn"' "$keymaps_file"
     grep -q 'keymap("n", "<leader><space>"' "$keymaps_file"
     grep -q 'BufWritePost' "$autocmds_file"
+    grep -q 'BufEnter' "$autocmds_file"
     grep -q 'EchoVimrcReloaded' "$personal_file"
     grep -q 'ShowFloatingMessage' "$personal_file"
+    grep -q 'vim.fs.root' "$root_file"
 }
 
 @test "copilot mapping is owned in ai plugin config and not lazy on insert" {
@@ -179,32 +187,38 @@ teardown() {
     ! grep -q 'coc-snippets' "$lsp_plugins"
     ! grep -q 'coc-snippets-expand-jump' "$lsp_plugins"
     ! grep -q "coc_snippet_next" "$lsp_plugins"
+    ! grep -q 'set statusline+=%{coc#status()}%=' "$lsp_plugins"
+    ! grep -q 'set statusline+=%{CocStatus()}%=' "$lsp_plugins"
 }
 
-@test "airline uses ASCII-safe symbols for the current UI config" {
+@test "lualine uses the evil_lualine theme" {
     local ui_plugins="$DOTFILES_DIR/nvim/lua/plugins/ui.lua"
 
-    grep -q 'airline_powerline_fonts = 0' "$ui_plugins"
-    grep -q 'airline_symbols_ascii = 1' "$ui_plugins"
+    grep -q 'nvim-lualine/lualine.nvim' "$ui_plugins"
+    grep -q 'bg = "#202328"' "$ui_plugins"
+    grep -q 'component_separators = ""' "$ui_plugins"
+    grep -q 'section_separators = ""' "$ui_plugins"
+    grep -q 'config = setup_evil_lualine' "$ui_plugins"
+    grep -q 'sources = { "nvim_diagnostic", "coc" }' "$ui_plugins"
+    grep -q 'lukas-reineke/indent-blankline.nvim' "$ui_plugins"
+    grep -q 'main = "ibl"' "$ui_plugins"
+    ! grep -q 'vim-airline/vim-airline' "$ui_plugins"
 }
 
 @test "Neovim plugin setup for lazy-loaded plugins lives in lazy specs" {
     local lazy_plugins="$DOTFILES_DIR/nvim/lua/plugins"
-    local plugin_config="$DOTFILES_DIR/vim/vimrc.plugin_config"
+    local coc_settings="$DOTFILES_DIR/nvim/coc-settings.json"
 
     grep -R -q 'local telescope = require("telescope")' "$lazy_plugins"
+    grep -R -q 'require("aerial").setup({' "$lazy_plugins"
     grep -R -q 'telescope.load_extension("ui-select")' "$lazy_plugins"
     grep -R -q 'require("CopilotChat").setup({' "$lazy_plugins"
     grep -R -q 'require("mcphub").setup({' "$lazy_plugins"
     grep -R -q 'require("claude-code").setup({' "$lazy_plugins"
     grep -R -q 'coc_global_extensions' "$lazy_plugins"
-    grep -R -q 'airline_powerline_fonts' "$lazy_plugins"
+    grep -R -q 'lualine.setup(config)' "$lazy_plugins"
     grep -R -q 'copilot_no_tab_map' "$lazy_plugins"
-
-    ! grep -q 'require("telescope")' "$plugin_config"
-    ! grep -q 'require("CopilotChat")' "$plugin_config"
-    ! grep -q 'require("mcphub")' "$plugin_config"
-    ! grep -q 'require("claude-code")' "$plugin_config"
+    grep -q '"suggest.noselect": true' "$coc_settings"
 }
 
 @test "neovim plugin specs are split into grouped lazy modules" {

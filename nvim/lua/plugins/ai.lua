@@ -32,7 +32,6 @@ return {
       vim.keymap.set("v", "<leader>cs", "<Plug>CopilotChatAddSelection", { remap = true })
     end,
   },
-  "madox2/vim-ai",
   {
     "greggh/claude-code.nvim",
     dependencies = {
