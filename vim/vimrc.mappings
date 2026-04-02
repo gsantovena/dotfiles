@@ -78,7 +78,7 @@ xnoremap + g<C-a>
 xnoremap - g<C-x>
 
 nmap <F8> :TagbarToggle<CR>
-map <F10> :NERDTreeToggle<CR>
+nnoremap <F10> :CocCommand explorer --toggle --position left<CR>
 
 map <C-p> :CocCommand markdown-preview-enhanced.openPreview<CR>
 map <C-S-p> :CocCommand markdown-preview-enhanced.syncPreview<CR>
@@ -86,7 +86,7 @@ map <C-S-p> :CocCommand markdown-preview-enhanced.syncPreview<CR>
 " Quickfix list navigation
 map <C-n> :cnext<CR>
 map <C-m> :cprevious<CR>
-nnoremap <leader>a :cclose<CR>
+nnoremap <leader>qc :cclose<CR>
 
 nnoremap <space> za
 
