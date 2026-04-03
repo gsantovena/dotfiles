@@ -39,9 +39,6 @@ setup_test_env() {
     # Create some fake existing files to test backup behavior
     echo "# Original bash_profile" > "$TEST_HOME/.bash_profile"
     echo "# Original zshrc" > "$TEST_HOME/.zshrc"
-    mkdir -p "$TEST_HOME/.vim"
-    echo "# Original vim config" > "$TEST_HOME/.vim/vimrc"
-    
     print_status "$GREEN" "Test environment created at: $TEST_HOME"
 }
 
@@ -69,8 +66,8 @@ test_dry_run() {
 
 DOTFILES_DIR="$1"
 TEST_HOME="$2"
-HOME_FILES="bash_profile aliases exports functions git gitconfig vim zshrc screenrc"
-CONFIG_FILES="nvim"
+    HOME_FILES="bash_profile aliases exports functions git gitconfig zshrc screenrc"
+    CONFIG_FILES="nvim"
 
 echo "DOTFILES_DIR: $DOTFILES_DIR"
 echo "TEST_HOME: $TEST_HOME"

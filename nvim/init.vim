@@ -3,34 +3,13 @@
 " Migrated to Neovim
 "---------------------------------------------
 
-" Persistent Undo {{{
-let s:undoDir = "/tmp/.undodir_" . $USER
-if !isdirectory(s:undoDir)
-  call mkdir(s:undoDir, "", 0700)
-endif
-let &undodir=s:undoDir
-set undofile
-" }}} Persistent Undo
-
-let g:python3_host_prog = expand('~/.venvs/nvim/bin/python3')
-
-set nocompatible
-let mapleader = ","
-
-source ~/.config/nvim/lua/config/showpopup.lua
+lua require('config.showpopup')
+lua require('config.options')
 
 " Initialize Lazy.nvim plugin manager
 lua require('lazy-init')
-
-source ~/.vim/vimrc.plugin_config
-source ~/.vim/vimrc.ui
-source ~/.vim/vimrc.mappings
-source ~/.vim/vimrc.personal
-
-" AUTO-RELOAD VIMRC ON SAVE {{{
-augroup myvimrc
-  au!
-  au BufWritePost ~/.config/nvim/init.vim,~/.vimrc,~/.vim/vimrc*,*/vim/vimrc* so $MYVIMRC | if has('gui_running') | so $MYGVIMRC | endif | call EchoVimrcReloaded()
-augroup END
-" }}} AUTO-RELOAD VIMRC ON SAVE
-
+lua require('config.keymaps')
+lua require('config.commands')
+lua require('config.autocmds')
+lua require('config.personal')
+lua require('config.project-root')

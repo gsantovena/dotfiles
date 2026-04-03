@@ -15,7 +15,7 @@ NC='\033[0m' # No Color
 # Configuration
 HISTORY_LOGS=${HOME}/.logs
 DOTFILES_DIR=$(git rev-parse --show-toplevel)
-HOME_FILES="bash_profile aliases exports functions git gitconfig vim zshrc screenrc"
+HOME_FILES="bash_profile aliases exports functions git gitconfig zshrc screenrc"
 CONFIG_FILES="nvim"
 BACKUP_DIR="${HOME}/.dotfiles-backup-$(date +%Y%m%d_%H%M%S)"
 
@@ -226,14 +226,6 @@ install_dotfiles() {
     # Create logs directory
     if [ "$DRY_RUN" = false ]; then
         mkdir -p "$HISTORY_LOGS"
-    fi
-    
-    # Handle special case for .vim directory
-    if [ -e "${HOME}/.vim" ] && [ "$DRY_RUN" = false ]; then
-        if [ "$VERBOSE" = true ]; then
-            print_status "$YELLOW" "Removing existing .vim directory to prevent inception"
-        fi
-        rm -rf "${HOME}/.vim"
     fi
     
     local link_errors=0
