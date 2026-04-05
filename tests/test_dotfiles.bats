@@ -205,6 +205,14 @@ teardown() {
     ! grep -q 'vim-airline/vim-airline' "$ui_plugins"
 }
 
+@test "treesitter eagerly manages javascript-family parsers without auto install races" {
+    local ui_plugins="$DOTFILES_DIR/nvim/lua/plugins/ui.lua"
+
+    grep -q 'nvim-treesitter/nvim-treesitter' "$ui_plugins"
+    grep -q 'ensure_installed = { "diff", "javascript", "typescript", "tsx" }' "$ui_plugins"
+    grep -q 'auto_install = false' "$ui_plugins"
+}
+
 @test "Neovim plugin setup for lazy-loaded plugins lives in lazy specs" {
     local lazy_plugins="$DOTFILES_DIR/nvim/lua/plugins"
     local coc_settings="$DOTFILES_DIR/nvim/coc-settings.json"

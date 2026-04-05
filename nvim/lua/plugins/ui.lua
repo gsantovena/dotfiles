@@ -221,8 +221,19 @@ return {
     build = ":TSUpdate",
     config = function()
       require("nvim-treesitter.configs").setup({
-        ensure_installed = { "diff" },
-        auto_install = true,
+        ensure_installed = { 
+          "diff", 
+          "dockerfile",
+          "go",
+          "javascript", 
+          "json",
+          "markdown",
+          "python",
+          "sql",
+          "typescript", 
+          "tsx" 
+        },
+        auto_install = false,
         highlight = { enable = true },
       })
     end,
