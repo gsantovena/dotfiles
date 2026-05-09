@@ -40,8 +40,7 @@ jobs:
       
       - name: Test installation script syntax
         run: |
-          bash -n install-dotfiles.sh
-          bash -n scripts/install-enhanced.sh
+          make syntax
 
       - name: Create test environment
         run: |
@@ -52,8 +51,7 @@ jobs:
           
       - name: Test dry-run installation
         run: |
-          # Test the installation in dry-run mode
-          bash scripts/test-install.sh
+          make test
           
   security-scan:
     name: Security Scan

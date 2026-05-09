@@ -14,9 +14,10 @@ NC='\033[0m' # No Color
 
 # Configuration
 HISTORY_LOGS=${HOME}/.logs
-DOTFILES_DIR=$(git rev-parse --show-toplevel)
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+DOTFILES_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
 HOME_FILES="bash_profile aliases exports functions git gitconfig zshrc screenrc"
-CONFIG_FILES="nvim"
+CONFIG_FILES="nvim ghostty"
 BACKUP_DIR="${HOME}/.dotfiles-backup-$(date +%Y%m%d_%H%M%S)"
 
 # Function to print colored output
@@ -86,9 +87,9 @@ check_requirements() {
     
     local missing_requirements=()
     
-    # Check if we're in a git repository
-    if ! git rev-parse --show-toplevel >/dev/null 2>&1; then
-        missing_requirements+=("Must be run from within the dotfiles git repository")
+    # Check if the script is installed inside a git repository
+    if ! git -C "$DOTFILES_DIR" rev-parse --show-toplevel >/dev/null 2>&1; then
+        missing_requirements+=("Dotfiles directory is not a git repository: $DOTFILES_DIR")
     fi
     
     # Check if required directories exist
@@ -186,7 +187,8 @@ create_backup() {
 link() {
     local source="$DOTFILES_DIR/$1"
     local target="$2"
-    local target_dir=$(dirname "$target")
+    local target_dir
+    target_dir=$(dirname "$target")
     
     # Validate source exists
     if [ ! -e "$source" ]; then
@@ -207,7 +209,21 @@ link() {
     # Show what we're doing
     if [ "$DRY_RUN" = true ]; then
         echo "Would link: $source --> $target"
+        if [ -e "$target" ] || [ -L "$target" ]; then
+            echo "Would replace existing target before linking: $target"
+        fi
     else
+        if [ -L "$target" ]; then
+            rm "$target"
+        elif [ -e "$target" ]; then
+            if [ "$CREATE_BACKUP" = false ]; then
+                print_status "$RED" "❌ Target already exists and backups are disabled: $target"
+                print_status "$YELLOW" "   Re-run with --backup or move the existing path out of the way."
+                return 1
+            fi
+            rm -rf "$target"
+        fi
+
         if [ "$VERBOSE" = true ]; then
             echo "Linking: $source --> $target"
         else

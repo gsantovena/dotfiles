@@ -1,61 +1,71 @@
-.PHONY: help test lint security install install-dry backup clean
+SHELL := /bin/bash
+.SHELLFLAGS := -eu -o pipefail -c
+.DEFAULT_GOAL := help
 
-# Default target
-help:
-	@echo "Available targets:"
-	@echo "  test          - Run all tests"
-	@echo "  lint          - Run shell script linting"
-	@echo "  security      - Run security checks"
-	@echo "  install       - Install dotfiles (with backup)"
-	@echo "  install-dry   - Dry run installation"
-	@echo "  backup        - Create backup of current configs"
-	@echo "  clean         - Clean test artifacts"
-	@echo "  help          - Show this help message"
+INSTALL_SCRIPT := scripts/install-enhanced.sh
+TEST_SCRIPT := scripts/test-install.sh
+SECURITY_SCRIPT := scripts/security-check.sh
+SHELL_SCRIPTS := $(INSTALL_SCRIPT) $(TEST_SCRIPT) $(SECURITY_SCRIPT)
+BATS_TESTS := tests/test_dotfiles.bats
 
-# Run all tests
-test:
-	@echo "Running dotfiles tests..."
-	bash scripts/test-install.sh
+.PHONY: help syntax lint security test test-bats check install install-dry install-no-backup quick-install backup brew clean
 
-# Run shell script linting
-lint:
+help: ## Show available targets
+	@awk 'BEGIN {FS = ":.*##"; printf "Available targets:\n"} /^[a-zA-Z0-9_-]+:.*##/ {printf "  %-18s %s\n", $$1, $$2}' $(MAKEFILE_LIST)
+
+syntax: ## Check shell script syntax
+	@echo "Checking shell script syntax..."
+	bash -n $(SHELL_SCRIPTS)
+
+lint: syntax ## Run shellcheck when available
 	@echo "Linting shell scripts..."
 	@if command -v shellcheck >/dev/null 2>&1; then \
-		find . -name "*.sh" -type f -exec shellcheck {} \; ; \
+		shellcheck $(SHELL_SCRIPTS); \
 	else \
-		echo "shellcheck not installed. Install with: brew install shellcheck (macOS) or apt install shellcheck (Ubuntu)"; \
+		echo "shellcheck not installed; syntax checks passed."; \
+		echo "Install with: brew install shellcheck"; \
 	fi
 
-# Run security checks
-security:
+security: ## Run security checks
 	@echo "Running security checks..."
-	bash scripts/security-check.sh
+	bash $(SECURITY_SCRIPT)
 
-# Install dotfiles with enhanced script
-install:
-	@echo "Installing dotfiles..."
-	bash scripts/install-enhanced.sh --backup --verbose
+test: syntax ## Run safe install behavior tests
+	@echo "Running installation tests..."
+	bash $(TEST_SCRIPT)
 
-# Dry run installation
-install-dry:
-	@echo "Dry run installation..."
-	bash scripts/install-enhanced.sh --dry-run --verbose
+test-bats: ## Run Bats test suite when bats is available
+	@echo "Running Bats tests..."
+	@if command -v bats >/dev/null 2>&1; then \
+		bats $(BATS_TESTS); \
+	else \
+		echo "bats not installed; skipping $(BATS_TESTS)."; \
+		echo "Install with: brew install bats-core"; \
+	fi
 
-# Create backup only
-backup:
-	@echo "Creating backup..."
-	bash scripts/install-enhanced.sh --dry-run --backup
-
-# Clean test artifacts
-clean:
-	@echo "Cleaning test artifacts..."
-	rm -rf /tmp/dotfiles-test-*
-	rm -rf /tmp/test-home
-
-# Run all quality checks
-check: lint security test
+check: lint security test test-bats ## Run all quality checks
 	@echo "All quality checks completed!"
 
-# Quick setup for new systems
-quick-install: check install
+install-dry: ## Preview install without modifying your home directory
+	@echo "Dry run installation..."
+	bash $(INSTALL_SCRIPT) --dry-run --verbose
+
+install: ## Install dotfiles with backup and verbose output
+	@echo "Installing dotfiles..."
+	bash $(INSTALL_SCRIPT) --backup --verbose
+
+install-no-backup: ## Install only if no existing targets need backup
+	@echo "Installing dotfiles without backup..."
+	bash $(INSTALL_SCRIPT) --no-backup --verbose
+
+quick-install: check install ## Run checks, then install
 	@echo "Quick installation completed!"
+
+backup: install-dry ## Preview files that would be backed up during install
+
+brew: ## Install Homebrew-managed tools
+	brew bundle --file=Brewfile
+
+clean: ## Remove local test artifacts
+	@echo "Cleaning test artifacts..."
+	rm -rf /tmp/dotfiles-test-* /tmp/dotfiles-bats-* /tmp/test-home
