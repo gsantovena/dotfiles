@@ -27,12 +27,15 @@ make install
 
 ## 🔧 Installation Options
 
-### Standard Installation
+### Using Make (Recommended)
 ```bash
-./install-dotfiles.sh
+make install-dry       # Preview symlink and backup changes
+make install           # Full installation with backup and validation
+make quick-install     # Run checks, then install
+make install-no-backup # Install only if no existing targets need backup
 ```
 
-### Enhanced Installation (Recommended)
+### Direct Script Usage
 ```bash
 # Dry run to see what will be changed
 ./scripts/install-enhanced.sh --dry-run
@@ -44,20 +47,12 @@ make install
 ./scripts/install-enhanced.sh --force
 ```
 
-### Using Make (Recommended)
-```bash
-make install-dry    # Dry run
-make install        # Full installation
-make check          # Run all quality checks
-make quick-install  # Run checks then install
-```
-
 ## 📁 Structure
 
 ```
 dotfiles/
 ├── .github/workflows/    # CI/CD automation
-├── scripts/             # Installation and validation scripts
+├── scripts/             # Installation, test, and validation scripts
 ├── tests/              # Automated tests
 ├── aliases             # Shell aliases
 ├── bash_profile        # Bash configuration
@@ -197,7 +192,7 @@ fi
 
 ### Adding New Configurations
 1. Add the file to the repository
-2. Update `HOME_FILES` or `CONFIG_FILES` in install scripts
+2. Update `HOME_FILES` or `CONFIG_FILES` in `scripts/install-enhanced.sh`
 3. Test with `make test`
 4. Document any dependencies
 

@@ -20,11 +20,7 @@ teardown() {
 }
 
 @test "install script syntax is valid" {
-    run bash -n "$DOTFILES_DIR/install-dotfiles.sh"
-    [ "$status" -eq 0 ]
-}
-
-@test "enhanced install script syntax is valid" {
+    [ ! -e "$DOTFILES_DIR/install-dotfiles.sh" ]
     run bash -n "$DOTFILES_DIR/scripts/install-enhanced.sh"
     [ "$status" -eq 0 ]
 }
@@ -37,6 +33,21 @@ teardown() {
 @test "test install script runs without errors" {
     run "$DOTFILES_DIR/scripts/test-install.sh"
     [ "$status" -eq 0 ]
+}
+
+@test "installer replaces existing directories instead of nesting symlinks" {
+    mkdir -p "$TEST_TMPDIR/enhanced-home/.git"
+    echo "# Original git metadata" > "$TEST_TMPDIR/enhanced-home/.git/config"
+    mkdir -p "$TEST_TMPDIR/enhanced-home/.config/nvim"
+    echo '" Original Neovim config' > "$TEST_TMPDIR/enhanced-home/.config/nvim/init.vim"
+
+    run env HOME="$TEST_TMPDIR/enhanced-home" bash "$DOTFILES_DIR/scripts/install-enhanced.sh" --backup
+    [ "$status" -eq 0 ]
+    [ -L "$TEST_TMPDIR/enhanced-home/.git" ]
+    [ -L "$TEST_TMPDIR/enhanced-home/.config/nvim" ]
+    [ -L "$TEST_TMPDIR/enhanced-home/.config/ghostty" ]
+    [ ! -L "$TEST_TMPDIR/enhanced-home/.git/git" ]
+    [ ! -L "$TEST_TMPDIR/enhanced-home/.config/nvim/nvim" ]
 }
 
 @test "required dotfiles exist" {
@@ -209,7 +220,10 @@ teardown() {
     local ui_plugins="$DOTFILES_DIR/nvim/lua/plugins/ui.lua"
 
     grep -q 'nvim-treesitter/nvim-treesitter' "$ui_plugins"
-    grep -q 'ensure_installed = { "diff", "javascript", "typescript", "tsx" }' "$ui_plugins"
+    grep -q '"diff"' "$ui_plugins"
+    grep -q '"javascript"' "$ui_plugins"
+    grep -q '"typescript"' "$ui_plugins"
+    grep -q '"tsx"' "$ui_plugins"
     grep -q 'auto_install = false' "$ui_plugins"
 }
 

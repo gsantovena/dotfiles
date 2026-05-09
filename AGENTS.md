@@ -1,18 +1,20 @@
 # Repository Guidelines
 
 ## Project Structure & Module Organization
-This repository manages environment configuration through symlinks. Core shell and Git files at the repo root are linked into `~/.*`, and `nvim/` is linked into `~/.config/nvim`. Use `install-dotfiles.sh` for simple linking and `scripts/install-enhanced.sh` for validation, backup, and verbose installs. Editor config now lives entirely in `nvim/` for a Neovim-only setup. Automation scripts are in `scripts/`, tests in `tests/`, and Git hooks under `git/templates/hooks/`.
+This repository manages environment configuration through symlinks. Core shell and Git files at the repo root are linked into `~/.*`, and config directories such as `nvim/` and `ghostty/` are linked into `~/.config/`. Use `scripts/install-enhanced.sh` through the Makefile for validation, backup, and verbose installs. Editor config now lives entirely in `nvim/` for a Neovim-only setup. Automation scripts are in `scripts/`, tests in `tests/`, and Git hooks under `git/templates/hooks/`.
 
 ## Build, Test, and Development Commands
 Main workflows:
 
 - `make check`: runs lint, security checks, and installation tests.
 - `make test`: validates install behavior via `scripts/test-install.sh`.
-- `make lint`: runs `shellcheck` across `*.sh` files when available.
+- `make test-bats`: runs the Bats test suite when Bats is available.
+- `make lint`: runs shell syntax checks and `shellcheck` across maintained scripts when available.
 - `make security`: checks for secret leaks and unsafe config patterns.
 - `make install-dry`: previews symlink changes without modifying your home directory.
 - `make install`: performs the full install with backup and verbose output.
 - `make quick-install`: runs checks, then installs.
+- `make install-no-backup`: installs only when no existing targets need backup.
 - `brew bundle --file=Brewfile`: installs the Homebrew-managed toolchain.
 
 ## Coding Style & Naming Conventions
@@ -25,4 +27,4 @@ Primary coverage is in `tests/test_dotfiles.bats`, which checks script syntax, i
 Recent history favors short, imperative commit subjects, with a scope prefix such as `docs:` when useful. Keep messages specific, for example: `docs: update install instructions` or `Force nvim to be the EDITOR.` PRs should explain the config change, list validation commands run, and note follow-up such as `brew bundle` or opening Neovim to install plugins. Include screenshots only for UI changes or documentation imagery.
 
 ## Security & Configuration Tips
-Do not commit machine-specific secrets, tokens, or private paths unless they are already intentional repo conventions. Prefer environment variables for sensitive values and run `make security` after touching shell startup files, install scripts, or Git hooks. Installs create `~/.logs`, back up files under `~/.dotfiles-backup-*`, and link `nvim/` into `~/.config/nvim`.
+Do not commit machine-specific secrets, tokens, or private paths unless they are already intentional repo conventions. Prefer environment variables for sensitive values and run `make security` after touching shell startup files, install scripts, or Git hooks. Installs create `~/.logs`, back up files under `~/.dotfiles-backup-*`, and link config directories such as `nvim/` and `ghostty/` into `~/.config/`.

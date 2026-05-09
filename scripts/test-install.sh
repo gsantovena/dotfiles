@@ -14,6 +14,7 @@ NC='\033[0m' # No Color
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 DOTFILES_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
+INSTALL_SCRIPT="$DOTFILES_DIR/scripts/install-enhanced.sh"
 
 # Function to print colored output
 print_status() {
@@ -39,6 +40,10 @@ setup_test_env() {
     # Create some fake existing files to test backup behavior
     echo "# Original bash_profile" > "$TEST_HOME/.bash_profile"
     echo "# Original zshrc" > "$TEST_HOME/.zshrc"
+    mkdir -p "$TEST_HOME/.git"
+    echo "# Original git metadata" > "$TEST_HOME/.git/config"
+    mkdir -p "$TEST_HOME/.config/nvim"
+    echo '" Original Neovim config' > "$TEST_HOME/.config/nvim/init.vim"
     print_status "$GREEN" "Test environment created at: $TEST_HOME"
 }
 
@@ -46,10 +51,10 @@ setup_test_env() {
 test_script_syntax() {
     print_status "$BLUE" "Testing installation script syntax..."
     
-    if bash -n "$DOTFILES_DIR/install-dotfiles.sh"; then
-        print_status "$GREEN" "✅ Installation script syntax is valid"
+    if bash -n "$INSTALL_SCRIPT" "$DOTFILES_DIR/scripts/security-check.sh" "$DOTFILES_DIR/scripts/test-install.sh"; then
+        print_status "$GREEN" "✅ Script syntax is valid"
     else
-        print_status "$RED" "❌ Installation script has syntax errors"
+        print_status "$RED" "❌ Script syntax errors found"
         return 1
     fi
 }
@@ -58,64 +63,7 @@ test_script_syntax() {
 test_dry_run() {
     print_status "$BLUE" "Testing dry-run installation..."
     
-    # Create a modified version of the install script for testing
-    local test_script="$TEST_HOME/test-install.sh"
-    
-    cat > "$test_script" << 'EOF'
-#!/bin/bash
-
-DOTFILES_DIR="$1"
-TEST_HOME="$2"
-    HOME_FILES="bash_profile aliases exports functions git gitconfig zshrc screenrc"
-    CONFIG_FILES="nvim"
-
-echo "DOTFILES_DIR: $DOTFILES_DIR"
-echo "TEST_HOME: $TEST_HOME"
-echo "Files to link:"
-
-link() {
-  echo "Would link: ${DOTFILES_DIR}/${1} --> ${2}"
-  
-  # Check if source file exists
-  if [ ! -e "${DOTFILES_DIR}/${1}" ]; then
-    echo "WARNING: Source file does not exist: ${DOTFILES_DIR}/${1}"
-    return 1
-  fi
-  
-  # Check if target directory exists
-  local target_dir=$(dirname "${2}")
-  if [ ! -d "$target_dir" ]; then
-    echo "WARNING: Target directory does not exist: $target_dir"
-    return 1
-  fi
-  
-  return 0
-}
-
-# Test home files
-for FILE in ${HOME_FILES}
-do
-    if ! link "${FILE}" "${TEST_HOME}/.${FILE}"; then
-        echo "ERROR: Failed to validate linking for $FILE"
-        exit 1
-    fi
-done
-
-# Test config files
-for FILE in ${CONFIG_FILES}
-do
-    if ! link "${FILE}" "${TEST_HOME}/.config/${FILE}"; then
-        echo "ERROR: Failed to validate linking for $FILE"
-        exit 1
-    fi
-done
-
-echo "All file links validated successfully!"
-EOF
-
-    chmod +x "$test_script"
-    
-    if "$test_script" "$DOTFILES_DIR" "$TEST_HOME"; then
+    if env HOME="$TEST_HOME" bash "$INSTALL_SCRIPT" --dry-run --verbose; then
         print_status "$GREEN" "✅ Dry-run installation completed successfully"
     else
         print_status "$RED" "❌ Dry-run installation failed"
@@ -137,8 +85,7 @@ test_actual_install() {
     mkdir -p "$TEST_HOME/.logs"
     
     # Run the actual install script
-    cd "$DOTFILES_DIR"
-    if ./install-dotfiles.sh; then
+    if bash "$INSTALL_SCRIPT" --backup --verbose; then
         print_status "$GREEN" "✅ Installation completed successfully"
         
         # Verify some key symlinks were created
@@ -157,11 +104,44 @@ test_actual_install() {
             print_status "$RED" "❌ .gitconfig symlink missing"
             verification_failed=true
         fi
+
+        if [ -L "$TEST_HOME/.git" ]; then
+            print_status "$GREEN" "✅ .git symlink created"
+        else
+            print_status "$RED" "❌ .git symlink missing"
+            verification_failed=true
+        fi
+
+        if [ -L "$TEST_HOME/.git/git" ]; then
+            print_status "$RED" "❌ Nested .git/git symlink should not be created"
+            verification_failed=true
+        fi
         
         if [ -L "$TEST_HOME/.config/nvim" ]; then
             print_status "$GREEN" "✅ .config/nvim symlink created"
         else
             print_status "$RED" "❌ .config/nvim symlink missing"
+            verification_failed=true
+        fi
+
+        if [ -L "$TEST_HOME/.config/nvim/nvim" ]; then
+            print_status "$RED" "❌ Nested .config/nvim/nvim symlink should not be created"
+            verification_failed=true
+        fi
+
+        if [ -L "$TEST_HOME/.config/ghostty" ]; then
+            print_status "$GREEN" "✅ .config/ghostty symlink created"
+        else
+            print_status "$RED" "❌ .config/ghostty symlink missing"
+            verification_failed=true
+        fi
+
+        local backup_dir
+        backup_dir=$(find "$TEST_HOME" -maxdepth 1 -type d -name ".dotfiles-backup-*" | head -n 1)
+        if [ -n "$backup_dir" ] && [ -f "$backup_dir/git/config" ] && [ -f "$backup_dir/.config/nvim/init.vim" ]; then
+            print_status "$GREEN" "✅ Existing directories moved to backup before linking"
+        else
+            print_status "$RED" "❌ Existing directory backup missing"
             verification_failed=true
         fi
         
