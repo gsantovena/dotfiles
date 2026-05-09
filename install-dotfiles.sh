@@ -3,7 +3,7 @@
 HISTORY_LOGS=${HOME}/.logs
 DOTFILES_DIR=$(git rev-parse --show-toplevel)
 HOME_FILES="bash_profile aliases exports functions git gitconfig zshrc screenrc"
-CONFIG_FILES="nvim"
+CONFIG_FILES="nvim ghostty"
 
 mkdir -p "${HISTORY_LOGS}"
 
