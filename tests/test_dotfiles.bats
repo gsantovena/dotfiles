@@ -111,10 +111,32 @@ EOF
 
 @test "tmux and ghostty preserve clickable URLs" {
     grep -q 'terminal-features.*,xterm-ghostty:extkeys:hyperlinks' "$DOTFILES_DIR/tmux/tmux.conf"
+    grep -q '^set -g word-separators " "$' "$DOTFILES_DIR/tmux/tmux.conf"
     grep -q '^bind-key -n MouseDown1Pane if -F "#{mouse_hyperlink}"' "$DOTFILES_DIR/tmux/tmux.conf"
-    grep -q 'command -v open' "$DOTFILES_DIR/tmux/tmux.conf"
-    grep -q 'command -v xdg-open' "$DOTFILES_DIR/tmux/tmux.conf"
+    grep -q 'open-url.sh "#{q:mouse_hyperlink}"' "$DOTFILES_DIR/tmux/tmux.conf"
+    grep -q 'open-url.sh "#{q:mouse_word}"' "$DOTFILES_DIR/tmux/tmux.conf"
     grep -q '^link-url = true$' "$DOTFILES_DIR/ghostty/config"
+}
+
+@test "tmux URL opener normalizes plain links safely" {
+    local fake_bin="$TEST_TMPDIR/fake-bin"
+    local opened_url="$TEST_TMPDIR/opened-url"
+    mkdir -p "$fake_bin"
+
+    cat > "$fake_bin/open" <<EOF
+#!/bin/bash
+printf '%s\n' "\$1" > "$opened_url"
+EOF
+    chmod +x "$fake_bin/open"
+
+    run env PATH="$fake_bin:$PATH" "$DOTFILES_DIR/tmux/open-url.sh" '"https://example.com/path?x=1".'
+    [ "$status" -eq 0 ]
+    [ "$(cat "$opened_url")" = "https://example.com/path?x=1" ]
+
+    rm -f "$opened_url"
+    run env PATH="$fake_bin:$PATH" "$DOTFILES_DIR/tmux/open-url.sh" 'www.example.com/docs,'
+    [ "$status" -eq 0 ]
+    [ "$(cat "$opened_url")" = "https://www.example.com/docs" ]
 }
 
 @test "tmux config syntax is valid" {
@@ -122,7 +144,7 @@ EOF
         skip "tmux not available"
     fi
 
-    run tmux -f /dev/null source-file -n "$DOTFILES_DIR/tmux/tmux.conf"
+    run tmux -L "dotfiles-bats-$$" -f /dev/null start-server \; source-file -n "$DOTFILES_DIR/tmux/tmux.conf" \; kill-server
     [ "$status" -eq 0 ]
 }
 
