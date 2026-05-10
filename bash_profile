@@ -41,3 +41,7 @@ eval "$(pyenv virtualenv-init -)"
 complete -C /opt/homebrew/bin/vault vault
 
 . "$HOME/.local/bin/env"
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="/Users/gsantovena/.sdkman"
+[[ -s "/Users/gsantovena/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/gsantovena/.sdkman/bin/sdkman-init.sh"
