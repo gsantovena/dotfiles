@@ -48,3 +48,8 @@ keymap("n", "<leader>qc", "<cmd>cclose<CR>")
 keymap("n", "<space>", "za")
 
 keymap("c", "w!!", "execute 'silent! write !sudo tee % >/dev/null' <bar> edit!")
+
+keymap("n", "<C-h>", "<cmd>TmuxNavigateLeft<CR>")
+keymap("n", "<C-l>", "<cmd>TmuxNavigateRight<CR>")
+keymap("n", "<C-j>", "<cmd>TmuxNavigateDown<CR>")
+keymap("n", "<C-k>", "<cmd>TmuxNavigateUp<CR>")

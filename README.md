@@ -20,6 +20,7 @@ make install
 
 - **Shell Configuration**: Zsh with oh-my-zsh, custom aliases and functions
 - **Editor Setup**: Neovim-only configuration with lazy.nvim plugin management
+- **Terminal Multiplexer**: Tmux configuration with TPM plugin management
 - **Git Configuration**: Custom aliases and templates for efficient workflows
 - **Package Management**: Comprehensive Brewfile for development tools
 - **Security**: Proper secrets management and validation
@@ -61,6 +62,7 @@ dotfiles/
 ├── git/                # Git templates and hooks
 ├── gitconfig           # Git configuration
 ├── nvim/               # Neovim configuration
+├── tmux/               # Tmux configuration
 ├── zshrc               # Zsh configuration
 ├── Brewfile            # Package management
 └── Makefile            # Build automation
@@ -156,6 +158,19 @@ nvim
 nvim -c "Lazy install" -c "qa"
 ```
 
+## 🧩 Tmux plugin setup
+
+The installer bootstraps [TPM](https://github.com/tmux-plugins/tpm) into
+`~/.config/tmux/plugins/tpm`. Other tmux plugins are declared in `tmux/tmux.conf`
+and installed by TPM.
+
+```bash
+# After installation, reload tmux config
+tmux source-file ~/.config/tmux/tmux.conf
+
+# Then press prefix + I inside tmux to install declared plugins
+```
+
 ### Key improvements
 - Better plugin support and performance
 - Asynchronous processing
@@ -205,6 +220,9 @@ brew bundle --file=Brewfile
 
 # Update plugins
 nvim -c "Lazy update" -c "qa"
+
+# Update tmux plugins
+# Press prefix + U inside tmux
 
 # Run health checks
 make check

@@ -40,14 +40,99 @@ teardown() {
     echo "# Original git metadata" > "$TEST_TMPDIR/enhanced-home/.git/config"
     mkdir -p "$TEST_TMPDIR/enhanced-home/.config/nvim"
     echo '" Original Neovim config' > "$TEST_TMPDIR/enhanced-home/.config/nvim/init.vim"
+    mkdir -p "$TEST_TMPDIR/enhanced-home/.config/tmux"
+    echo "# Original tmux config" > "$TEST_TMPDIR/enhanced-home/.config/tmux/tmux.conf"
 
-    run env HOME="$TEST_TMPDIR/enhanced-home" bash "$DOTFILES_DIR/scripts/install-enhanced.sh" --backup
+    run env HOME="$TEST_TMPDIR/enhanced-home" DOTFILES_SKIP_TPM_BOOTSTRAP=true bash "$DOTFILES_DIR/scripts/install-enhanced.sh" --backup
     [ "$status" -eq 0 ]
     [ -L "$TEST_TMPDIR/enhanced-home/.git" ]
     [ -L "$TEST_TMPDIR/enhanced-home/.config/nvim" ]
     [ -L "$TEST_TMPDIR/enhanced-home/.config/ghostty" ]
+    [ -L "$TEST_TMPDIR/enhanced-home/.config/tmux" ]
     [ ! -L "$TEST_TMPDIR/enhanced-home/.git/git" ]
     [ ! -L "$TEST_TMPDIR/enhanced-home/.config/nvim/nvim" ]
+    [ ! -L "$TEST_TMPDIR/enhanced-home/.config/tmux/tmux" ]
+}
+
+@test "installer dry-run announces TPM bootstrap" {
+    run env HOME="$TEST_TMPDIR/dry-home" bash "$DOTFILES_DIR/scripts/install-enhanced.sh" --dry-run
+    [ "$status" -eq 0 ]
+    [[ "$output" == *"Would install TPM from https://github.com/tmux-plugins/tpm.git"* ]]
+}
+
+@test "installer bootstraps TPM into configured plugin directory" {
+    local fake_bin="$TEST_TMPDIR/fake-bin"
+    local tpm_dir="$TEST_TMPDIR/tpm"
+    local real_git
+    real_git="$(command -v git)"
+    mkdir -p "$fake_bin"
+
+    cat > "$fake_bin/git" <<EOF
+#!/bin/bash
+set -euo pipefail
+
+if [ "\${1:-}" = "clone" ]; then
+    shift
+    if [ "\${1:-}" = "--depth" ]; then
+        shift 2
+    fi
+    repo="\$1"
+    target="\$2"
+    mkdir -p "\$target"
+    printf '#!/bin/sh\n' > "\$target/tpm"
+    chmod +x "\$target/tpm"
+    printf '%s\n' "\$repo" > "\$target/cloned-from"
+    exit 0
+fi
+
+exec "$real_git" "\$@"
+EOF
+    chmod +x "$fake_bin/git"
+
+    run env PATH="$fake_bin:$PATH" HOME="$TEST_TMPDIR/bootstrap-home" TPM_INSTALL_DIR="$tpm_dir" bash "$DOTFILES_DIR/scripts/install-enhanced.sh" --backup
+    [ "$status" -eq 0 ]
+    [ -x "$tpm_dir/tpm" ]
+    [ "$(cat "$tpm_dir/cloned-from")" = "https://github.com/tmux-plugins/tpm.git" ]
+}
+
+@test "tmux config uses TPM and ignores installed plugin checkouts" {
+    grep -q "@plugin 'tmux-plugins/tpm'" "$DOTFILES_DIR/tmux/tmux.conf"
+    grep -q "run '~/.config/tmux/plugins/tpm/tpm'" "$DOTFILES_DIR/tmux/tmux.conf"
+    grep -q '^tmux/plugins/$' "$DOTFILES_DIR/.gitignore"
+}
+
+@test "tmux preserves Shift+Enter for Codex multiline input" {
+    grep -q 'terminal-features.*,xterm-ghostty:extkeys:hyperlinks' "$DOTFILES_DIR/tmux/tmux.conf"
+    grep -q '^set-option -g extended-keys always$' "$DOTFILES_DIR/tmux/tmux.conf"
+    grep -q '^set-option -g extended-keys-format csi-u$' "$DOTFILES_DIR/tmux/tmux.conf"
+    grep -q '^bind-key -n S-Enter send-keys -H 1b 5b 31 33 3b 32 75$' "$DOTFILES_DIR/tmux/tmux.conf"
+    grep -q '^keybind = shift+enter=csi:13;2u$' "$DOTFILES_DIR/ghostty/config"
+}
+
+@test "tmux and ghostty preserve clickable URLs" {
+    grep -q 'terminal-features.*,xterm-ghostty:extkeys:hyperlinks' "$DOTFILES_DIR/tmux/tmux.conf"
+    grep -q '^bind-key -n MouseDown1Pane if -F "#{mouse_hyperlink}"' "$DOTFILES_DIR/tmux/tmux.conf"
+    grep -q 'command -v open' "$DOTFILES_DIR/tmux/tmux.conf"
+    grep -q 'command -v xdg-open' "$DOTFILES_DIR/tmux/tmux.conf"
+    grep -q '^link-url = true$' "$DOTFILES_DIR/ghostty/config"
+}
+
+@test "tmux config syntax is valid" {
+    if ! command -v tmux >/dev/null 2>&1; then
+        skip "tmux not available"
+    fi
+
+    run tmux -f /dev/null source-file -n "$DOTFILES_DIR/tmux/tmux.conf"
+    [ "$status" -eq 0 ]
+}
+
+@test "ghostty config syntax is valid when ghostty is available" {
+    if ! command -v ghostty >/dev/null 2>&1; then
+        skip "ghostty not available"
+    fi
+
+    run ghostty +validate-config --config-file="$DOTFILES_DIR/ghostty/config"
+    [ "$status" -eq 0 ]
 }
 
 @test "required dotfiles exist" {

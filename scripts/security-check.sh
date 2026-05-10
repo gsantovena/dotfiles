@@ -97,7 +97,8 @@ check_permissions() {
     local bad_permissions=()
     while IFS= read -r -d '' file; do
         if [ -f "$file" ]; then
-            local perms=$(stat -c "%a" "$file" 2>/dev/null || stat -f "%Lp" "$file" 2>/dev/null)
+            local perms
+            perms=$(stat -c "%a" "$file" 2>/dev/null || stat -f "%Lp" "$file" 2>/dev/null)
             if [ "${perms: -1}" = "7" ] || [ "${perms: -2:1}" = "7" ]; then
                 bad_permissions+=("$file:$perms")
             fi
