@@ -174,6 +174,10 @@ EOF
     [ -f "$DOTFILES_DIR/zsh/55-aliases.zsh" ]
     [ -f "$DOTFILES_DIR/zsh/60-zmv.zsh" ]
     [ -f "$DOTFILES_DIR/zsh/70-named-directories.zsh" ]
+
+    [ -d "$DOTFILES_DIR/ohmyposh" ]
+    [ -f "$DOTFILES_DIR/ohmyposh/zen.toml" ]
+    [ -f "$DOTFILES_DIR/ohmyposh/default.toml" ]
 }
 
 @test "git configuration is valid" {
@@ -187,7 +191,7 @@ EOF
         skip "zsh not available"
     fi
     
-    # Test basic syntax (may not catch all oh-my-zsh issues)
+    # Test basic syntax (may not catch all plugin/runtime issues)
     run zsh -n "$DOTFILES_DIR/zshrc"
     [ "$status" -eq 0 ]
 
@@ -195,6 +199,12 @@ EOF
         run zsh -n "$file"
         [ "$status" -eq 0 ]
     done
+}
+
+@test "oh-my-posh prompt configuration is installed and wired into zsh" {
+    grep -q 'CONFIG_FILES="nvim ghostty tmux ohmyposh"' "$DOTFILES_DIR/scripts/install-enhanced.sh"
+    grep -q 'brew "oh-my-posh"' "$DOTFILES_DIR/Brewfile"
+    grep -q 'oh-my-posh init zsh --config "$HOME/.config/ohmyposh/zen.toml"' "$DOTFILES_DIR/zsh/00-zinit.zsh"
 }
 
 @test "bash profile syntax" {

@@ -186,7 +186,7 @@ test_config_syntax() {
         if zsh -n "$DOTFILES_DIR/zshrc" 2>/dev/null; then
             print_status "$GREEN" "✅ zshrc syntax is valid"
         else
-            print_status "$YELLOW" "⚠️  zshrc may have syntax issues (some oh-my-zsh features might not be available in test)"
+            print_status "$YELLOW" "⚠️  zshrc may have syntax issues (some plugin/runtime features might not be available in test)"
         fi
 
         for file in "$DOTFILES_DIR"/zsh/*.zsh; do
