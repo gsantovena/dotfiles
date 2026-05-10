@@ -102,11 +102,19 @@ EOF
 }
 
 @test "tmux preserves Shift+Enter for Codex multiline input" {
-    grep -q 'terminal-features.*,xterm-ghostty:extkeys' "$DOTFILES_DIR/tmux/tmux.conf"
+    grep -q 'terminal-features.*,xterm-ghostty:extkeys:hyperlinks' "$DOTFILES_DIR/tmux/tmux.conf"
     grep -q '^set-option -g extended-keys always$' "$DOTFILES_DIR/tmux/tmux.conf"
     grep -q '^set-option -g extended-keys-format csi-u$' "$DOTFILES_DIR/tmux/tmux.conf"
     grep -q '^bind-key -n S-Enter send-keys -H 1b 5b 31 33 3b 32 75$' "$DOTFILES_DIR/tmux/tmux.conf"
     grep -q '^keybind = shift+enter=csi:13;2u$' "$DOTFILES_DIR/ghostty/config"
+}
+
+@test "tmux and ghostty preserve clickable URLs" {
+    grep -q 'terminal-features.*,xterm-ghostty:extkeys:hyperlinks' "$DOTFILES_DIR/tmux/tmux.conf"
+    grep -q '^bind-key -n MouseDown1Pane if -F "#{mouse_hyperlink}"' "$DOTFILES_DIR/tmux/tmux.conf"
+    grep -q 'command -v open' "$DOTFILES_DIR/tmux/tmux.conf"
+    grep -q 'command -v xdg-open' "$DOTFILES_DIR/tmux/tmux.conf"
+    grep -q '^link-url = true$' "$DOTFILES_DIR/ghostty/config"
 }
 
 @test "tmux config syntax is valid" {
