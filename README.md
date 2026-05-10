@@ -310,7 +310,7 @@ git clone your-fork
 cd dotfiles
 
 # Make changes
-vim some-config-file
+nvim some-config-file
 
 # Test changes
 make test
@@ -330,12 +330,11 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 ## 🙏 Acknowledgments
 
-- zinit, Oh My Posh, and Oh My Zsh communities for shell enhancements
+- zinit, Oh My Posh, and Oh My Zsh snippet/plugin communities for shell enhancements
 - Vim/Neovim community for editor excellence
 - Homebrew maintainers for package management
 - Open source contributors who make development better
 
 ---
 
-*Last updated: $(date)*
-*For DevOps recommendations and improvements, see [DEVOPS_RECOMMENDATIONS.md](DEVOPS_RECOMMENDATIONS.md)*
+For the current improvement backlog, see [DEVOPS_RECOMMENDATIONS.md](DEVOPS_RECOMMENDATIONS.md).

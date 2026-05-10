@@ -204,6 +204,7 @@ EOF
 @test "oh-my-posh prompt configuration is installed and wired into zsh" {
     grep -q 'CONFIG_FILES="nvim ghostty tmux ohmyposh"' "$DOTFILES_DIR/scripts/install-enhanced.sh"
     grep -q 'brew "oh-my-posh"' "$DOTFILES_DIR/Brewfile"
+    grep -q 'brew "zoxide"' "$DOTFILES_DIR/Brewfile"
     grep -q 'oh-my-posh init zsh --config "$HOME/.config/ohmyposh/zen.toml"' "$DOTFILES_DIR/zsh/00-zinit.zsh"
 }
 
@@ -315,7 +316,7 @@ EOF
     grep -q 'keymap("n", "<leader><space>"' "$keymaps_file"
     grep -q 'BufWritePost' "$autocmds_file"
     grep -q 'BufEnter' "$autocmds_file"
-    grep -q 'EchoVimrcReloaded' "$personal_file"
+    grep -q 'EchoConfigReloaded' "$personal_file"
     grep -q 'ShowFloatingMessage' "$personal_file"
     grep -q 'vim.fs.root' "$root_file"
 }

@@ -1,27 +1,23 @@
 local augroup = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
 
-local myvimrc = augroup("myvimrc", { clear = true })
+local nvim_config = augroup("nvim_config", { clear = true })
 
 autocmd("BufWritePost", {
-  group = myvimrc,
+  group = nvim_config,
   pattern = {
     vim.fn.stdpath("config") .. "/init.vim",
-    vim.fn.expand("~/.vimrc"),
-    "~/.vim/vimrc*",
-    "*/vim/vimrc*",
+    vim.fn.stdpath("config") .. "/lua/config/*.lua",
+    vim.fn.stdpath("config") .. "/lua/plugins/*.lua",
   },
   callback = function()
     vim.cmd("source $MYVIMRC")
-    if vim.fn.has("gui_running") == 1 then
-      vim.cmd("source $MYGVIMRC")
-    end
-    require("config.personal").echo_vimrc_reloaded()
+    require("config.personal").echo_config_reloaded()
   end,
 })
 
 autocmd({ "BufEnter", "BufWinEnter" }, {
-  group = myvimrc,
+  group = nvim_config,
   callback = function(args)
     require("config.project-root").apply(args.buf)
   end,
