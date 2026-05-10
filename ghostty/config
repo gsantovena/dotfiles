@@ -2,3 +2,6 @@ font-size = 18
 window-width = 120
 window-height = 40
 macos-option-as-alt = true
+
+# Send Shift+Enter as CSI-u so TUIs such as Codex can distinguish it from Enter.
+keybind = shift+enter=csi:13;2u

@@ -44,6 +44,8 @@ setup_test_env() {
     echo "# Original git metadata" > "$TEST_HOME/.git/config"
     mkdir -p "$TEST_HOME/.config/nvim"
     echo '" Original Neovim config' > "$TEST_HOME/.config/nvim/init.vim"
+    mkdir -p "$TEST_HOME/.config/tmux"
+    echo "# Original tmux config" > "$TEST_HOME/.config/tmux/tmux.conf"
     print_status "$GREEN" "Test environment created at: $TEST_HOME"
 }
 
@@ -63,7 +65,7 @@ test_script_syntax() {
 test_dry_run() {
     print_status "$BLUE" "Testing dry-run installation..."
     
-    if env HOME="$TEST_HOME" bash "$INSTALL_SCRIPT" --dry-run --verbose; then
+    if env HOME="$TEST_HOME" DOTFILES_SKIP_TPM_BOOTSTRAP=true bash "$INSTALL_SCRIPT" --dry-run --verbose; then
         print_status "$GREEN" "✅ Dry-run installation completed successfully"
     else
         print_status "$RED" "❌ Dry-run installation failed"
@@ -85,7 +87,7 @@ test_actual_install() {
     mkdir -p "$TEST_HOME/.logs"
     
     # Run the actual install script
-    if bash "$INSTALL_SCRIPT" --backup --verbose; then
+    if DOTFILES_SKIP_TPM_BOOTSTRAP=true bash "$INSTALL_SCRIPT" --backup --verbose; then
         print_status "$GREEN" "✅ Installation completed successfully"
         
         # Verify some key symlinks were created
@@ -136,9 +138,21 @@ test_actual_install() {
             verification_failed=true
         fi
 
+        if [ -L "$TEST_HOME/.config/tmux" ]; then
+            print_status "$GREEN" "✅ .config/tmux symlink created"
+        else
+            print_status "$RED" "❌ .config/tmux symlink missing"
+            verification_failed=true
+        fi
+
+        if [ -L "$TEST_HOME/.config/tmux/tmux" ]; then
+            print_status "$RED" "❌ Nested .config/tmux/tmux symlink should not be created"
+            verification_failed=true
+        fi
+
         local backup_dir
         backup_dir=$(find "$TEST_HOME" -maxdepth 1 -type d -name ".dotfiles-backup-*" | head -n 1)
-        if [ -n "$backup_dir" ] && [ -f "$backup_dir/git/config" ] && [ -f "$backup_dir/.config/nvim/init.vim" ]; then
+        if [ -n "$backup_dir" ] && [ -f "$backup_dir/git/config" ] && [ -f "$backup_dir/.config/nvim/init.vim" ] && [ -f "$backup_dir/.config/tmux/tmux.conf" ]; then
             print_status "$GREEN" "✅ Existing directories moved to backup before linking"
         else
             print_status "$RED" "❌ Existing directory backup missing"
@@ -199,6 +213,7 @@ test_config_syntax() {
 }
 
 # Cleanup test environment
+# shellcheck disable=SC2329 # Invoked by the EXIT trap in main.
 cleanup() {
     print_status "$BLUE" "Cleaning up test environment..."
     if [ -n "${TEST_HOME:-}" ] && [ -d "$TEST_HOME" ]; then

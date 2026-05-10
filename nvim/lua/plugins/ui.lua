@@ -206,6 +206,9 @@ end
 return {
   -- UI and appearance
   {
+    "christoomey/vim-tmux-navigator",
+  },
+  {
     "nvim-lualine/lualine.nvim",
     config = setup_evil_lualine,
   },

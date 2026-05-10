@@ -60,3 +60,6 @@ build/
 personal/
 private/
 local/
+
+# Tmux Plugin Manager installs plugin checkouts here; do not track nested repos.
+tmux/plugins/

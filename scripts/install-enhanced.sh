@@ -17,8 +17,10 @@ HISTORY_LOGS=${HOME}/.logs
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 DOTFILES_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
 HOME_FILES="bash_profile aliases exports functions git gitconfig zshrc screenrc"
-CONFIG_FILES="nvim ghostty"
+CONFIG_FILES="nvim ghostty tmux"
 BACKUP_DIR="${HOME}/.dotfiles-backup-$(date +%Y%m%d_%H%M%S)"
+TPM_REPO_URL="${TPM_REPO_URL:-https://github.com/tmux-plugins/tpm.git}"
+TPM_INSTALL_DIR="${TPM_INSTALL_DIR:-$HOME/.config/tmux/plugins/tpm}"
 
 # Function to print colored output
 print_status() {
@@ -282,7 +284,8 @@ verify_installation() {
     for file in $HOME_FILES; do
         local target="$HOME/.$file"
         if [ -L "$target" ]; then
-            local link_target=$(readlink "$target")
+            local link_target
+            link_target=$(readlink "$target")
             if [ "$link_target" = "$DOTFILES_DIR/$file" ]; then
                 if [ "$VERBOSE" = true ]; then
                     print_status "$GREEN" "✅ $target correctly linked"
@@ -301,7 +304,8 @@ verify_installation() {
     for file in $CONFIG_FILES; do
         local target="$HOME/.config/$file"
         if [ -L "$target" ]; then
-            local link_target=$(readlink "$target")
+            local link_target
+            link_target=$(readlink "$target")
             if [ "$link_target" = "$DOTFILES_DIR/$file" ]; then
                 if [ "$VERBOSE" = true ]; then
                     print_status "$GREEN" "✅ $target correctly linked"
@@ -324,6 +328,53 @@ verify_installation() {
     fi
 }
 
+# Bootstrap Tmux Plugin Manager so it can install plugins declared in tmux.conf
+install_tpm() {
+    print_status "$BLUE" "Installing Tmux Plugin Manager..."
+
+    if [ "$DRY_RUN" = true ]; then
+        if [ -e "$TPM_INSTALL_DIR" ]; then
+            echo "TPM already exists at: $TPM_INSTALL_DIR"
+        else
+            echo "Would install TPM from $TPM_REPO_URL to: $TPM_INSTALL_DIR"
+        fi
+        return 0
+    fi
+
+    case "${DOTFILES_SKIP_TPM_BOOTSTRAP:-false}" in
+        1|true|TRUE|yes|YES)
+            print_status "$YELLOW" "Skipping TPM bootstrap because DOTFILES_SKIP_TPM_BOOTSTRAP is set"
+            return 0
+            ;;
+    esac
+
+    if [ -x "$TPM_INSTALL_DIR/tpm" ]; then
+        print_status "$GREEN" "✅ TPM already installed at: $TPM_INSTALL_DIR"
+        return 0
+    fi
+
+    if [ -e "$TPM_INSTALL_DIR" ]; then
+        print_status "$RED" "❌ TPM install path exists but does not contain an executable tpm script: $TPM_INSTALL_DIR"
+        print_status "$YELLOW" "   Remove the path or install TPM there manually, then re-run the installer."
+        return 1
+    fi
+
+    mkdir -p "$(dirname "$TPM_INSTALL_DIR")"
+
+    if [ "$VERBOSE" = true ]; then
+        echo "Cloning TPM: $TPM_REPO_URL --> $TPM_INSTALL_DIR"
+    fi
+
+    git clone --depth 1 "$TPM_REPO_URL" "$TPM_INSTALL_DIR"
+
+    if [ -x "$TPM_INSTALL_DIR/tpm" ]; then
+        print_status "$GREEN" "✅ TPM installed successfully"
+    else
+        print_status "$RED" "❌ TPM clone completed, but expected executable was not found: $TPM_INSTALL_DIR/tpm"
+        return 1
+    fi
+}
+
 # Print next steps
 print_next_steps() {
     print_status "$BLUE" "Next steps:"
@@ -333,14 +384,18 @@ print_next_steps() {
     echo "   # or run non-interactively:"
     echo "   nvim -c 'Lazy install' -c 'qa'"
     echo ""
-    echo "2. Install Homebrew packages:"
+    echo "2. Install tmux plugins with TPM:"
+    echo "   tmux source-file ~/.config/tmux/tmux.conf"
+    echo "   # Then press prefix + I inside tmux"
+    echo ""
+    echo "3. Install Homebrew packages:"
     echo "   brew bundle --file=$DOTFILES_DIR/Brewfile"
     echo ""
-    echo "3. Restart your shell or run:"
+    echo "4. Restart your shell or run:"
     echo "   source ~/.zshrc"
     echo ""
     if [ "$CREATE_BACKUP" = true ] && [ -d "$BACKUP_DIR" ]; then
-        echo "4. Your original files are backed up in:"
+        echo "5. Your original files are backed up in:"
         echo "   $BACKUP_DIR"
         echo ""
     fi
@@ -359,6 +414,7 @@ main() {
     create_backup
     install_dotfiles
     verify_installation
+    install_tpm
     
     echo "================================="
     
