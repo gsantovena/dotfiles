@@ -163,6 +163,17 @@ EOF
     for file in "${files[@]}"; do
         [ -f "$DOTFILES_DIR/$file" ]
     done
+
+    [ -d "$DOTFILES_DIR/zsh" ]
+    [ -f "$DOTFILES_DIR/zsh/00-zinit.zsh" ]
+    [ -f "$DOTFILES_DIR/zsh/10-shared-shell.zsh" ]
+    [ -f "$DOTFILES_DIR/zsh/20-tools.zsh" ]
+    [ -f "$DOTFILES_DIR/zsh/30-completions.zsh" ]
+    [ -f "$DOTFILES_DIR/zsh/40-vendor.zsh" ]
+    [ -f "$DOTFILES_DIR/zsh/50-keybindings.zsh" ]
+    [ -f "$DOTFILES_DIR/zsh/55-aliases.zsh" ]
+    [ -f "$DOTFILES_DIR/zsh/60-zmv.zsh" ]
+    [ -f "$DOTFILES_DIR/zsh/70-named-directories.zsh" ]
 }
 
 @test "git configuration is valid" {
@@ -179,6 +190,11 @@ EOF
     # Test basic syntax (may not catch all oh-my-zsh issues)
     run zsh -n "$DOTFILES_DIR/zshrc"
     [ "$status" -eq 0 ]
+
+    for file in "$DOTFILES_DIR"/zsh/*.zsh; do
+        run zsh -n "$file"
+        [ "$status" -eq 0 ]
+    done
 }
 
 @test "bash profile syntax" {
