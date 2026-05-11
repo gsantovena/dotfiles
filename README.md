@@ -55,17 +55,22 @@ dotfiles/
 ├── .github/workflows/    # CI/CD automation
 ├── scripts/             # Installation, test, and validation scripts
 ├── tests/              # Automated tests
-├── aliases             # Shell aliases
-├── bash_profile        # Bash configuration
-├── exports             # Environment variables
-├── functions           # Shell functions
-├── git/                # Git templates and hooks
-├── gitconfig           # Git configuration
-├── nvim/               # Neovim configuration
-├── ohmyposh/           # Oh My Posh prompt themes
-├── tmux/               # Tmux configuration
-├── zsh/                # Modular Zsh configuration
-├── zshrc               # Zsh module loader
+├── home/               # Files symlinked into ~/.* plus shell support
+│   ├── aliases         # Shell aliases
+│   ├── bash_profile    # Bash configuration
+│   ├── exports         # Environment variables
+│   ├── functions       # Shell functions
+│   ├── git/            # Git templates and hooks
+│   ├── gitconfig       # Git configuration
+│   ├── screenrc        # GNU Screen configuration
+│   ├── zsh/            # Modular Zsh configuration
+│   └── zshrc           # Zsh module loader
+├── config/             # Directories symlinked into ~/.config/*
+│   ├── ghostty/        # Ghostty terminal configuration
+│   ├── nvim/           # Neovim configuration
+│   ├── ohmyposh/       # Oh My Posh prompt themes
+│   └── tmux/           # Tmux configuration
+├── docs/               # Extended project documentation
 ├── Brewfile            # Package management
 └── Makefile            # Build automation
 ```
@@ -105,9 +110,9 @@ make check            # Complete quality validation
 ./scripts/test-install.sh
 
 # Validate configurations
-git config --file gitconfig --list
-zsh -n zshrc
-zsh -n zsh/*.zsh
+git config --file home/gitconfig --list
+zsh -n home/zshrc
+zsh -n home/zsh/*.zsh
 ```
 
 ## 📦 Requirements
@@ -115,8 +120,8 @@ zsh -n zsh/*.zsh
 ### Essential
 - **Git**: Version control
 - **Zsh**: Modern shell
-- **zinit**: Zsh plugin manager (bootstrapped automatically by `zsh/00-zinit.zsh`)
-- **Oh My Posh**: Prompt engine using configs from `ohmyposh/`
+- **zinit**: Zsh plugin manager (bootstrapped automatically by `home/zsh/00-zinit.zsh`)
+- **Oh My Posh**: Prompt engine using configs from `config/ohmyposh/`
 - **Homebrew**: Package management (macOS)
 
 ### Optional
@@ -141,18 +146,18 @@ brew bundle --file=Brewfile
 ## 🔄 Neovim-only editor setup
 
 This repository now uses **Neovim as the only tracked editor configuration**.
-The active runtime lives under `nvim/`, with:
+The active runtime lives under `config/nvim/`, with:
 
-- `nvim/init.vim` as the thin entrypoint
-- `nvim/lua/config/*` for general editor behavior
-- `nvim/lua/plugins/*` for grouped lazy.nvim plugin specs
-- `nvim/coc-settings.json` for CoC settings
+- `config/nvim/init.vim` as the thin entrypoint
+- `config/nvim/lua/config/*` for general editor behavior
+- `config/nvim/lua/plugins/*` for grouped lazy.nvim plugin specs
+- `config/nvim/coc-settings.json` for CoC settings
 
 Supporting Neovim docs:
 
-- `nvim/README.md` — structure and ownership
-- `nvim/PLUGIN_AUDIT.md` — current plugin inventory
-- `nvim/PLUGIN_REEVALUATION.md` — keep/remove/replace decisions
+- `docs/nvim/README.md` — structure and ownership
+- `docs/nvim/PLUGIN_AUDIT.md` — current plugin inventory
+- `docs/nvim/PLUGIN_REEVALUATION.md` — keep/remove/replace decisions
 
 ### Setup Neovim Plugins
 ```bash
@@ -167,7 +172,7 @@ nvim -c "Lazy install" -c "qa"
 ## 🧩 Tmux plugin setup
 
 The installer bootstraps [TPM](https://github.com/tmux-plugins/tpm) into
-`~/.config/tmux/plugins/tpm`. Other tmux plugins are declared in `tmux/tmux.conf`
+`~/.config/tmux/plugins/tpm`. Other tmux plugins are declared in `config/tmux/tmux.conf`
 and installed by TPM.
 
 ```bash
@@ -182,7 +187,7 @@ tmux source-file ~/.config/tmux/tmux.conf
 - Asynchronous processing
 - Modern architecture
 - Lua configuration support
-- No split ownership between `nvim/` and legacy Vim files
+- No split ownership between `config/nvim/` and legacy Vim files
 
 ## 🏗️ CI/CD & Automation
 
@@ -212,7 +217,7 @@ fi
 ```
 
 ### Adding New Configurations
-1. Add the file to the repository
+1. Add home-level dotfiles under `home/`, or XDG config directories under `config/`
 2. Update `HOME_FILES` or `CONFIG_FILES` in `scripts/install-enhanced.sh`
 3. Test with `make test`
 4. Document any dependencies
@@ -287,7 +292,7 @@ make install
 exec zsh
 ```
 
-The zinit bootstrap in `zsh/00-zinit.zsh` installs zinit into
+The zinit bootstrap in `home/zsh/00-zinit.zsh` installs zinit into
 `${XDG_DATA_HOME:-$HOME/.local/share}/zinit/zinit.git` on first shell startup.
 
 ### Getting Help
@@ -337,4 +342,4 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 ---
 
-For the current improvement backlog, see [DEVOPS_RECOMMENDATIONS.md](DEVOPS_RECOMMENDATIONS.md).
+For the current improvement backlog, see [docs/DEVOPS_RECOMMENDATIONS.md](docs/DEVOPS_RECOMMENDATIONS.md).

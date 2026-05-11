@@ -17,7 +17,9 @@ HISTORY_LOGS=${HOME}/.logs
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 DOTFILES_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
 HOME_FILES="bash_profile aliases exports functions git gitconfig zshrc screenrc"
+HOME_SOURCE_DIR="home"
 CONFIG_FILES="nvim ghostty tmux ohmyposh"
+CONFIG_SOURCE_DIR="config"
 BACKUP_DIR="${HOME}/.dotfiles-backup-$(date +%Y%m%d_%H%M%S)"
 TPM_REPO_URL="${TPM_REPO_URL:-https://github.com/tmux-plugins/tpm.git}"
 TPM_INSTALL_DIR="${TPM_INSTALL_DIR:-$HOME/.config/tmux/plugins/tpm}"
@@ -101,14 +103,14 @@ check_requirements() {
     
     # Check if all source files exist
     for file in $HOME_FILES; do
-        if [ ! -e "$DOTFILES_DIR/$file" ]; then
-            missing_requirements+=("Missing source file: $DOTFILES_DIR/$file")
+        if [ ! -e "$DOTFILES_DIR/$HOME_SOURCE_DIR/$file" ]; then
+            missing_requirements+=("Missing source file: $DOTFILES_DIR/$HOME_SOURCE_DIR/$file")
         fi
     done
     
     for file in $CONFIG_FILES; do
-        if [ ! -e "$DOTFILES_DIR/$file" ]; then
-            missing_requirements+=("Missing source file: $DOTFILES_DIR/$file")
+        if [ ! -e "$DOTFILES_DIR/$CONFIG_SOURCE_DIR/$file" ]; then
+            missing_requirements+=("Missing source file: $DOTFILES_DIR/$CONFIG_SOURCE_DIR/$file")
         fi
     done
     
@@ -250,14 +252,14 @@ install_dotfiles() {
     
     # Link home files
     for file in $HOME_FILES; do
-        if ! link "$file" "$HOME/.$file"; then
+        if ! link "$HOME_SOURCE_DIR/$file" "$HOME/.$file"; then
             ((link_errors++))
         fi
     done
     
     # Link config files
     for file in $CONFIG_FILES; do
-        if ! link "$file" "$HOME/.config/$file"; then
+        if ! link "$CONFIG_SOURCE_DIR/$file" "$HOME/.config/$file"; then
             ((link_errors++))
         fi
     done
@@ -286,7 +288,7 @@ verify_installation() {
         if [ -L "$target" ]; then
             local link_target
             link_target=$(readlink "$target")
-            if [ "$link_target" = "$DOTFILES_DIR/$file" ]; then
+            if [ "$link_target" = "$DOTFILES_DIR/$HOME_SOURCE_DIR/$file" ]; then
                 if [ "$VERBOSE" = true ]; then
                     print_status "$GREEN" "✅ $target correctly linked"
                 fi
@@ -306,7 +308,7 @@ verify_installation() {
         if [ -L "$target" ]; then
             local link_target
             link_target=$(readlink "$target")
-            if [ "$link_target" = "$DOTFILES_DIR/$file" ]; then
+            if [ "$link_target" = "$DOTFILES_DIR/$CONFIG_SOURCE_DIR/$file" ]; then
                 if [ "$VERBOSE" = true ]; then
                     print_status "$GREEN" "✅ $target correctly linked"
                 fi

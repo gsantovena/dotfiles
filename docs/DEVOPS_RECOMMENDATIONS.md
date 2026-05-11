@@ -9,11 +9,11 @@ and Ubuntu. The remaining work should stay incremental and test-backed.
 - `make check` runs lint, security checks, installation tests, and Bats tests.
 - `scripts/install-enhanced.sh` validates, backs up, links home files, links
   config directories, and bootstraps TPM when enabled.
-- `zshrc` is a thin loader for `zsh/*.zsh` modules.
+- `home/zshrc` is a thin loader for `home/zsh/*.zsh` modules.
 - Zsh plugins are managed by zinit; the prompt is managed by Oh My Posh from
-  `ohmyposh/`.
+  `config/ohmyposh/`.
 - Neovim is the only tracked editor runtime and uses lazy.nvim modules.
-- Tmux and Ghostty configs are tracked under `~/.config/` symlink targets.
+- Tmux and Ghostty config sources live under `config/` and are linked to `~/.config/` targets.
 
 ## Recommended Next Improvements
 
@@ -49,7 +49,7 @@ package.
 failures can otherwise be hard to diagnose.
 
 **Plan:**
-1. Add a lightweight `zsh/README.md` documenting module order and ownership.
+1. Add a lightweight `docs/zsh.md` documenting module order and ownership.
 2. Add a `make doctor-shell` target or script that checks zinit, Oh My Posh,
    fzf, zoxide, and linked config paths.
 3. Keep shell startup quiet; put diagnostics in explicit doctor commands.

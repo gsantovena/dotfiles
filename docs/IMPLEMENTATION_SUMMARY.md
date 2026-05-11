@@ -9,24 +9,24 @@ contracts.
 
 ## Shell
 
-- `zshrc` is a thin entrypoint that loads `zsh/*.zsh` in lexical order.
-- `zsh/00-zinit.zsh` bootstraps zinit, loads Zsh plugins/snippets, and initializes
+- `home/zshrc` is a thin entrypoint that loads `home/zsh/*.zsh` in lexical order.
+- `home/zsh/00-zinit.zsh` bootstraps zinit, loads Zsh plugins/snippets, and initializes
   Oh My Posh when available.
-- `ohmyposh/` contains tracked prompt themes linked to `~/.config/ohmyposh`.
-- Shared aliases, exports, and functions are sourced from `zsh/10-shared-shell.zsh`.
+- `config/ohmyposh/` contains tracked prompt themes linked to `~/.config/ohmyposh`.
+- Shared aliases, exports, and functions are sourced from `home/zsh/10-shared-shell.zsh`.
 
 ## Editor
 
 - Neovim is the only tracked editor configuration.
-- `nvim/init.vim` delegates behavior to Lua modules under `nvim/lua/config` and
-  plugin specs under `nvim/lua/plugins`.
+- `config/nvim/init.vim` delegates behavior to Lua modules under `config/nvim/lua/config` and
+  plugin specs under `config/nvim/lua/plugins`.
 - lazy.nvim owns plugin management.
 
 ## Terminal
 
-- `tmux/` is linked to `~/.config/tmux`.
+- `config/tmux/` is linked to `~/.config/tmux`.
 - The installer can bootstrap TPM unless `DOTFILES_SKIP_TPM_BOOTSTRAP` is set.
-- `ghostty/` is linked to `~/.config/ghostty`.
+- `config/ghostty/` is linked to `~/.config/ghostty`.
 
 ## Automation
 
@@ -49,10 +49,10 @@ make check
 Useful focused checks:
 
 ```bash
-zsh -n zshrc
-zsh -n zsh/*.zsh
-git config --file gitconfig --list
-oh-my-posh init zsh --config ohmyposh/zen.toml
+zsh -n home/zshrc
+zsh -n home/zsh/*.zsh
+git config --file home/gitconfig --list
+oh-my-posh init zsh --config config/ohmyposh/zen.toml
 ```
 
 ## Known Tradeoffs
