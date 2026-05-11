@@ -22,6 +22,38 @@ vim.cmd([[
   colorscheme retrobox
 ]])
 
+local transparent_highlights = {
+  "Normal",
+  "NormalNC",
+  "NormalFloat",
+  "FloatBorder",
+  "SignColumn",
+  "EndOfBuffer",
+  "FoldColumn",
+  "LineNr",
+  "NonText",
+  "StatusLine",
+  "StatusLineNC",
+  "TabLine",
+  "TabLineFill",
+  "TabLineSel",
+  "VertSplit",
+  "WinSeparator",
+}
+
+local function apply_terminal_transparency()
+  for _, group in ipairs(transparent_highlights) do
+    vim.cmd.highlight(group .. " guibg=NONE ctermbg=NONE")
+  end
+end
+
+vim.api.nvim_create_autocmd("ColorScheme", {
+  group = vim.api.nvim_create_augroup("nvim_transparent_background", { clear = true }),
+  callback = apply_terminal_transparency,
+})
+
+apply_terminal_transparency()
+
 opt.termguicolors = true
 opt.encoding = "utf-8"
 opt.number = true

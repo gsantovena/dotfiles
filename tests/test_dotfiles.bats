@@ -310,6 +310,9 @@ EOF
     grep -q "require('config.personal')" "$init_file"
 
     grep -q 'opt.termguicolors = true' "$options_file"
+    grep -q 'apply_terminal_transparency' "$options_file"
+    grep -q 'nvim_transparent_background' "$options_file"
+    grep -q 'guibg=NONE ctermbg=NONE' "$options_file"
     ! grep -q 'opt.laststatus = 2' "$options_file"
     ! grep -q 'statusline =' "$options_file"
     grep -q 'keymap("n", "<leader>tn"' "$keymaps_file"
@@ -340,7 +343,7 @@ EOF
     local ui_plugins="$DOTFILES_DIR/nvim/lua/plugins/ui.lua"
 
     grep -q 'nvim-lualine/lualine.nvim' "$ui_plugins"
-    grep -q 'bg = "#202328"' "$ui_plugins"
+    grep -q 'bg = "NONE"' "$ui_plugins"
     grep -q 'component_separators = ""' "$ui_plugins"
     grep -q 'section_separators = ""' "$ui_plugins"
     grep -q 'config = setup_evil_lualine' "$ui_plugins"
