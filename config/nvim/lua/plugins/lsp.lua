@@ -136,7 +136,7 @@ return {
         map <C-S-p> :CocCommand markdown-preview-enhanced.syncPreview<CR>
 
         nmap <leader>gs :CocCommand git.status<CR>
-        nmap <leader>gd :CocCommand git.diff<CR>
+        nmap <leader>gd :CocCommand git.chunkInfo<CR>
         nmap <leader>gl :CocCommand git.log<CR>
         nmap <leader>gb :CocCommand git.blame<CR>
       ]])
