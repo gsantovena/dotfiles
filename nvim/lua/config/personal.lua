@@ -6,8 +6,8 @@ function M.show_floating_message(msg)
   popup.show_floating(msg)
 end
 
-function M.echo_vimrc_reloaded()
-  M.show_floating_message("✅ vimrc reloaded!")
+function M.echo_config_reloaded()
+  M.show_floating_message("✅ Neovim config reloaded!")
 end
 
 function M.save_popup()
@@ -19,7 +19,7 @@ function M.save_popup_error()
 end
 
 _G.ShowFloatingMessage = M.show_floating_message
-_G.EchoVimrcReloaded = M.echo_vimrc_reloaded
+_G.EchoConfigReloaded = M.echo_config_reloaded
 _G.SavePopup = M.save_popup
 _G.SavePopupError = M.save_popup_error
 

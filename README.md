@@ -18,7 +18,7 @@ make install
 
 ## 📋 Features
 
-- **Shell Configuration**: Zsh with oh-my-zsh, custom aliases and functions
+- **Shell Configuration**: Zsh with zinit-managed plugins, Oh My Posh prompt, custom aliases, and functions
 - **Editor Setup**: Neovim-only configuration with lazy.nvim plugin management
 - **Terminal Multiplexer**: Tmux configuration with TPM plugin management
 - **Git Configuration**: Custom aliases and templates for efficient workflows
@@ -62,8 +62,10 @@ dotfiles/
 ├── git/                # Git templates and hooks
 ├── gitconfig           # Git configuration
 ├── nvim/               # Neovim configuration
+├── ohmyposh/           # Oh My Posh prompt themes
 ├── tmux/               # Tmux configuration
-├── zshrc               # Zsh configuration
+├── zsh/                # Modular Zsh configuration
+├── zshrc               # Zsh module loader
 ├── Brewfile            # Package management
 └── Makefile            # Build automation
 ```
@@ -105,13 +107,16 @@ make check            # Complete quality validation
 # Validate configurations
 git config --file gitconfig --list
 zsh -n zshrc
+zsh -n zsh/*.zsh
 ```
 
 ## 📦 Requirements
 
 ### Essential
 - **Git**: Version control
-- **Zsh**: Modern shell (oh-my-zsh recommended)
+- **Zsh**: Modern shell
+- **zinit**: Zsh plugin manager (bootstrapped automatically by `zsh/00-zinit.zsh`)
+- **Oh My Posh**: Prompt engine using configs from `ohmyposh/`
 - **Homebrew**: Package management (macOS)
 
 ### Optional
@@ -122,14 +127,15 @@ zsh -n zshrc
 ### Installation Commands
 ```bash
 # macOS
-brew install git zsh neovim shellcheck
+brew install git zsh neovim shellcheck oh-my-posh
 
 # Ubuntu/Debian
 sudo apt-get update
 sudo apt-get install git zsh neovim shellcheck
+# Install Oh My Posh with your platform package manager or from https://ohmyposh.dev
 
-# Install oh-my-zsh
-sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+# Install all Homebrew-managed tools on macOS
+brew bundle --file=Brewfile
 ```
 
 ## 🔄 Neovim-only editor setup
@@ -256,7 +262,7 @@ sudo chown -R $USER:$USER ~/.dotfiles
 ./scripts/test-install.sh
 
 # Manual verification
-ls -la ~/.zshrc ~/.gitconfig ~/.config/nvim
+ls -la ~/.zshrc ~/.gitconfig ~/.config/nvim ~/.config/ohmyposh
 ```
 
 **Neovim statusline icons look wrong**
@@ -268,14 +274,21 @@ brew install --cask font-hack-nerd-font
 Then select **Hack Nerd Font** in your terminal profile. In iTerm2:
 Settings → Profiles → Text → Font.
 
-**Oh-my-zsh not loading**
+**Zsh prompt or plugins not loading**
 ```bash
-# Install oh-my-zsh first
-sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+# Ensure Oh My Posh is installed and the prompt config is linked
+brew install oh-my-posh
+ls -la ~/.config/ohmyposh/zen.toml
+
+# Re-run the installer if the symlink is missing
+make install
 
 # Restart shell
 exec zsh
 ```
+
+The zinit bootstrap in `zsh/00-zinit.zsh` installs zinit into
+`${XDG_DATA_HOME:-$HOME/.local/share}/zinit/zinit.git` on first shell startup.
 
 ### Getting Help
 - Check GitHub Issues for known problems
@@ -297,7 +310,7 @@ git clone your-fork
 cd dotfiles
 
 # Make changes
-vim some-config-file
+nvim some-config-file
 
 # Test changes
 make test
@@ -317,12 +330,11 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 ## 🙏 Acknowledgments
 
-- Oh-my-zsh community for shell enhancements
+- zinit, Oh My Posh, and Oh My Zsh snippet/plugin communities for shell enhancements
 - Vim/Neovim community for editor excellence
 - Homebrew maintainers for package management
 - Open source contributors who make development better
 
 ---
 
-*Last updated: $(date)*
-*For DevOps recommendations and improvements, see [DEVOPS_RECOMMENDATIONS.md](DEVOPS_RECOMMENDATIONS.md)*
+For the current improvement backlog, see [DEVOPS_RECOMMENDATIONS.md](DEVOPS_RECOMMENDATIONS.md).

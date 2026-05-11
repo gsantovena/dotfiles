@@ -77,7 +77,7 @@ check_emails() {
         if grep -E "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" "$file" > /dev/null 2>&1; then
             email_files+=("$file")
         fi
-    done < <(find "$DOTFILES_DIR" -type f \( -name "*.sh" -o -name "*rc" -o -name "gitconfig" -o -name "aliases" -o -name "exports" -o -name "functions" \) -print0)
+    done < <(find "$DOTFILES_DIR" -path "$DOTFILES_DIR/.git" -prune -o -type f \( -name "*.sh" -o -name "*rc" -o -name "gitconfig" -o -name "aliases" -o -name "exports" -o -name "functions" \) -print0)
     
     if [ ${#email_files[@]} -gt 0 ]; then
         print_status "$YELLOW" "⚠️  Email addresses found in:"
@@ -122,7 +122,7 @@ check_executables() {
     
     local unexpected_executables=()
     while IFS= read -r -d '' file; do
-        if [ -x "$file" ] && [[ ! "$file" =~ \.sh$ ]] && [[ ! "$file" =~ install-dotfiles\.sh$ ]]; then
+        if [ -x "$file" ] && [[ ! "$file" =~ \.sh$ ]]; then
             unexpected_executables+=("$file")
         fi
     done < <(find "$DOTFILES_DIR" -type f \( -name "*rc" -o -name "aliases" -o -name "exports" -o -name "functions" -o -name "gitconfig" \) -print0)

@@ -3,8 +3,6 @@
 # - https://github.com/paulirish/dotfiles
 ##
 
-export VAULT_ADDR=https://vault.dm.nfl.com
-
 for file in ~/.{aliases,exports,functions,functions.extra}; do
     [ -r "$file" ] && source "$file"
 done

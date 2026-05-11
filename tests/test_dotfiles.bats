@@ -163,6 +163,21 @@ EOF
     for file in "${files[@]}"; do
         [ -f "$DOTFILES_DIR/$file" ]
     done
+
+    [ -d "$DOTFILES_DIR/zsh" ]
+    [ -f "$DOTFILES_DIR/zsh/00-zinit.zsh" ]
+    [ -f "$DOTFILES_DIR/zsh/10-shared-shell.zsh" ]
+    [ -f "$DOTFILES_DIR/zsh/20-tools.zsh" ]
+    [ -f "$DOTFILES_DIR/zsh/30-completions.zsh" ]
+    [ -f "$DOTFILES_DIR/zsh/40-vendor.zsh" ]
+    [ -f "$DOTFILES_DIR/zsh/50-keybindings.zsh" ]
+    [ -f "$DOTFILES_DIR/zsh/55-aliases.zsh" ]
+    [ -f "$DOTFILES_DIR/zsh/60-zmv.zsh" ]
+    [ -f "$DOTFILES_DIR/zsh/70-named-directories.zsh" ]
+
+    [ -d "$DOTFILES_DIR/ohmyposh" ]
+    [ -f "$DOTFILES_DIR/ohmyposh/zen.toml" ]
+    [ -f "$DOTFILES_DIR/ohmyposh/default.toml" ]
 }
 
 @test "git configuration is valid" {
@@ -176,9 +191,21 @@ EOF
         skip "zsh not available"
     fi
     
-    # Test basic syntax (may not catch all oh-my-zsh issues)
+    # Test basic syntax (may not catch all plugin/runtime issues)
     run zsh -n "$DOTFILES_DIR/zshrc"
     [ "$status" -eq 0 ]
+
+    for file in "$DOTFILES_DIR"/zsh/*.zsh; do
+        run zsh -n "$file"
+        [ "$status" -eq 0 ]
+    done
+}
+
+@test "oh-my-posh prompt configuration is installed and wired into zsh" {
+    grep -q 'CONFIG_FILES="nvim ghostty tmux ohmyposh"' "$DOTFILES_DIR/scripts/install-enhanced.sh"
+    grep -q 'brew "oh-my-posh"' "$DOTFILES_DIR/Brewfile"
+    grep -q 'brew "zoxide"' "$DOTFILES_DIR/Brewfile"
+    grep -q 'oh-my-posh init zsh --config "$HOME/.config/ohmyposh/zen.toml"' "$DOTFILES_DIR/zsh/00-zinit.zsh"
 }
 
 @test "bash profile syntax" {
@@ -289,7 +316,7 @@ EOF
     grep -q 'keymap("n", "<leader><space>"' "$keymaps_file"
     grep -q 'BufWritePost' "$autocmds_file"
     grep -q 'BufEnter' "$autocmds_file"
-    grep -q 'EchoVimrcReloaded' "$personal_file"
+    grep -q 'EchoConfigReloaded' "$personal_file"
     grep -q 'ShowFloatingMessage' "$personal_file"
     grep -q 'vim.fs.root' "$root_file"
 }
