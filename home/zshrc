@@ -1,0 +1,19 @@
+# Modular zsh configuration entrypoint.
+#
+# The real configuration lives in home/zsh/*.zsh so each concern can be updated
+# independently while this file remains safe to symlink as ~/.zshrc.
+
+_dotfiles_zshrc="${(%):-%N}"
+_dotfiles_zshrc_dir="${_dotfiles_zshrc:A:h}"
+if [[ "${_dotfiles_zshrc_dir:t}" == "home" ]]; then
+    DOTFILES_DIR="${DOTFILES_DIR:-${_dotfiles_zshrc_dir:h}}"
+else
+    DOTFILES_DIR="${DOTFILES_DIR:-$_dotfiles_zshrc_dir}"
+fi
+unset _dotfiles_zshrc _dotfiles_zshrc_dir
+
+for file in "$DOTFILES_DIR"/home/zsh/*.zsh(N); do
+    [ -r "$file" ] && source "$file"
+done
+
+unset file

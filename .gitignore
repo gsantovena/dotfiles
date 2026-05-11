@@ -32,7 +32,7 @@ logs/
 # Vim/Neovim
 .viminfo
 .vim/view/*
-nvim/lazy-lock.json
+config/nvim/lazy-lock.json
 
 # Local generated editor state
 .omx/
@@ -62,4 +62,4 @@ private/
 local/
 
 # Tmux Plugin Manager installs plugin checkouts here; do not track nested repos.
-tmux/plugins/
+config/tmux/plugins/

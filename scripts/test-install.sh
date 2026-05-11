@@ -183,13 +183,13 @@ test_config_syntax() {
     
     # Test shell configurations
     if command -v zsh >/dev/null 2>&1; then
-        if zsh -n "$DOTFILES_DIR/zshrc" 2>/dev/null; then
+        if zsh -n "$DOTFILES_DIR/home/zshrc" 2>/dev/null; then
             print_status "$GREEN" "✅ zshrc syntax is valid"
         else
             print_status "$YELLOW" "⚠️  zshrc may have syntax issues (some plugin/runtime features might not be available in test)"
         fi
 
-        for file in "$DOTFILES_DIR"/zsh/*.zsh; do
+        for file in "$DOTFILES_DIR"/home/zsh/*.zsh; do
             [ -e "$file" ] || continue
             if zsh -n "$file" 2>/dev/null; then
                 if [ "${VERBOSE:-false}" = true ]; then
@@ -203,7 +203,7 @@ test_config_syntax() {
         print_status "$YELLOW" "⚠️  zsh not available for syntax testing"
     fi
     
-    if bash -n "$DOTFILES_DIR/bash_profile" 2>/dev/null; then
+    if bash -n "$DOTFILES_DIR/home/bash_profile" 2>/dev/null; then
         print_status "$GREEN" "✅ bash_profile syntax is valid"
     else
         print_status "$RED" "❌ bash_profile has syntax errors"
@@ -211,7 +211,7 @@ test_config_syntax() {
     fi
     
     # Test git configuration
-    if git config --file "$DOTFILES_DIR/gitconfig" --list >/dev/null 2>&1; then
+    if git config --file "$DOTFILES_DIR/home/gitconfig" --list >/dev/null 2>&1; then
         print_status "$GREEN" "✅ gitconfig is valid"
     else
         print_status "$RED" "❌ gitconfig has errors"

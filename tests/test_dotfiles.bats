@@ -96,26 +96,26 @@ EOF
 }
 
 @test "tmux config uses TPM and ignores installed plugin checkouts" {
-    grep -q "@plugin 'tmux-plugins/tpm'" "$DOTFILES_DIR/tmux/tmux.conf"
-    grep -q "run '~/.config/tmux/plugins/tpm/tpm'" "$DOTFILES_DIR/tmux/tmux.conf"
-    grep -q '^tmux/plugins/$' "$DOTFILES_DIR/.gitignore"
+    grep -q "@plugin 'tmux-plugins/tpm'" "$DOTFILES_DIR/config/tmux/tmux.conf"
+    grep -q "run '~/.config/tmux/plugins/tpm/tpm'" "$DOTFILES_DIR/config/tmux/tmux.conf"
+    grep -q '^config/tmux/plugins/$' "$DOTFILES_DIR/.gitignore"
 }
 
 @test "tmux preserves Shift+Enter for Codex multiline input" {
-    grep -q 'terminal-features.*,xterm-ghostty:extkeys:hyperlinks' "$DOTFILES_DIR/tmux/tmux.conf"
-    grep -q '^set-option -g extended-keys always$' "$DOTFILES_DIR/tmux/tmux.conf"
-    grep -q '^set-option -g extended-keys-format csi-u$' "$DOTFILES_DIR/tmux/tmux.conf"
-    grep -q '^bind-key -n S-Enter send-keys -H 1b 5b 31 33 3b 32 75$' "$DOTFILES_DIR/tmux/tmux.conf"
-    grep -q '^keybind = shift+enter=csi:13;2u$' "$DOTFILES_DIR/ghostty/config"
+    grep -q 'terminal-features.*,xterm-ghostty:extkeys:hyperlinks' "$DOTFILES_DIR/config/tmux/tmux.conf"
+    grep -q '^set-option -g extended-keys always$' "$DOTFILES_DIR/config/tmux/tmux.conf"
+    grep -q '^set-option -g extended-keys-format csi-u$' "$DOTFILES_DIR/config/tmux/tmux.conf"
+    grep -q '^bind-key -n S-Enter send-keys -H 1b 5b 31 33 3b 32 75$' "$DOTFILES_DIR/config/tmux/tmux.conf"
+    grep -q '^keybind = shift+enter=csi:13;2u$' "$DOTFILES_DIR/config/ghostty/config"
 }
 
 @test "tmux and ghostty preserve clickable URLs" {
-    grep -q 'terminal-features.*,xterm-ghostty:extkeys:hyperlinks' "$DOTFILES_DIR/tmux/tmux.conf"
-    grep -q '^set -g word-separators " "$' "$DOTFILES_DIR/tmux/tmux.conf"
-    grep -q '^bind-key -n MouseDown1Pane if -F "#{mouse_hyperlink}"' "$DOTFILES_DIR/tmux/tmux.conf"
-    grep -q 'open-url.sh "#{q:mouse_hyperlink}"' "$DOTFILES_DIR/tmux/tmux.conf"
-    grep -q 'open-url.sh "#{q:mouse_word}"' "$DOTFILES_DIR/tmux/tmux.conf"
-    grep -q '^link-url = true$' "$DOTFILES_DIR/ghostty/config"
+    grep -q 'terminal-features.*,xterm-ghostty:extkeys:hyperlinks' "$DOTFILES_DIR/config/tmux/tmux.conf"
+    grep -q '^set -g word-separators " "$' "$DOTFILES_DIR/config/tmux/tmux.conf"
+    grep -q '^bind-key -n MouseDown1Pane if -F "#{mouse_hyperlink}"' "$DOTFILES_DIR/config/tmux/tmux.conf"
+    grep -q 'open-url.sh "#{q:mouse_hyperlink}"' "$DOTFILES_DIR/config/tmux/tmux.conf"
+    grep -q 'open-url.sh "#{q:mouse_word}"' "$DOTFILES_DIR/config/tmux/tmux.conf"
+    grep -q '^link-url = true$' "$DOTFILES_DIR/config/ghostty/config"
 }
 
 @test "tmux URL opener normalizes plain links safely" {
@@ -129,12 +129,12 @@ printf '%s\n' "\$1" > "$opened_url"
 EOF
     chmod +x "$fake_bin/open"
 
-    run env PATH="$fake_bin:$PATH" "$DOTFILES_DIR/tmux/open-url.sh" '"https://example.com/path?x=1".'
+    run env PATH="$fake_bin:$PATH" "$DOTFILES_DIR/config/tmux/open-url.sh" '"https://example.com/path?x=1".'
     [ "$status" -eq 0 ]
     [ "$(cat "$opened_url")" = "https://example.com/path?x=1" ]
 
     rm -f "$opened_url"
-    run env PATH="$fake_bin:$PATH" "$DOTFILES_DIR/tmux/open-url.sh" 'www.example.com/docs,'
+    run env PATH="$fake_bin:$PATH" "$DOTFILES_DIR/config/tmux/open-url.sh" 'www.example.com/docs,'
     [ "$status" -eq 0 ]
     [ "$(cat "$opened_url")" = "https://www.example.com/docs" ]
 }
@@ -144,7 +144,7 @@ EOF
         skip "tmux not available"
     fi
 
-    run tmux -L "dotfiles-bats-$$" -f /dev/null start-server \; source-file -n "$DOTFILES_DIR/tmux/tmux.conf" \; kill-server
+    run tmux -L "dotfiles-bats-$$" -f /dev/null start-server \; source-file -n "$DOTFILES_DIR/config/tmux/tmux.conf" \; kill-server
     [ "$status" -eq 0 ]
 }
 
@@ -153,35 +153,39 @@ EOF
         skip "ghostty not available"
     fi
 
-    run ghostty +validate-config --config-file="$DOTFILES_DIR/ghostty/config"
+    mkdir -p "$TEST_TMPDIR/xdg-config"
+    ln -s "$DOTFILES_DIR/config/ghostty" "$TEST_TMPDIR/xdg-config/ghostty"
+
+    run env XDG_CONFIG_HOME="$TEST_TMPDIR/xdg-config" ghostty +validate-config --config-file="$DOTFILES_DIR/config/ghostty/config"
     [ "$status" -eq 0 ]
 }
 
 @test "required dotfiles exist" {
-    local files=("zshrc" "bash_profile" "gitconfig" "aliases" "exports" "functions")
+    local files=("zshrc" "bash_profile" "gitconfig" "aliases" "exports" "functions" "screenrc")
     
     for file in "${files[@]}"; do
-        [ -f "$DOTFILES_DIR/$file" ]
+        [ -f "$DOTFILES_DIR/home/$file" ]
     done
 
-    [ -d "$DOTFILES_DIR/zsh" ]
-    [ -f "$DOTFILES_DIR/zsh/00-zinit.zsh" ]
-    [ -f "$DOTFILES_DIR/zsh/10-shared-shell.zsh" ]
-    [ -f "$DOTFILES_DIR/zsh/20-tools.zsh" ]
-    [ -f "$DOTFILES_DIR/zsh/30-completions.zsh" ]
-    [ -f "$DOTFILES_DIR/zsh/40-vendor.zsh" ]
-    [ -f "$DOTFILES_DIR/zsh/50-keybindings.zsh" ]
-    [ -f "$DOTFILES_DIR/zsh/55-aliases.zsh" ]
-    [ -f "$DOTFILES_DIR/zsh/60-zmv.zsh" ]
-    [ -f "$DOTFILES_DIR/zsh/70-named-directories.zsh" ]
+    [ -d "$DOTFILES_DIR/home/git" ]
+    [ -d "$DOTFILES_DIR/home/zsh" ]
+    [ -f "$DOTFILES_DIR/home/zsh/00-zinit.zsh" ]
+    [ -f "$DOTFILES_DIR/home/zsh/10-shared-shell.zsh" ]
+    [ -f "$DOTFILES_DIR/home/zsh/20-tools.zsh" ]
+    [ -f "$DOTFILES_DIR/home/zsh/30-completions.zsh" ]
+    [ -f "$DOTFILES_DIR/home/zsh/40-vendor.zsh" ]
+    [ -f "$DOTFILES_DIR/home/zsh/50-keybindings.zsh" ]
+    [ -f "$DOTFILES_DIR/home/zsh/55-aliases.zsh" ]
+    [ -f "$DOTFILES_DIR/home/zsh/60-zmv.zsh" ]
+    [ -f "$DOTFILES_DIR/home/zsh/70-named-directories.zsh" ]
 
-    [ -d "$DOTFILES_DIR/ohmyposh" ]
-    [ -f "$DOTFILES_DIR/ohmyposh/zen.toml" ]
-    [ -f "$DOTFILES_DIR/ohmyposh/default.toml" ]
+    [ -d "$DOTFILES_DIR/config/ohmyposh" ]
+    [ -f "$DOTFILES_DIR/config/ohmyposh/zen.toml" ]
+    [ -f "$DOTFILES_DIR/config/ohmyposh/default.toml" ]
 }
 
 @test "git configuration is valid" {
-    run git config --file "$DOTFILES_DIR/gitconfig" --list
+    run git config --file "$DOTFILES_DIR/home/gitconfig" --list
     [ "$status" -eq 0 ]
 }
 
@@ -192,10 +196,10 @@ EOF
     fi
     
     # Test basic syntax (may not catch all plugin/runtime issues)
-    run zsh -n "$DOTFILES_DIR/zshrc"
+    run zsh -n "$DOTFILES_DIR/home/zshrc"
     [ "$status" -eq 0 ]
 
-    for file in "$DOTFILES_DIR"/zsh/*.zsh; do
+    for file in "$DOTFILES_DIR"/home/zsh/*.zsh; do
         run zsh -n "$file"
         [ "$status" -eq 0 ]
     done
@@ -205,52 +209,52 @@ EOF
     grep -q 'CONFIG_FILES="nvim ghostty tmux ohmyposh"' "$DOTFILES_DIR/scripts/install-enhanced.sh"
     grep -q 'brew "oh-my-posh"' "$DOTFILES_DIR/Brewfile"
     grep -q 'brew "zoxide"' "$DOTFILES_DIR/Brewfile"
-    grep -q 'oh-my-posh init zsh --config "$HOME/.config/ohmyposh/zen.toml"' "$DOTFILES_DIR/zsh/00-zinit.zsh"
+    grep -q 'oh-my-posh init zsh --config "$HOME/.config/ohmyposh/zen.toml"' "$DOTFILES_DIR/home/zsh/00-zinit.zsh"
 }
 
 @test "bash profile syntax" {
-    run bash -n "$DOTFILES_DIR/bash_profile"
+    run bash -n "$DOTFILES_DIR/home/bash_profile"
     [ "$status" -eq 0 ]
 }
 
 @test "neovim configuration files exist" {
-    [ -f "$DOTFILES_DIR/nvim/init.vim" ]
-    [ -f "$DOTFILES_DIR/nvim/coc-settings.json" ]
-    [ -f "$DOTFILES_DIR/nvim/lua/lazy-init.lua" ]
-    [ -f "$DOTFILES_DIR/nvim/lua/config/options.lua" ]
-    [ -f "$DOTFILES_DIR/nvim/lua/config/keymaps.lua" ]
-    [ -f "$DOTFILES_DIR/nvim/lua/config/commands.lua" ]
-    [ -f "$DOTFILES_DIR/nvim/lua/config/autocmds.lua" ]
-    [ -f "$DOTFILES_DIR/nvim/lua/config/personal.lua" ]
-    [ -f "$DOTFILES_DIR/nvim/lua/config/project-root.lua" ]
-    [ -f "$DOTFILES_DIR/nvim/lua/config/showpopup.lua" ]
-    [ -f "$DOTFILES_DIR/nvim/lua/plugins/init.lua" ]
-    [ -f "$DOTFILES_DIR/nvim/lua/plugins/editing.lua" ]
-    [ -f "$DOTFILES_DIR/nvim/lua/plugins/navigation.lua" ]
-    [ -f "$DOTFILES_DIR/nvim/lua/plugins/git.lua" ]
-    [ -f "$DOTFILES_DIR/nvim/lua/plugins/ui.lua" ]
-    [ -f "$DOTFILES_DIR/nvim/lua/plugins/lsp.lua" ]
-    [ -f "$DOTFILES_DIR/nvim/lua/plugins/ai.lua" ]
-    [ -f "$DOTFILES_DIR/nvim/lua/plugins/tools.lua" ]
+    [ -f "$DOTFILES_DIR/config/nvim/init.vim" ]
+    [ -f "$DOTFILES_DIR/config/nvim/coc-settings.json" ]
+    [ -f "$DOTFILES_DIR/config/nvim/lua/lazy-init.lua" ]
+    [ -f "$DOTFILES_DIR/config/nvim/lua/config/options.lua" ]
+    [ -f "$DOTFILES_DIR/config/nvim/lua/config/keymaps.lua" ]
+    [ -f "$DOTFILES_DIR/config/nvim/lua/config/commands.lua" ]
+    [ -f "$DOTFILES_DIR/config/nvim/lua/config/autocmds.lua" ]
+    [ -f "$DOTFILES_DIR/config/nvim/lua/config/personal.lua" ]
+    [ -f "$DOTFILES_DIR/config/nvim/lua/config/project-root.lua" ]
+    [ -f "$DOTFILES_DIR/config/nvim/lua/config/showpopup.lua" ]
+    [ -f "$DOTFILES_DIR/config/nvim/lua/plugins/init.lua" ]
+    [ -f "$DOTFILES_DIR/config/nvim/lua/plugins/editing.lua" ]
+    [ -f "$DOTFILES_DIR/config/nvim/lua/plugins/navigation.lua" ]
+    [ -f "$DOTFILES_DIR/config/nvim/lua/plugins/git.lua" ]
+    [ -f "$DOTFILES_DIR/config/nvim/lua/plugins/ui.lua" ]
+    [ -f "$DOTFILES_DIR/config/nvim/lua/plugins/lsp.lua" ]
+    [ -f "$DOTFILES_DIR/config/nvim/lua/plugins/ai.lua" ]
+    [ -f "$DOTFILES_DIR/config/nvim/lua/plugins/tools.lua" ]
     [ ! -d "$DOTFILES_DIR/vim" ]
 }
 
 @test "neovim migration from vim-plug to lazy.nvim" {
     # Verify init.vim no longer sources vim-plug config
-    ! grep -q "source.*vimrc.plugins" "$DOTFILES_DIR/nvim/init.vim"
+    ! grep -q "source.*vimrc.plugins" "$DOTFILES_DIR/config/nvim/init.vim"
     
     # Verify init.vim sources lazy-init instead
-    grep -q "require('lazy-init')" "$DOTFILES_DIR/nvim/init.vim"
-    grep -q "require('config.options')" "$DOTFILES_DIR/nvim/init.vim"
-    grep -q "require('config.keymaps')" "$DOTFILES_DIR/nvim/init.vim"
-    grep -q "require('config.commands')" "$DOTFILES_DIR/nvim/init.vim"
-    grep -q "require('config.autocmds')" "$DOTFILES_DIR/nvim/init.vim"
-    grep -q "require('config.personal')" "$DOTFILES_DIR/nvim/init.vim"
-    grep -q "require('config.project-root')" "$DOTFILES_DIR/nvim/init.vim"
-    ! grep -q "source ~/.vim/" "$DOTFILES_DIR/nvim/init.vim"
+    grep -q "require('lazy-init')" "$DOTFILES_DIR/config/nvim/init.vim"
+    grep -q "require('config.options')" "$DOTFILES_DIR/config/nvim/init.vim"
+    grep -q "require('config.keymaps')" "$DOTFILES_DIR/config/nvim/init.vim"
+    grep -q "require('config.commands')" "$DOTFILES_DIR/config/nvim/init.vim"
+    grep -q "require('config.autocmds')" "$DOTFILES_DIR/config/nvim/init.vim"
+    grep -q "require('config.personal')" "$DOTFILES_DIR/config/nvim/init.vim"
+    grep -q "require('config.project-root')" "$DOTFILES_DIR/config/nvim/init.vim"
+    ! grep -q "source ~/.vim/" "$DOTFILES_DIR/config/nvim/init.vim"
     
     # Verify lazy imports grouped plugin modules
-    local lazy_plugins="$DOTFILES_DIR/nvim/lua/plugins"
+    local lazy_plugins="$DOTFILES_DIR/config/nvim/lua/plugins"
     grep -q 'import = "plugins.editing"' "$lazy_plugins/init.lua"
     grep -q 'import = "plugins.navigation"' "$lazy_plugins/init.lua"
     grep -q 'import = "plugins.lsp"' "$lazy_plugins/init.lua"
@@ -277,11 +281,11 @@ EOF
 }
 
 @test "shared Neovim mappings do not reference removed or conflicting plugin keys" {
-    local keymaps_file="$DOTFILES_DIR/nvim/lua/config/keymaps.lua"
-    local navigation_plugins="$DOTFILES_DIR/nvim/lua/plugins/navigation.lua"
-    local lsp_plugins="$DOTFILES_DIR/nvim/lua/plugins/lsp.lua"
-    local ai_plugins="$DOTFILES_DIR/nvim/lua/plugins/ai.lua"
-    local tools_plugins="$DOTFILES_DIR/nvim/lua/plugins/tools.lua"
+    local keymaps_file="$DOTFILES_DIR/config/nvim/lua/config/keymaps.lua"
+    local navigation_plugins="$DOTFILES_DIR/config/nvim/lua/plugins/navigation.lua"
+    local lsp_plugins="$DOTFILES_DIR/config/nvim/lua/plugins/lsp.lua"
+    local ai_plugins="$DOTFILES_DIR/config/nvim/lua/plugins/ai.lua"
+    local tools_plugins="$DOTFILES_DIR/config/nvim/lua/plugins/tools.lua"
 
     ! grep -q "NERDTreeToggle" "$lsp_plugins"
     grep -q "AerialToggle" "$navigation_plugins"
@@ -297,12 +301,12 @@ EOF
 }
 
 @test "neovim non-plugin options and keymaps are owned by Lua config modules" {
-    local init_file="$DOTFILES_DIR/nvim/init.vim"
-    local options_file="$DOTFILES_DIR/nvim/lua/config/options.lua"
-    local keymaps_file="$DOTFILES_DIR/nvim/lua/config/keymaps.lua"
-    local autocmds_file="$DOTFILES_DIR/nvim/lua/config/autocmds.lua"
-    local personal_file="$DOTFILES_DIR/nvim/lua/config/personal.lua"
-    local root_file="$DOTFILES_DIR/nvim/lua/config/project-root.lua"
+    local init_file="$DOTFILES_DIR/config/nvim/init.vim"
+    local options_file="$DOTFILES_DIR/config/nvim/lua/config/options.lua"
+    local keymaps_file="$DOTFILES_DIR/config/nvim/lua/config/keymaps.lua"
+    local autocmds_file="$DOTFILES_DIR/config/nvim/lua/config/autocmds.lua"
+    local personal_file="$DOTFILES_DIR/config/nvim/lua/config/personal.lua"
+    local root_file="$DOTFILES_DIR/config/nvim/lua/config/project-root.lua"
 
     grep -q "require('config.options')" "$init_file"
     grep -q "require('config.keymaps')" "$init_file"
@@ -325,8 +329,8 @@ EOF
 }
 
 @test "copilot mapping is owned in ai plugin config and not lazy on insert" {
-    local ai_plugins="$DOTFILES_DIR/nvim/lua/plugins/ai.lua"
-    local lsp_plugins="$DOTFILES_DIR/nvim/lua/plugins/lsp.lua"
+    local ai_plugins="$DOTFILES_DIR/config/nvim/lua/plugins/ai.lua"
+    local lsp_plugins="$DOTFILES_DIR/config/nvim/lua/plugins/lsp.lua"
 
     grep -q 'github/copilot.vim' "$ai_plugins"
     grep -q 'lazy = false' "$ai_plugins"
@@ -340,7 +344,7 @@ EOF
 }
 
 @test "lualine uses the evil_lualine theme" {
-    local ui_plugins="$DOTFILES_DIR/nvim/lua/plugins/ui.lua"
+    local ui_plugins="$DOTFILES_DIR/config/nvim/lua/plugins/ui.lua"
 
     grep -q 'nvim-lualine/lualine.nvim' "$ui_plugins"
     grep -q 'bg = "NONE"' "$ui_plugins"
@@ -354,7 +358,7 @@ EOF
 }
 
 @test "treesitter eagerly manages javascript-family parsers without auto install races" {
-    local ui_plugins="$DOTFILES_DIR/nvim/lua/plugins/ui.lua"
+    local ui_plugins="$DOTFILES_DIR/config/nvim/lua/plugins/ui.lua"
 
     grep -q 'nvim-treesitter/nvim-treesitter' "$ui_plugins"
     grep -q '"diff"' "$ui_plugins"
@@ -365,8 +369,8 @@ EOF
 }
 
 @test "Neovim plugin setup for lazy-loaded plugins lives in lazy specs" {
-    local lazy_plugins="$DOTFILES_DIR/nvim/lua/plugins"
-    local coc_settings="$DOTFILES_DIR/nvim/coc-settings.json"
+    local lazy_plugins="$DOTFILES_DIR/config/nvim/lua/plugins"
+    local coc_settings="$DOTFILES_DIR/config/nvim/coc-settings.json"
 
     grep -R -q 'local telescope = require("telescope")' "$lazy_plugins"
     grep -R -q 'require("aerial").setup({' "$lazy_plugins"
@@ -381,7 +385,7 @@ EOF
 }
 
 @test "neovim plugin specs are split into grouped lazy modules" {
-    local plugins_dir="$DOTFILES_DIR/nvim/lua/plugins"
+    local plugins_dir="$DOTFILES_DIR/config/nvim/lua/plugins"
 
     grep -q "return {" "$plugins_dir/init.lua"
     grep -q 'import = "plugins.editing"' "$plugins_dir/init.lua"
@@ -399,11 +403,11 @@ EOF
 }
 
 @test "neovim lua files have valid basic structure" {
-    local lazy_init_file="$DOTFILES_DIR/nvim/lua/lazy-init.lua"
+    local lazy_init_file="$DOTFILES_DIR/config/nvim/lua/lazy-init.lua"
 
     grep -q 'require("lazy")' "$lazy_init_file"
 
-    for lua_file in "$DOTFILES_DIR"/nvim/lua/plugins/*.lua; do
+    for lua_file in "$DOTFILES_DIR"/config/nvim/lua/plugins/*.lua; do
         local open_braces=$(grep -o "{" "$lua_file" | wc -l)
         local close_braces=$(grep -o "}" "$lua_file" | wc -l)
         [ "$open_braces" -eq "$close_braces" ]

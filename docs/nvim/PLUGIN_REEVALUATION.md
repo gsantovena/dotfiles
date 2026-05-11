@@ -10,7 +10,7 @@ Neovim-only setup. It classifies plugins into:
 - revisit later
 
 It is based on:
-- current repo usage and keymaps under `nvim/lua/plugins/*`
+- current repo usage and keymaps under `config/nvim/lua/plugins/*`
 - current test expectations in `tests/test_dotfiles.bats`
 - primary-source plugin/documentation review for replacement candidates
 
@@ -120,7 +120,7 @@ It is based on:
 - Aerial describes itself as a code outline window for skimming and quick navigation, with Neovim 0.11+ support and integrations with Telescope, fzf, and Lualine.
 
 **Implemented replacement**
-- `nvim/lua/plugins/navigation.lua`
+- `config/nvim/lua/plugins/navigation.lua`
 - `AerialToggle!` on `<F8>`
 
 **Risk**: medium
@@ -151,14 +151,14 @@ It is based on:
 ### 6. `dylanaraps/root.vim` — replaced with native Neovim
 
 **Why it was replaced**
-- Root detection is now handled in `nvim/lua/config/project-root.lua`.
+- Root detection is now handled in `config/nvim/lua/config/project-root.lua`.
 
 **Why replace**
 - This is a narrow behavior area that Neovim can now handle natively.
 - Native root detection would reduce plugin count.
 
 **Implemented replacement**
-- `nvim/lua/config/project-root.lua`
+- `config/nvim/lua/config/project-root.lua`
 - buffer-local root detection driven by `vim.fs.root()`
 
 **Primary-source note**
@@ -169,7 +169,7 @@ It is based on:
 ### 7. `coc.nvim` — keep for now
 
 **Current repo evidence**
-- Deeply integrated in `nvim/lua/plugins/lsp.lua`
+- Deeply integrated in `config/nvim/lua/plugins/lsp.lua`
 - Current UX preference is explicitly CoC-style
 
 **Why keep**
@@ -195,9 +195,9 @@ Primary sources reviewed:
 - Neovim Lua docs (`vim.fs.root()`): https://neovim.io/doc/user/lua.html
 
 Repo-local evidence:
-- `nvim/lua/plugins/navigation.lua`
-- `nvim/lua/plugins/ui.lua`
-- `nvim/lua/plugins/lsp.lua`
-- `nvim/lua/plugins/ai.lua`
-- `nvim/lua/plugins/tools.lua`
+- `config/nvim/lua/plugins/navigation.lua`
+- `config/nvim/lua/plugins/ui.lua`
+- `config/nvim/lua/plugins/lsp.lua`
+- `config/nvim/lua/plugins/ai.lua`
+- `config/nvim/lua/plugins/tools.lua`
 - `tests/test_dotfiles.bats`

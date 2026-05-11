@@ -5,7 +5,7 @@ SHELL := /bin/bash
 INSTALL_SCRIPT := scripts/install-enhanced.sh
 TEST_SCRIPT := scripts/test-install.sh
 SECURITY_SCRIPT := scripts/security-check.sh
-TMUX_OPEN_URL_SCRIPT := tmux/open-url.sh
+TMUX_OPEN_URL_SCRIPT := config/tmux/open-url.sh
 SHELL_SCRIPTS := $(INSTALL_SCRIPT) $(TEST_SCRIPT) $(SECURITY_SCRIPT) $(TMUX_OPEN_URL_SCRIPT)
 BATS_TESTS := tests/test_dotfiles.bats
 

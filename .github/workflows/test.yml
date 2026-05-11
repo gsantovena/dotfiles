@@ -77,12 +77,12 @@ jobs:
       - name: Validate shell configurations
         run: |
           # Test zsh configuration syntax
-          zsh -n zshrc || echo "Warning: zshrc has syntax issues"
+          zsh -n home/zshrc || echo "Warning: zshrc has syntax issues"
           
           # Test bash configuration syntax  
-          bash -n bash_profile || echo "Warning: bash_profile has syntax issues"
+          bash -n home/bash_profile || echo "Warning: bash_profile has syntax issues"
           
       - name: Validate git configuration
         run: |
           # Test git configuration
-          git config --file gitconfig --list > /dev/null
+          git config --file home/gitconfig --list > /dev/null
