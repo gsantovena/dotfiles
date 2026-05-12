@@ -118,6 +118,10 @@ EOF
     grep -q '^link-url = true$' "$DOTFILES_DIR/config/ghostty/config"
 }
 
+@test "ghostty enables SSH terminal compatibility helpers" {
+    grep -q '^shell-integration-features = .*ssh-env.*ssh-terminfo' "$DOTFILES_DIR/config/ghostty/config"
+}
+
 @test "tmux URL opener normalizes plain links safely" {
     local fake_bin="$TEST_TMPDIR/fake-bin"
     local opened_url="$TEST_TMPDIR/opened-url"

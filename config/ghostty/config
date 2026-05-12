@@ -4,6 +4,11 @@ window-height = 40
 macos-option-as-alt = true
 link-url = true
 
+# Keep Ghostty's terminal capabilities usable when SSH'ing to hosts that do not
+# already know xterm-ghostty. This avoids remote zsh prompt/redraw glitches while
+# preserving Ghostty's richer terminfo when the remote host can install it.
+shell-integration-features = cursor,no-sudo,title,ssh-env,ssh-terminfo,path
+
 # Send Shift+Enter as CSI-u so TUIs such as Codex can distinguish it from Enter.
 keybind = shift+enter=csi:13;2u
 keybind = global:cmd+s=toggle_quick_terminal
