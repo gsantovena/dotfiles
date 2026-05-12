@@ -67,7 +67,7 @@ zinit snippet OMZP::vagrant-prompt
 zinit snippet OMZP::virtualenv
 zinit snippet OMZP::vscode
 zinit snippet OMZP::web-search
-zinit snippet OMZP::z
+# zinit snippet OMZP::z
 
 zinit ice depth=1 \
   cloneopts"--filter=blob:none --sparse" \
