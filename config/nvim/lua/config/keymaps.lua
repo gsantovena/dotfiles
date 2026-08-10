@@ -49,7 +49,7 @@ keymap("n", "<space>", "za")
 
 keymap("c", "w!!", "execute 'silent! write !sudo tee % >/dev/null' <bar> edit!")
 
-keymap("n", "<C-h>", "<cmd>TmuxNavigateLeft<CR>")
-keymap("n", "<C-l>", "<cmd>TmuxNavigateRight<CR>")
-keymap("n", "<C-j>", "<cmd>TmuxNavigateDown<CR>")
-keymap("n", "<C-k>", "<cmd>TmuxNavigateUp<CR>")
+keymap({ "n", "t" }, "<M-h>", "<cmd>TmuxNavigateLeft<CR>")
+keymap({ "n", "t" }, "<M-l>", "<cmd>TmuxNavigateRight<CR>")
+keymap({ "n", "t" }, "<M-j>", "<cmd>TmuxNavigateDown<CR>")
+keymap({ "n", "t" }, "<M-k>", "<cmd>TmuxNavigateUp<CR>")
