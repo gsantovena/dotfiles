@@ -88,6 +88,12 @@ return {
           scrolling = true,
         },
       })
+
+      -- Upstream commands.lua calls `claude_code.version()`, but init.lua exposes
+      -- `version` as a table, so the plugin's own command errors out.
+      vim.api.nvim_create_user_command("ClaudeCodeVersion", function()
+        vim.notify("Claude Code version: " .. require("claude-code").get_version(), vim.log.levels.INFO)
+      end, { desc = "Display Claude Code version" })
     end,
   },
 }
