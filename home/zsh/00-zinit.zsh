@@ -78,8 +78,26 @@ zinit ice depth=1 \
 
 zinit light ohmyzsh/ohmyzsh
 
-# Load completions
-autoload -Uz compinit && compinit
+# Completion directories every fpath contributor needs registered in the dump, so
+# they have to be in place before compinit runs.
+SF_COMPLETIONS="$HOME/Library/Caches/sf/autocomplete/functions/zsh"
+[ -d "$SF_COMPLETIONS" ] && fpath=("$SF_COMPLETIONS" $fpath)
+unset SF_COMPLETIONS
+
+DOCKER_COMPLETIONS="$HOME/.docker/completions"
+[ -d "$DOCKER_COMPLETIONS" ] && fpath=("$DOCKER_COMPLETIONS" $fpath)
+unset DOCKER_COMPLETIONS
+
+# Load completions. Rebuilding the dump costs ~350ms, so only re-scan fpath once a
+# day and trust the cached dump in between.
+autoload -Uz compinit
+_zcompdump=("$HOME"/.zcompdump(N.mh-24))
+if (( $#_zcompdump )); then
+    compinit -C
+else
+    compinit
+fi
+unset _zcompdump
 
 zinit cdreplay -q
 

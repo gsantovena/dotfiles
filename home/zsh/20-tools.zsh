@@ -10,12 +10,32 @@ GCP_COMPLETION="/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/com
 [ -r "$GCP_COMPLETION" ] && source "$GCP_COMPLETION"
 unset GCP_ZSH_PATH GCP_COMPLETION
 
+# --no-rehash skips regenerating all shims on every shell start, which takes over a
+# second across the installed Ruby versions. Run `rbenv rehash` after installing a gem
+# that ships an executable.
 if command -v rbenv >/dev/null 2>&1; then
-    eval "$(rbenv init - zsh)"
+    eval "$(rbenv init - --no-rehash zsh)"
 fi
 
+# --no-use skips nvm's default-version activation, which spends over a second
+# validating the alias chain. Put that version's bin on PATH directly instead; `nvm use`
+# still switches away from it normally.
 export NVM_DIR="$HOME/.nvm"
-[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && source "/opt/homebrew/opt/nvm/nvm.sh"
+if [ -s "/opt/homebrew/opt/nvm/nvm.sh" ]; then
+    source "/opt/homebrew/opt/nvm/nvm.sh" --no-use
+
+    if [ -r "$NVM_DIR/alias/default" ]; then
+        nvm_default_bin=("$NVM_DIR"/versions/node/v$(<"$NVM_DIR/alias/default")*/bin(N/n[-1]))
+        if [ -n "$nvm_default_bin" ]; then
+            path=("$nvm_default_bin" $path)
+        else
+            # The default alias points at something a version-prefix glob cannot resolve.
+            nvm use --silent default
+        fi
+        unset nvm_default_bin
+    fi
+fi
+
 [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && source "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"
 
 # THIS MUST BE AT THE END OF THE SDKMAN BLOCK FOR SDKMAN TO WORK.

@@ -9,16 +9,6 @@ if [ -r "$PING_IDENTITY_CONFIG" ]; then
 fi
 unset PING_IDENTITY_CONFIG
 
-SF_AC_ZSH_SETUP_PATH="$HOME/Library/Caches/sf/autocomplete/zsh_setup"
-[ -r "$SF_AC_ZSH_SETUP_PATH" ] && source "$SF_AC_ZSH_SETUP_PATH"
-unset SF_AC_ZSH_SETUP_PATH
-
-# The following lines have been added by Docker Desktop to enable Docker CLI completions.
-DOCKER_COMPLETIONS_DIR="$HOME/.docker/completions"
-if [ -d "$DOCKER_COMPLETIONS_DIR" ]; then
-    fpath=("$DOCKER_COMPLETIONS_DIR" $fpath)
-    autoload -Uz compinit
-    compinit
-fi
-unset DOCKER_COMPLETIONS_DIR
-# End of Docker CLI completions
+# Salesforce CLI and Docker CLI completions are registered in 00-zinit.zsh, where they
+# precede compinit. Do not source their vendor setup scripts here: each runs its own
+# compinit, costing ~300ms per extra call.
