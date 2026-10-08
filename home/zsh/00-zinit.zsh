@@ -40,7 +40,6 @@ zinit snippet OMZP::dotenv
 zinit snippet OMZP::gh
 zinit snippet OMZP::git
 zinit snippet OMZP::git-prompt
-zinit snippet OMZP::github
 zinit snippet OMZP::gitignore
 zinit snippet OMZP::golang
 zinit snippet OMZP::helm
