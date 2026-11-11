@@ -224,23 +224,34 @@ return {
   -- Treesitter for syntax highlighting
   {
     "nvim-treesitter/nvim-treesitter",
+    branch = "main",
+    lazy = false,
     build = ":TSUpdate",
     config = function()
-      require("nvim-treesitter.configs").setup({
-        ensure_installed = { 
-          "diff", 
-          "dockerfile",
-          "go",
-          "javascript", 
-          "json",
-          "markdown",
-          "python",
-          "sql",
-          "typescript", 
-          "tsx" 
-        },
-        auto_install = false,
-        highlight = { enable = true },
+      local parsers = {
+        "bash",
+        "diff",
+        "dockerfile",
+        "go",
+        "html",
+        "javascript",
+        "json",
+        "lua",
+        "markdown",
+        "python",
+        "sql",
+        "typescript",
+        "tsx",
+        "vim",
+        "vimdoc",
+        "yaml",
+      }
+      require("nvim-treesitter").install(parsers)
+
+      vim.api.nvim_create_autocmd("FileType", {
+        callback = function(args)
+          pcall(vim.treesitter.start, args.buf)
+        end,
       })
     end,
   },
